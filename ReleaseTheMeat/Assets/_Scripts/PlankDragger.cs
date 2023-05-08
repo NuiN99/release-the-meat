@@ -8,6 +8,7 @@ using static UnityEngine.GraphicsBuffer;
 public class PlankDragger : MonoBehaviour
 {
     [SerializeField] GameObject plankCellPrefab;
+    [SerializeField] GameObject finishedPlankPrefab;
 
     [SerializeField] int maxLength;
     [SerializeField] float cellDistance;
@@ -74,12 +75,27 @@ public class PlankDragger : MonoBehaviour
 
     void PlaceEndPoint()
     {
-        GameObject finishedPlank = new("FinishedPlank");
+        int cellCount = plankCells.Count;
+        if (cellCount <= 1) 
+        {
+            ResetCurrentPlank(false);
+            return;
+        } 
+
+        Vector2 endPoint = cellPoints[cellCount - 1];
+        
+
+        GameObject finishedPlank = Instantiate(finishedPlankPrefab, (startPoint + endPoint) / 2, startCell.transform.rotation);
+        BoxCollider2D plankCol = finishedPlank.GetComponent<BoxCollider2D>();
+
         foreach (GameObject plankCell in plankCells)
         {
             GameObject finishedPlankCell = Instantiate(plankCell, plankCell.transform.position, plankCell.transform.rotation);
             finishedPlankCell.transform.parent = finishedPlank.transform;
         }
+
+        SetColliderSize(plankCol);
+
         ResetCurrentPlank(false);
     }
 
@@ -104,6 +120,7 @@ public class PlankDragger : MonoBehaviour
         for (float i = 0; (i < mouseDist) && (i < cellDistance * maxLength); i += cellDistance)
         {
             if (cellDistance <= 0) return;
+            
             cellPoints.Add((startPoint) + (mouseDir * i));
         }
 
@@ -113,5 +130,12 @@ public class PlankDragger : MonoBehaviour
             GameObject plankCell = Instantiate(plankCellPrefab, cell, startCell.transform.rotation);
             plankCells.Add(plankCell);
         }
+    }
+
+    void SetColliderSize(BoxCollider2D col)
+    {
+        float sizeX = plankCells.Count * cellDistance;
+        float sizeY = plankCellPrefab.transform.localScale.x;
+        col.size = new Vector2(sizeX, sizeY);
     }
 }
