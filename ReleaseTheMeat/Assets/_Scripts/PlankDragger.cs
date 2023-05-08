@@ -57,7 +57,12 @@ public class PlankDragger : MonoBehaviour
     {
         
         float mouseDist = Vector2.Distance(startCell.transform.position, mousePos);
-        Vector2 mouseDir = (mousePos - startPoint).normalized;
+        Vector2 mouseDir = (mousePos - (Vector2)startCell.transform.position).normalized;
+
+        foreach(GameObject plankCell in plankCells) 
+        {
+            Destroy(plankCell);
+        }
 
         cellPoints.Clear();
         plankCells.Clear();
@@ -66,7 +71,7 @@ public class PlankDragger : MonoBehaviour
 
         for (float i = 0; i < mouseDist; i += cellDistance)
         {
-            cellPoints.Add(mouseDir * i);
+            cellPoints.Add((mouseDir * startPoint) * i);
         }
 
         for(int i = 0; i < cellPoints.Count; i++) 
