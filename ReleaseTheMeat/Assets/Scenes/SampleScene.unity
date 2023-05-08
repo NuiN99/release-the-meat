@@ -382,7 +382,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plankCellPrefab: {fileID: 8147115049358047964, guid: 73792e4ed896f1341b0f07842ddf897d, type: 3}
-  cellDistance: 0.5
+  cellDistance: 0.3
 --- !u!4 &1595437389
 Transform:
   m_ObjectHideFlags: 0

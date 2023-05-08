@@ -22,9 +22,8 @@ public class PlankDragger : MonoBehaviour
     {
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
+        FinalizePlank();
         PlaceStartPoint();
-
-        if (startCell == null) return;
 
         RotateToMouse();
         PopulatePlankLength();
@@ -32,45 +31,63 @@ public class PlankDragger : MonoBehaviour
 
     void PlaceStartPoint()
     {
-         
         //RaycastHit2D mouseRay = Physics2D.Raycast(mousePos, -Vector3.forward);
 
         if (Input.GetMouseButtonDown(0) && !startPointPlaced) 
         {
             startPointPlaced = true;
             startPoint = mousePos;
-
             startCell = Instantiate(plankCellPrefab, startPoint, Quaternion.identity);
         }
     }
 
-    
+    void FinalizePlank()
+    {
+        if(Input.GetMouseButtonDown(0) && startPointPlaced)
+        {
+            GameObject finishedPlank = new("FinishedPlank");
+
+            foreach(GameObject plankCell in plankCells) 
+            {
+                GameObject finishedPlankCell = Instantiate(plankCell, plankCell.transform.position, plankCell.transform.rotation);
+                finishedPlankCell.transform.parent = finishedPlank.transform;
+            }
+
+            foreach (GameObject plankCell in plankCells) Destroy(plankCell);
+
+            Destroy(startCell); 
+
+            cellPoints.Clear();
+            plankCells.Clear();
+
+            startPointPlaced = false;
+        }
+    }
 
     void RotateToMouse()
     {
-        Vector2 mouseDir = (mousePos - (Vector2)startCell.transform.position).normalized;
+        if (!startPointPlaced) return;
+
+        Vector2 mouseDir = (mousePos - startPoint).normalized;
         float angle = Mathf.Atan2(mouseDir.y, mouseDir.x) * Mathf.Rad2Deg;
         startCell.transform.eulerAngles = new Vector3(0,0,angle);
     }
 
     void PopulatePlankLength()
     {
-        
-        float mouseDist = Vector2.Distance(startCell.transform.position, mousePos);
-        Vector2 mouseDir = (mousePos - (Vector2)startCell.transform.position).normalized;
+        if (!startPointPlaced) return;
 
-        foreach(GameObject plankCell in plankCells) 
-        {
-            Destroy(plankCell);
-        }
+        float mouseDist = Vector2.Distance(startPoint, mousePos);
+        Vector2 mouseDir = (mousePos - startPoint).normalized;
+
+        foreach(GameObject plankCell in plankCells) Destroy(plankCell);
 
         cellPoints.Clear();
         plankCells.Clear();
 
-        
-
         for (float i = 0; i < mouseDist; i += cellDistance)
         {
+            if (cellDistance <= 0) return;
             cellPoints.Add((startPoint) + (mouseDir * i));
         }
 
