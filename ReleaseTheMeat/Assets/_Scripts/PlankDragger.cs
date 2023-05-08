@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
@@ -10,7 +11,7 @@ public class PlankDragger : MonoBehaviour
 
     [SerializeField] float cellDistance;
 
-    bool startPointPlaced;
+    bool isPlacingPlank;
 
     List<Vector2> cellPoints = new List<Vector2>();
     List<GameObject> plankCells = new List<GameObject>();
@@ -22,51 +23,68 @@ public class PlankDragger : MonoBehaviour
     {
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        FinalizePlank();
-        PlaceStartPoint();
+        PlacePlank();
+    }
 
-        RotateToMouse();
-        PopulatePlankLength();
+    void PlacePlank()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (!isPlacingPlank)
+            {
+                PlaceStartPoint();
+                isPlacingPlank = true;
+            }
+            else
+            {
+                PlaceEndPoint();
+                isPlacingPlank = false;
+            }
+        }
+        else if (isPlacingPlank)
+        {
+            if (Input.GetMouseButtonDown(1))
+            {
+                ResetCurrentPlank(false);
+                isPlacingPlank = false;
+                return;
+            }
+
+            RotateToMouse();
+            PopulatePlankLength();
+        }
+    }
+
+    void ResetCurrentPlank(bool keepStartCell)
+    {
+        foreach (GameObject plankCell in plankCells) Destroy(plankCell);
+
+        if (!keepStartCell) Destroy(startCell);
+
+        cellPoints.Clear();
+        plankCells.Clear();
     }
 
     void PlaceStartPoint()
     {
-        //RaycastHit2D mouseRay = Physics2D.Raycast(mousePos, -Vector3.forward);
-
-        if (Input.GetMouseButtonDown(0) && !startPointPlaced) 
-        {
-            startPointPlaced = true;
-            startPoint = mousePos;
-            startCell = Instantiate(plankCellPrefab, startPoint, Quaternion.identity);
-        }
+        startPoint = mousePos;
+        startCell = Instantiate(plankCellPrefab, startPoint, Quaternion.identity);
     }
 
-    void FinalizePlank()
+    void PlaceEndPoint()
     {
-        if(Input.GetMouseButtonDown(0) && startPointPlaced)
+        GameObject finishedPlank = new("FinishedPlank");
+        foreach (GameObject plankCell in plankCells)
         {
-            GameObject finishedPlank = new("FinishedPlank");
-
-            foreach(GameObject plankCell in plankCells) 
-            {
-                GameObject finishedPlankCell = Instantiate(plankCell, plankCell.transform.position, plankCell.transform.rotation);
-                finishedPlankCell.transform.parent = finishedPlank.transform;
-            }
-
-            foreach (GameObject plankCell in plankCells) Destroy(plankCell);
-
-            Destroy(startCell); 
-
-            cellPoints.Clear();
-            plankCells.Clear();
-
-            startPointPlaced = false;
+            GameObject finishedPlankCell = Instantiate(plankCell, plankCell.transform.position, plankCell.transform.rotation);
+            finishedPlankCell.transform.parent = finishedPlank.transform;
         }
+        ResetCurrentPlank(false);
     }
 
     void RotateToMouse()
     {
-        if (!startPointPlaced) return;
+        if (!isPlacingPlank) return;
 
         Vector2 mouseDir = (mousePos - startPoint).normalized;
         float angle = Mathf.Atan2(mouseDir.y, mouseDir.x) * Mathf.Rad2Deg;
@@ -75,15 +93,12 @@ public class PlankDragger : MonoBehaviour
 
     void PopulatePlankLength()
     {
-        if (!startPointPlaced) return;
+        if (!isPlacingPlank) return;
 
         float mouseDist = Vector2.Distance(startPoint, mousePos);
         Vector2 mouseDir = (mousePos - startPoint).normalized;
 
-        foreach(GameObject plankCell in plankCells) Destroy(plankCell);
-
-        cellPoints.Clear();
-        plankCells.Clear();
+        ResetCurrentPlank(true);
 
         for (float i = 0; i < mouseDist; i += cellDistance)
         {
