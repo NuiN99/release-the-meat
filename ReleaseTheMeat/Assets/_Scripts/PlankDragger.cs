@@ -71,7 +71,7 @@ public class PlankDragger : MonoBehaviour
 
         for (float i = 0; i < mouseDist; i += cellDistance)
         {
-            cellPoints.Add((mouseDir * startPoint) * i);
+            cellPoints.Add((startPoint) + (mouseDir * i));
         }
 
         for(int i = 0; i < cellPoints.Count; i++) 
