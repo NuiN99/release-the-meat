@@ -1,9 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Net;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class PlankDragger : MonoBehaviour
 {
@@ -39,7 +37,7 @@ public class PlankDragger : MonoBehaviour
             }
             else
             {
-                PlaceEndPoint();
+                FinalizePlank();
                 isPlacingPlank = false;
             }
         }
@@ -57,23 +55,14 @@ public class PlankDragger : MonoBehaviour
         }
     }
 
-    void ResetCurrentPlank(bool keepStartCell)
-    {
-        foreach (GameObject plankCell in plankCells) Destroy(plankCell);
-
-        if (!keepStartCell) Destroy(startCell);
-
-        cellPoints.Clear();
-        plankCells.Clear();
-    }
-
+ 
     void PlaceStartPoint()
     {
         startPoint = mousePos;
         startCell = Instantiate(plankCellPrefab, startPoint, Quaternion.identity);
     }
 
-    void PlaceEndPoint()
+    void FinalizePlank()
     {
         int cellCount = plankCells.Count;
         if (cellCount <= 1) 
@@ -84,9 +73,9 @@ public class PlankDragger : MonoBehaviour
 
         Vector2 endPoint = cellPoints[cellCount - 1];
         
-
         GameObject finishedPlank = Instantiate(finishedPlankPrefab, (startPoint + endPoint) / 2, startCell.transform.rotation);
         BoxCollider2D plankCol = finishedPlank.GetComponent<BoxCollider2D>();
+        Rigidbody2D plankRB = finishedPlank.GetComponent<Rigidbody2D>();
 
         foreach (GameObject plankCell in plankCells)
         {
@@ -95,7 +84,7 @@ public class PlankDragger : MonoBehaviour
         }
 
         SetColliderSize(plankCol);
-
+        SetMass(plankRB);
         ResetCurrentPlank(false);
     }
 
@@ -132,10 +121,26 @@ public class PlankDragger : MonoBehaviour
         }
     }
 
+    void ResetCurrentPlank(bool keepStartCell)
+    {
+        foreach (GameObject plankCell in plankCells) Destroy(plankCell);
+
+        if (!keepStartCell) Destroy(startCell);
+
+        cellPoints.Clear();
+        plankCells.Clear();
+    }
+
+
     void SetColliderSize(BoxCollider2D col)
     {
         float sizeX = plankCells.Count * cellDistance;
         float sizeY = plankCellPrefab.transform.localScale.x;
         col.size = new Vector2(sizeX, sizeY);
+    }
+
+    void SetMass(Rigidbody2D rb)
+    {
+        rb.mass = plankCells.Count / 10f;
     }
 }
