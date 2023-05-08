@@ -9,6 +9,7 @@ public class PlankDragger : MonoBehaviour
 {
     [SerializeField] GameObject plankCellPrefab;
 
+    [SerializeField] int maxLength;
     [SerializeField] float cellDistance;
 
     bool isPlacingPlank;
@@ -100,7 +101,7 @@ public class PlankDragger : MonoBehaviour
 
         ResetCurrentPlank(true);
 
-        for (float i = 0; i < mouseDist; i += cellDistance)
+        for (float i = 0; (i < mouseDist) && (i < cellDistance * maxLength); i += cellDistance)
         {
             if (cellDistance <= 0) return;
             cellPoints.Add((startPoint) + (mouseDir * i));
