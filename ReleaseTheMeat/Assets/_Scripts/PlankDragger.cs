@@ -22,7 +22,6 @@ public class PlankDragger : MonoBehaviour
     void Update()
     {
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
         PlacePlank();
     }
 
@@ -74,14 +73,20 @@ public class PlankDragger : MonoBehaviour
         Vector2 endPoint = cellPoints[cellCount - 1];
         
         GameObject finishedPlank = Instantiate(finishedPlankPrefab, (startPoint + endPoint) / 2, startCell.transform.rotation);
+        finishedPlank.name = "Plank";
         BoxCollider2D plankCol = finishedPlank.GetComponent<BoxCollider2D>();
         Rigidbody2D plankRB = finishedPlank.GetComponent<Rigidbody2D>();
+        Plank plankScript = finishedPlank.GetComponent<Plank>();
 
-        foreach (GameObject plankCell in plankCells)
+        for(int i = 0; i < plankCells.Count; i++)
         {
-            GameObject finishedPlankCell = Instantiate(plankCell, plankCell.transform.position, plankCell.transform.rotation);
+            GameObject finishedPlankCell = Instantiate(plankCells[i], plankCells[i].transform.position, plankCells[i].transform.rotation);
+            finishedPlankCell.name = $"PlankCell{i + 1}";
             finishedPlankCell.transform.parent = finishedPlank.transform;
         }
+        
+        plankScript.isPlaced = true;
+        plankScript.SetCells();
 
         SetColliderSize(plankCol);
         SetMass(plankRB);
@@ -106,7 +111,7 @@ public class PlankDragger : MonoBehaviour
 
         ResetCurrentPlank(true);
 
-        for (float i = 0; (i < mouseDist) && (i < cellDistance * maxLength); i += cellDistance)
+        for (float i = 0; (i < mouseDist) && (i < cellDistance * (maxLength - 1)); i += cellDistance)
         {
             if (cellDistance <= 0) return;
             
