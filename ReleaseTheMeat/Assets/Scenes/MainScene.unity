@@ -123,6 +123,56 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &479311930
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 479311932}
+  - component: {fileID: 479311931}
+  m_Layer: 0
+  m_Name: SelectionController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &479311931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 479311930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7ac7b54ef5e1314181583eeef0fbe0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoveredPartType: 0
+  rayRadius: 0.25
+  selectionMask:
+    serializedVersion: 2
+    m_Bits: 64
+  selectionPointPrefab: {fileID: 740048008282109977, guid: 611e51bae2596f34b9e7632f1f1cd225, type: 3}
+--- !u!4 &479311932
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 479311930}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -529,6 +579,7 @@ MonoBehaviour:
   selectionMask:
     serializedVersion: 2
     m_Bits: 64
+  selectionPointPrefab: {fileID: 0}
 --- !u!1 &1831253079
 GameObject:
   m_ObjectHideFlags: 0
@@ -558,6 +609,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70b695c210842234ba9ec90e8e790574, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  draggingPlank: 0
   plankPrefab: {fileID: 405934711945403022, guid: 87e0f31ec28ec30458a23b59c77959c5, type: 3}
 --- !u!4 &1831253081
 Transform:

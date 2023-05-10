@@ -6,9 +6,16 @@ public class PlankCreator : MonoBehaviour
 {
     Vector2 mousePos;
     Vector2 startPoint;
-    bool draggingPlank;
+    Vector2 endPoint;
+    public bool draggingPlank;
     [SerializeField] GameObject plankPrefab;
     GameObject currentPlank;
+
+    public static PlankCreator instance;
+    private void Awake()
+    {
+        if(instance == null) instance = this;
+    }
 
     void Start()
     {
@@ -38,6 +45,7 @@ public class PlankCreator : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0) && draggingPlank)
         {
+            endPoint = mousePos;
             currentPlank = null;
             draggingPlank = false;
         }
@@ -52,6 +60,11 @@ public class PlankCreator : MonoBehaviour
         draggingPlank = true;
         startPoint = mousePos;
         currentPlank = Instantiate(plankPrefab, startPoint, Quaternion.identity);
+        if(currentPlank.TryGetComponent(out Attachable attachable))
+        {
+            attachable.startPoint = startPoint;
+            attachable.endPoint = endPoint;
+        }
     }
 
     void RotateToMouse()
