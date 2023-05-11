@@ -4,8 +4,6 @@ using System.Runtime.InteropServices;
 using UnityEditor.UI;
 using UnityEngine;
 using System;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Newtonsoft.Json.Serialization;
 
 public class MouseSelection : MonoBehaviour
 {
@@ -37,7 +35,8 @@ public class MouseSelection : MonoBehaviour
         selectingObject = false;
         SelectNearestPlank();
 
-        if(!selectingObject) Destroy(selectionPoint);
+        if (!selectingObject)
+            ResetSelectionPoint();
     }
 
     void SelectNearestPlank()
@@ -46,7 +45,7 @@ public class MouseSelection : MonoBehaviour
         RaycastHit2D[] rayHits = Physics2D.CircleCastAll(mousePos, rayRadius, Vector3.zero, 0, selectionMask);
 
         selectedPart = null;
-        Destroy(selectionPoint);
+        ResetSelectionPoint();
 
         float maxDist = Mathf.Infinity;
         foreach(RaycastHit2D rayHit in rayHits)
@@ -93,5 +92,9 @@ public class MouseSelection : MonoBehaviour
         return vClosestPoint;
     }
 
-
+    void ResetSelectionPoint()
+    {
+        Destroy(selectionPoint);
+        selectionPoint = null;
+    }
 }

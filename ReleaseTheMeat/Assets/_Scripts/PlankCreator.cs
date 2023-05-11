@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,7 @@ public class PlankCreator : MonoBehaviour
 {
     [SerializeField] float minLength;
     [SerializeField] float maxLength;
+    [SerializeField] float massByScaleDivider;
     Vector2 mousePos;
     Vector2 startPoint;
     Vector2 endPoint;
@@ -83,6 +85,15 @@ public class PlankCreator : MonoBehaviour
 
     void PlaceEndPoint()
     {
+        if (currentPlank.transform.localScale.x < minLength)
+        {
+            ResetPlank();
+            return;
+        }
+
+        Rigidbody2D plankRB = currentPlank.GetComponent<Rigidbody2D>();
+        plankRB.mass = currentPlank.transform.localScale.x / massByScaleDivider;
+
         if (MouseSelection.instance.selectedPart != null)
         {
             endPoint = MouseSelection.instance.selectionPoint.transform.position;
@@ -97,10 +108,9 @@ public class PlankCreator : MonoBehaviour
         {
             attachable.startPoint = startPoint;
             attachable.endPoint = endPoint;
-        }
 
-        if (currentPlank.transform.localScale.x < minLength) 
-            ResetPlank();
+            attachable.CheckForAttachedParts();
+        }
 
         currentPlank = null;
         draggingPlank = false;

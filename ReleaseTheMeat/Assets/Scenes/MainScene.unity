@@ -156,7 +156,7 @@ MonoBehaviour:
   rayRadius: 0.1
   selectionMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 192
   selectionPointPrefab: {fileID: 740048008282109977, guid: 611e51bae2596f34b9e7632f1f1cd225, type: 3}
   selectionPoint: {fileID: 0}
   selectedPart: {fileID: 0}
@@ -615,6 +615,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minLength: 0.5
   maxLength: 7.5
+  massByScaleDivider: 10
   draggingPlank: 0
   plankPrefab: {fileID: 405934711945403022, guid: 87e0f31ec28ec30458a23b59c77959c5, type: 3}
   currentPlank: {fileID: 0}
