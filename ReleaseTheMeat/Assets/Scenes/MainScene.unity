@@ -153,11 +153,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hoveredPartType: 0
-  rayRadius: 0.15
+  rayRadius: 0.1
   selectionMask:
     serializedVersion: 2
     m_Bits: 64
   selectionPointPrefab: {fileID: 740048008282109977, guid: 611e51bae2596f34b9e7632f1f1cd225, type: 3}
+  selectionPoint: {fileID: 0}
+  selectedPart: {fileID: 0}
 --- !u!4 &479311932
 Transform:
   m_ObjectHideFlags: 0
@@ -580,6 +582,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   selectionPointPrefab: {fileID: 0}
+  selectionPoint: {fileID: 0}
+  selectedPart: {fileID: 0}
 --- !u!1 &1831253079
 GameObject:
   m_ObjectHideFlags: 0
@@ -609,6 +613,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70b695c210842234ba9ec90e8e790574, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minLength: 0.5
   maxLength: 7.5
   draggingPlank: 0
   plankPrefab: {fileID: 405934711945403022, guid: 87e0f31ec28ec30458a23b59c77959c5, type: 3}
