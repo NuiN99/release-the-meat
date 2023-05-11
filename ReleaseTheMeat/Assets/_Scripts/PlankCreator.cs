@@ -40,27 +40,27 @@ public class PlankCreator : MonoBehaviour
 
         if (Input.GetMouseButton(0) && draggingPlank)
         {
-            if(MouseSelection.instance.selectedPart == null)
-            {
-                ScaleToPoint(mousePos);
-                RotateToPoint(mousePos);
-            }
-            else
+            if(MouseSelection.instance.selectedPart)
             {
                 ScaleToPoint(MouseSelection.instance.selectionPoint.transform.position);
                 RotateToPoint(MouseSelection.instance.selectionPoint.transform.position);
+            }
+            else
+            {
+                ScaleToPoint(mousePos);
+                RotateToPoint(mousePos);
             }
         }
 
         if (Input.GetMouseButtonUp(0) && draggingPlank)
         {
-            if (MouseSelection.instance.selectedPart == null)
+            if (MouseSelection.instance.selectedPart)
             {
-                endPoint = mousePos;
+                endPoint = MouseSelection.instance.selectionPoint.transform.position;
             }
             else
             {
-                endPoint = MouseSelection.instance.selectionPoint.transform.position;
+                endPoint = mousePos;
             }
 
             if (currentPlank.TryGetComponent(out Attachable attachable))
@@ -78,15 +78,17 @@ public class PlankCreator : MonoBehaviour
     {
         draggingPlank = true;
 
-        if (MouseSelection.instance.selectedPart == null)
-        {
-            startPoint = mousePos;
-        }
-        else
+        if (MouseSelection.instance.selectedPart)
         {
             startPoint = MouseSelection.instance.selectionPoint.transform.position;
         }
+        else
+        {
+            startPoint = mousePos;
+        }
+
         currentPlank = Instantiate(plankPrefab, startPoint, Quaternion.identity);
+        currentPlank.name = "Plank";
     }
 
     void RotateToPoint(Vector2 point)
