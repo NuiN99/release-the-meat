@@ -25,16 +25,23 @@ public class Attachable : MonoBehaviour
 
     public void CheckForAttachedParts()
     {
-        if(objAttachedToStart != null)
+        if (GetComponent<Plank>())
         {
-            Rigidbody2D objAttachedToStartRB = objAttachedToStart.GetComponent<Rigidbody2D>();
-            SetHingeJointValues(startHinge, startPoint, objAttachedToStartRB);
+            if (objAttachedToStart)
+            {
+                Rigidbody2D objAttachedToStartRB = objAttachedToStart.GetComponent<Rigidbody2D>();
+                SetHingeJointValues(startHinge, startPoint, objAttachedToStartRB);
+            }
+            if (objAttachedToEnd)
+            {
+                Rigidbody2D objAttachedToEndRB = objAttachedToEnd.GetComponent<Rigidbody2D>();
+                SetHingeJointValues(endHinge, endPoint, objAttachedToEndRB);
+            }
         }
 
-        if(objAttachedToEnd != null)
+        if (GetComponent<Wheel>())
         {
-            Rigidbody2D objAttachedToEndRB = objAttachedToEnd.GetComponent<Rigidbody2D>();
-            SetHingeJointValues(endHinge, endPoint, objAttachedToEndRB);
+
         }
     }
 
@@ -45,5 +52,10 @@ public class Attachable : MonoBehaviour
         hingeJoint.connectedBody = body;
         hingeJoint.anchor = transform.InverseTransformPoint(anchor);
         hingeJoint.connectedAnchor = body.transform.InverseTransformPoint(anchor);
+    }
+
+    void SetWheelJointValues()
+    {
+
     }
 }
