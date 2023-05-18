@@ -74,7 +74,7 @@ public class PlankCreator : MonoBehaviour
         currentPlank.name = "Plank";
 
         if (selectedPart != null)
-            currentPlank.GetComponent<Attachable>().objAttachedToStart = selectedPart;
+            currentPlank.GetComponent<Plank>().objAttachedToStart = selectedPart;
     }
 
     void DragPlank(GameObject selectedPart, GameObject selectionPointObj)
@@ -105,19 +105,19 @@ public class PlankCreator : MonoBehaviour
         if (selectedPart != null)
         {
             endPoint = selectionPointObj.transform.position;
-            currentPlank.GetComponent<Attachable>().objAttachedToEnd = selectedPart;
+            currentPlank.GetComponent<Plank>().objAttachedToEnd = selectedPart;
         }
         else
         {
             endPoint = mousePos;
         }
 
-        if (currentPlank.TryGetComponent(out Attachable attachable))
+        if (currentPlank.TryGetComponent(out Plank plank))
         {
-            attachable.startPoint = startPoint;
-            attachable.endPoint = endPoint;
+            plank.startPoint = startPoint;
+            plank.endPoint = endPoint;
 
-            attachable.CheckForAttachedParts();
+            plank.CheckForAttachedParts();
         }
 
         currentPlank = null;

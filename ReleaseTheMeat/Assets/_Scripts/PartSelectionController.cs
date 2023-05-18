@@ -64,9 +64,9 @@ public class PartSelectionController : MonoBehaviour
         if (selectedPart == null) return;
         selectingObject = true;
 
-        Attachable attachable = selectedPart.GetComponent<Attachable>();
-        Vector2 startPoint = attachable.startPoint; 
-        Vector2 endPoint = attachable.endPoint;
+        Plank plank = selectedPart.GetComponent<Plank>();
+        Vector2 startPoint = plank.startPoint; 
+        Vector2 endPoint = plank.endPoint;
 
         selectionPoint = Instantiate(selectionPointPrefab, ClosestPointOnLine(startPoint, endPoint, mousePos), Quaternion.identity);
     }
