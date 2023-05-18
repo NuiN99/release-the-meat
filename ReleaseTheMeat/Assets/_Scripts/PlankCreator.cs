@@ -29,15 +29,16 @@ public class PlankCreator : MonoBehaviour
 
     void Update()
     {
-        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        if (PartSelection.instance.selectedPart != PartSelection.PartType.PLANK) return;
 
+        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         PlankPlacement();
     }
     
     void PlankPlacement()
     {
-        GameObject selectedPart = PartSelectionController.instance.selectedPart;
-        GameObject selectionPointObj = PartSelectionController.instance.selectionPoint;
+        GameObject selectedPart = PartCreationSelector.instance.selectedPart;
+        GameObject selectionPointObj = PartCreationSelector.instance.selectionPoint;
 
         if (Input.GetMouseButtonDown(0) && !draggingPlank)
         {

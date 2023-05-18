@@ -5,10 +5,10 @@ using UnityEditor.UI;
 using UnityEngine;
 using System;
 
-public class PartSelectionController : MonoBehaviour
+public class PartCreationSelector : MonoBehaviour
 {
     public PartType hoveredPartType;
-    public static PartSelectionController instance;
+    public static PartCreationSelector instance;
 
     Vector2 mousePos;
     [SerializeField] float rayRadius;
@@ -68,10 +68,10 @@ public class PartSelectionController : MonoBehaviour
         Vector2 startPoint = plank.startPoint; 
         Vector2 endPoint = plank.endPoint;
 
-        selectionPoint = Instantiate(selectionPointPrefab, ClosestPointOnLine(startPoint, endPoint, mousePos), Quaternion.identity);
+        selectionPoint = Instantiate(selectionPointPrefab, PlankLengthSelection(startPoint, endPoint, mousePos), Quaternion.identity);
     }
 
-    Vector2 ClosestPointOnLine(Vector3 startPoint, Vector3 endPoint, Vector3 point)
+    Vector2 PlankLengthSelection(Vector3 startPoint, Vector3 endPoint, Vector3 point)
     {
         var vVector1 = point - startPoint;
         var vVector2 = (endPoint - startPoint).normalized;
