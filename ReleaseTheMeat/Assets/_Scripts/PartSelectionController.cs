@@ -5,10 +5,10 @@ using UnityEditor.UI;
 using UnityEngine;
 using System;
 
-public class MouseSelection : MonoBehaviour
+public class PartSelectionController : MonoBehaviour
 {
     public PartType hoveredPartType;
-    public static MouseSelection instance;
+    public static PartSelectionController instance;
 
     Vector2 mousePos;
     [SerializeField] float rayRadius;

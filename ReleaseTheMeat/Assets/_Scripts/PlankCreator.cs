@@ -30,10 +30,18 @@ public class PlankCreator : MonoBehaviour
     void Update()
     {
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        
+
+        PlankPlacement();
+    }
+    
+    void PlankPlacement()
+    {
+        GameObject selectedPart = PartSelectionController.instance.selectedPart;
+        GameObject selectionPointObj = PartSelectionController.instance.selectionPoint;
+
         if (Input.GetMouseButtonDown(0) && !draggingPlank)
         {
-            PlaceStartPoint();
+            PlaceStartPoint(selectedPart, selectionPointObj);
         }
 
         if (Input.GetMouseButtonDown(1) && draggingPlank)
@@ -43,38 +51,38 @@ public class PlankCreator : MonoBehaviour
 
         if (Input.GetMouseButton(0) && draggingPlank)
         {
-            DragPlank();
+            DragPlank(selectedPart, selectionPointObj);
         }
 
         if (Input.GetMouseButtonUp(0) && draggingPlank)
         {
-            PlaceEndPoint();
+            PlaceEndPoint(selectedPart, selectionPointObj);
         }
     }
-    
 
-    void PlaceStartPoint()
+    void PlaceStartPoint(GameObject selectedPart, GameObject selectionPointObj)
     {
         draggingPlank = true;
 
-        if (MouseSelection.instance.selectedPart != null)
-            startPoint = MouseSelection.instance.selectionPoint.transform.position;
+        
+        if (selectedPart != null)
+            startPoint = selectionPointObj.transform.position;
         else
             startPoint = mousePos;
 
         currentPlank = Instantiate(plankPrefab, startPoint, Quaternion.identity);
         currentPlank.name = "Plank";
 
-        if (MouseSelection.instance.selectedPart != null)
-            currentPlank.GetComponent<Attachable>().objAttachedToStart = MouseSelection.instance.selectedPart;
+        if (selectedPart != null)
+            currentPlank.GetComponent<Attachable>().objAttachedToStart = selectedPart;
     }
 
-    void DragPlank()
+    void DragPlank(GameObject selectedPart, GameObject selectionPointObj)
     {
-        if (MouseSelection.instance.selectedPart != null)
+        if (selectedPart != null)
         {
-            ScaleToPoint(MouseSelection.instance.selectionPoint.transform.position);
-            RotateToPoint(MouseSelection.instance.selectionPoint.transform.position);
+            ScaleToPoint(selectionPointObj.transform.position);
+            RotateToPoint(selectionPointObj.transform.position);
         }
         else
         {
@@ -83,7 +91,7 @@ public class PlankCreator : MonoBehaviour
         }
     }
 
-    void PlaceEndPoint()
+    void PlaceEndPoint(GameObject selectedPart, GameObject selectionPointObj)
     {
         if (currentPlank.transform.localScale.x < minLength)
         {
@@ -94,10 +102,10 @@ public class PlankCreator : MonoBehaviour
         Rigidbody2D plankRB = currentPlank.GetComponent<Rigidbody2D>();
         plankRB.mass = currentPlank.transform.localScale.x / massByScaleDivider;
 
-        if (MouseSelection.instance.selectedPart != null)
+        if (selectedPart != null)
         {
-            endPoint = MouseSelection.instance.selectionPoint.transform.position;
-            currentPlank.GetComponent<Attachable>().objAttachedToEnd = MouseSelection.instance.selectedPart;
+            endPoint = selectionPointObj.transform.position;
+            currentPlank.GetComponent<Attachable>().objAttachedToEnd = selectedPart;
         }
         else
         {
