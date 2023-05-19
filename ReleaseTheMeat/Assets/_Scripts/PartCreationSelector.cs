@@ -7,7 +7,7 @@ using System;
 
 public class PartCreationSelector : MonoBehaviour
 {
-    public PartType hoveredPartType;
+    
     public static PartCreationSelector instance;
 
     Vector2 mousePos;
@@ -22,8 +22,9 @@ public class PartCreationSelector : MonoBehaviour
 
     public enum PartType 
     {
-        Nothing, Plank, Wheel
+        NULL, PLANK, WHEEL
     }
+    public PartType hoveredPartType;
 
     void Awake()
     {
@@ -34,6 +35,8 @@ public class PartCreationSelector : MonoBehaviour
     {
         selectingObject = false;
         SelectNearestPlank();
+
+        ChangeEnum();
 
         if (!selectingObject)
             ResetSelectionPoint();
@@ -71,6 +74,8 @@ public class PartCreationSelector : MonoBehaviour
         selectionPoint = Instantiate(selectionPointPrefab, PlankLengthSelection(startPoint, endPoint, mousePos), Quaternion.identity);
     }
 
+
+
     Vector2 PlankLengthSelection(Vector3 startPoint, Vector3 endPoint, Vector3 point)
     {
         var vVector1 = point - startPoint;
@@ -96,5 +101,18 @@ public class PartCreationSelector : MonoBehaviour
     {
         Destroy(selectionPoint);
         selectionPoint = null;
+    }
+
+    void ChangeEnum()
+    {
+        if (selectedPart == null) 
+        {
+            hoveredPartType = PartType.NULL;
+            return;
+        }
+        
+
+        else if (selectedPart.GetComponent<Plank>()) hoveredPartType = PartType.PLANK;
+        else if (selectedPart.GetComponent<Wheel>()) hoveredPartType = PartType.WHEEL;
     }
 }

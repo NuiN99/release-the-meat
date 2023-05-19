@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Attachable : MonoBehaviour
 {
-    
+    public bool isAttached;
     void Start()
     {
         

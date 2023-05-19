@@ -29,7 +29,7 @@ public class PlankCreator : MonoBehaviour
 
     void Update()
     {
-        if (PartSelection.instance.selectedPart != PartSelection.PartType.PLANK) return;
+        if (PartSelection.instance.partType != PartSelection.PartType.PLANK) return;
 
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         PlankPlacement();

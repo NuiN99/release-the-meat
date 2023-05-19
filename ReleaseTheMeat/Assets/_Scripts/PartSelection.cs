@@ -8,9 +8,9 @@ public class PartSelection : MonoBehaviour
 {
     public enum PartType
     {
-        PLANK, WHEEL
+        NULL, PLANK, WHEEL
     }
-    public PartType selectedPart;
+    public PartType partType;
 
     public static PartSelection instance;
 
@@ -25,10 +25,10 @@ public class PartSelection : MonoBehaviour
         switch (partID)
         {
             case "PLANK":
-                selectedPart = PartType.PLANK;
+                partType = PartType.PLANK;
                 break;
             case "WHEEL":
-                selectedPart = PartType.WHEEL;
+                partType = PartType.WHEEL;
                 break;
         }
     }
