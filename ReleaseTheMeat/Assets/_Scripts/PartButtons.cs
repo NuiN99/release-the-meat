@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PartSelection : MonoBehaviour
+public class PartButtons : MonoBehaviour
 {
     public enum PartType
     {
@@ -12,7 +12,7 @@ public class PartSelection : MonoBehaviour
     }
     public PartType partType;
 
-    public static PartSelection instance;
+    public static PartButtons instance;
 
     void Awake()
     {

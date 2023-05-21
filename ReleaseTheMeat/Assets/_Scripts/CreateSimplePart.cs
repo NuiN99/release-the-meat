@@ -13,13 +13,13 @@ public class CreateSimplePart : MonoBehaviour
 
     void Update()
     {
-        if (PartSelection.instance.partType != PartSelection.PartType.NULL) return;
-        CheckType(PartSelection.instance.partType);
+        if (PartButtons.instance.partType != PartButtons.PartType.NULL) return;
+        CheckType(PartButtons.instance.partType);
     }
 
-    void CheckType(PartSelection.PartType partType)
+    void CheckType(PartButtons.PartType partType)
     {
-        if(partType == PartSelection.PartType.WHEEL)
+        if(partType == PartButtons.PartType.WHEEL)
         {
             CreateWheelPart(wheel);
         }
