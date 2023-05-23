@@ -5,9 +5,8 @@ using UnityEngine;
 public class Wheel : MonoBehaviour
 {
     WheelJoint2D wheelJoint;
-    [SerializeField] float speed;
+    [SerializeField] float acceleration;
     [SerializeField] float maxSpeed;
-    [SerializeField] float wheelSpeedDecay;
     void Start()
     {
         wheelJoint = GetComponent<WheelJoint2D>();
@@ -20,29 +19,21 @@ public class Wheel : MonoBehaviour
 
     void MoveWheel()
     {
-        float xAxis = Input.GetAxis("Horizontal");
+        float xAxis = Input.GetAxisRaw("Horizontal");
+
         var motor = wheelJoint.motor;
-        motor.motorSpeed += xAxis * speed;
+        motor.motorSpeed += xAxis * acceleration;
 
-
-        motor.motorSpeed -= (Time.fixedDeltaTime * wheelSpeedDecay) * Mathf.Sign(motor.motorSpeed);
+        if(xAxis == 0)
+            motor.motorSpeed = -GetComponent<Rigidbody2D>().angularVelocity * Mathf.Sign(motor.motorSpeed);
 
         if (Mathf.Abs(motor.motorSpeed) > maxSpeed)
-        {
             motor.motorSpeed = maxSpeed * Mathf.Sign(motor.motorSpeed);
-        }
-
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
-        {
-            wheelJoint.useMotor = true;
-        }
-        else
-        {
-            wheelJoint.useMotor = false;
-        }
-
 
         wheelJoint.motor = motor;
+
+        if (xAxis == 0)
+            wheelJoint.useMotor = false;
     }
 }
 
