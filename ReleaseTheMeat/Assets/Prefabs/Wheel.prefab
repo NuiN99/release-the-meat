@@ -64,7 +64,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   acceleration: 7
   maxSpeed: 500
-  wheelSpeedDecay: 100
 --- !u!50 &4641117914644135565
 Rigidbody2D:
   serializedVersion: 4
@@ -109,7 +108,7 @@ WheelJoint2D:
   m_UseMotor: 1
   m_Motor:
     m_MotorSpeed: 0
-    m_MaximumMotorForce: 10000
+    m_MaximumMotorForce: 1
 --- !u!58 &4641117914644135562
 CircleCollider2D:
   m_ObjectHideFlags: 0
