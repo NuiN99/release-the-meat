@@ -40,25 +40,31 @@ public class SimplePartCreator : MonoBehaviour
             placingPart = false;
         }
 
+        SpriteRenderer selectedPartObjSR = selectedPartObj.GetComponent<SpriteRenderer>();
+
         switch (partType)
         {
             case PartButtons.PartType.NULL:
+
                 currentHeldPart = null;
-                selectedPartIcon = null;
+                selectedPartObjSR.sprite = null;
+
                 return;
 
             case PartButtons.PartType.PLANK:
+
                 currentHeldPart = null;
-                selectedPartIcon = null;
+                selectedPartObjSR.sprite = null;
+
                 return;
 
             case PartButtons.PartType.WHEEL:
+
                 currentHeldPart = wheelPrefab;
-                selectedPartIcon = wheelIcon;
+                selectedPartObjSR.sprite = wheelIcon;
+
                 break;
         }
-
-        selectedPartObj.GetComponent<SpriteRenderer>().sprite = selectedPartIcon;
 
 
         PlacePart();
@@ -80,10 +86,36 @@ public class SimplePartCreator : MonoBehaviour
 
     void PlacePart()
     {
-        if(placingPart && Input.GetMouseButtonDown(0))
+        if(!placingPart) return;
+
+        if (Input.GetMouseButtonDown(0))
         {
             GameObject newPart = Instantiate(currentHeldPart, placementPos, Quaternion.identity);
             newPart.name = currentHeldPart.name;
+
+            switch (PartButtons.instance.partType)
+            {
+                case PartButtons.PartType.NULL:
+                    break;
+                case PartButtons.PartType.PLANK:
+                    break;
+                case PartButtons.PartType.WHEEL:
+                    SetWheelJoint(newPart);
+                    break;
+            }
         }
+    }
+
+
+    void SetWheelJoint(GameObject wheel)
+    {
+        if (PartCreationSelector.instance.selectedPart == null) return;
+
+        WheelJoint2D joint = wheel.GetComponent<WheelJoint2D>();
+        Rigidbody2D selectionRB = PartCreationSelector.instance.selectedPart.GetComponent<Rigidbody2D>();
+
+        joint.connectedBody = selectionRB;
+        joint.anchor = wheel.transform.InverseTransformPoint(wheel.transform.position);
+        joint.connectedAnchor = selectionRB.transform.InverseTransformPoint(wheel.transform.position);
     }
 }

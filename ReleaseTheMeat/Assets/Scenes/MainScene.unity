@@ -1411,7 +1411,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedPartObj: {fileID: 273957399}
-  wheelIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  wheelIcon: {fileID: 21300000, guid: 36e6970b84831434a9eac79abd03700b, type: 3}
   wheelPrefab: {fileID: 4641117914644135560, guid: 257ea09229a41f449bf7a8953a58abd9, type: 3}
 --- !u!1 &1977805719
 GameObject:
