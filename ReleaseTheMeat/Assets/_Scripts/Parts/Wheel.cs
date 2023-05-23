@@ -6,9 +6,11 @@ public class Wheel : MonoBehaviour
 {
     WheelJoint2D wheelJoint;
     [SerializeField] float speed;
+    [SerializeField] float maxSpeed;
+    [SerializeField] float wheelSpeedDecay;
     void Start()
     {
-        wheelJoint= GetComponent<WheelJoint2D>();
+        wheelJoint = GetComponent<WheelJoint2D>();
     }
 
     void FixedUpdate()
@@ -20,12 +22,17 @@ public class Wheel : MonoBehaviour
     {
         float xAxis = Input.GetAxis("Horizontal");
         var motor = wheelJoint.motor;
-        motor.motorSpeed = xAxis * speed;
+        motor.motorSpeed += xAxis * speed;
 
-        wheelJoint.motor = motor;
 
-        
-        if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        motor.motorSpeed -= (Time.fixedDeltaTime * wheelSpeedDecay) * Mathf.Sign(motor.motorSpeed);
+
+        if (Mathf.Abs(motor.motorSpeed) > maxSpeed)
+        {
+            motor.motorSpeed = maxSpeed * Mathf.Sign(motor.motorSpeed);
+        }
+
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
             wheelJoint.useMotor = true;
         }
@@ -33,5 +40,12 @@ public class Wheel : MonoBehaviour
         {
             wheelJoint.useMotor = false;
         }
+
+
+        wheelJoint.motor = motor;
     }
 }
+
+
+    
+
