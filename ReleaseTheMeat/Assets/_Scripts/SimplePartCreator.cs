@@ -18,9 +18,11 @@ public class SimplePartCreator : MonoBehaviour
     [SerializeField] GameObject wheelPrefab;
     Vector2 placementPos;
 
-    void Start()
+    public static SimplePartCreator instance;
+    private void Awake()
     {
-        
+        if (instance == null)
+            instance = this;
     }
 
     void Update()
@@ -72,14 +74,14 @@ public class SimplePartCreator : MonoBehaviour
 
     void MoveSelectedPartIcon()
     {
-        if(PartCreationSelector.instance.selectionPoint == null)
+        if(PartSelection.instance.selectionPoint == null)
         {
             placementPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             selectedPartObj.transform.position = placementPos;
         }
         else
         {
-            placementPos = PartCreationSelector.instance.selectionPoint.transform.position;
+            placementPos = PartSelection.instance.selectionPoint.transform.position;
             selectedPartObj.transform.position = placementPos;
         }
     }
@@ -93,6 +95,19 @@ public class SimplePartCreator : MonoBehaviour
             GameObject newPart = Instantiate(currentHeldPart, placementPos, Quaternion.identity);
             newPart.name = currentHeldPart.name;
 
+            /*if (PartSelection.instance.selectedPart != null) 
+            {
+                if(newPart.GetComponent<SimplePart>() && PartSelection.instance.selectedPart.GetComponent<SimplePart>())
+                {
+                    Destroy(newPart);
+                    return;
+                }
+            }*/
+            
+            GameObject selection = PartSelection.instance.selectedPart;
+            if(selection == null) return;
+            Rigidbody2D selectionRB = selection.GetComponent<Rigidbody2D>();
+
             switch (PartButtons.instance.partType)
             {
                 case PartButtons.PartType.NULL:
@@ -100,22 +115,24 @@ public class SimplePartCreator : MonoBehaviour
                 case PartButtons.PartType.PLANK:
                     break;
                 case PartButtons.PartType.WHEEL:
-                    SetWheelJoint(newPart);
+                    SetWheelJoint(newPart, selectionRB);
                     break;
             }
+
+            CurrentHeldPart.instance.part = null;
         }
     }
 
 
-    void SetWheelJoint(GameObject wheel)
+    public void SetWheelJoint(GameObject wheel, Rigidbody2D connectedBody)
     {
-        if (PartCreationSelector.instance.selectedPart == null) return;
+        if (PartSelection.instance.selectedPart == null) return;
+        if (PartSelection.instance.selectedPart.GetComponent<Wheel>()) return;
 
         WheelJoint2D joint = wheel.GetComponent<WheelJoint2D>();
-        Rigidbody2D selectionRB = PartCreationSelector.instance.selectedPart.GetComponent<Rigidbody2D>();
 
-        joint.connectedBody = selectionRB;
+        joint.connectedBody = connectedBody;
         joint.anchor = wheel.transform.InverseTransformPoint(wheel.transform.position);
-        joint.connectedAnchor = selectionRB.transform.InverseTransformPoint(wheel.transform.position);
+        joint.connectedAnchor = connectedBody.transform.InverseTransformPoint(wheel.transform.position);
     }
 }

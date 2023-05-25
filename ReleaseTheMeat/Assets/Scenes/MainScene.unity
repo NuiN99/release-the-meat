@@ -330,6 +330,7 @@ GameObject:
   m_Component:
   - component: {fileID: 479311932}
   - component: {fileID: 479311931}
+  - component: {fileID: 479311933}
   m_Layer: 0
   m_Name: MouseSelectionController
   m_TagString: Untagged
@@ -352,7 +353,7 @@ MonoBehaviour:
   rayRadius: 0.1
   selectionMask:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 384
   selectionPointPrefab: {fileID: 740048008282109977, guid: 611e51bae2596f34b9e7632f1f1cd225, type: 3}
   selectionPoint: {fileID: 0}
   selectedPart: {fileID: 0}
@@ -372,6 +373,19 @@ Transform:
   m_Father: {fileID: 2134404120}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &479311933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 479311930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc4a9ebd6a25c004cb8061083760e656, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  part: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

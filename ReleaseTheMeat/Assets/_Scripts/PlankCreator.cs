@@ -37,8 +37,8 @@ public class PlankCreator : MonoBehaviour
     
     void PlankPlacement()
     {
-        GameObject selectedPart = PartCreationSelector.instance.selectedPart;
-        GameObject selectionPointObj = PartCreationSelector.instance.selectionPoint;
+        GameObject selectedPart = PartSelection.instance.selectedPart;
+        GameObject selectionPointObj = PartSelection.instance.selectionPoint;
 
         if (Input.GetMouseButtonDown(0) && !draggingPlank)
         {
@@ -57,6 +57,7 @@ public class PlankCreator : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0) && draggingPlank)
         {
+            CurrentHeldPart.instance.part = null;
             PlaceEndPoint(selectedPart, selectionPointObj);
         }
     }
@@ -73,6 +74,8 @@ public class PlankCreator : MonoBehaviour
 
         currentPlank = Instantiate(plankPrefab, startPoint, Quaternion.identity);
         currentPlank.name = "Plank";
+
+        CurrentHeldPart.instance.part = currentPlank;
 
         if (selectedPart != null)
             currentPlank.GetComponent<Plank>().objAttachedToStart = selectedPart;
@@ -107,6 +110,12 @@ public class PlankCreator : MonoBehaviour
         {
             endPoint = selectionPointObj.transform.position;
             currentPlank.GetComponent<Plank>().objAttachedToEnd = selectedPart;
+
+
+            if (selectedPart.GetComponent<Wheel>())
+            {
+                SimplePartCreator.instance.SetWheelJoint(selectedPart, currentPlank.GetComponent<Rigidbody2D>());
+            }
         }
         else
         {

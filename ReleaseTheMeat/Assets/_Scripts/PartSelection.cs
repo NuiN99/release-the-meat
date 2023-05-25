@@ -4,11 +4,12 @@ using System.Runtime.InteropServices;
 using UnityEditor.UI;
 using UnityEngine;
 using System;
+using System.Net;
 
-public class PartCreationSelector : MonoBehaviour
+public class PartSelection : MonoBehaviour
 {
     
-    public static PartCreationSelector instance;
+    public static PartSelection instance;
 
     Vector2 mousePos;
     [SerializeField] float rayRadius;
@@ -34,15 +35,19 @@ public class PartCreationSelector : MonoBehaviour
     void Update()
     {
         selectingObject = false;
-        SelectNearestPlank();
 
         ChangeEnum();
+
+
+        SelectNearestPart();
+
+        
 
         if (!selectingObject)
             ResetSelectionPoint();
     }
 
-    void SelectNearestPlank()
+    void SelectNearestPart()
     {
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         RaycastHit2D[] rayHits = Physics2D.CircleCastAll(mousePos, rayRadius, Vector3.zero, 0, selectionMask);
@@ -53,7 +58,7 @@ public class PartCreationSelector : MonoBehaviour
         float maxDist = Mathf.Infinity;
         foreach(RaycastHit2D rayHit in rayHits)
         {
-            if (!ReferenceEquals(rayHit.collider.gameObject, PlankCreator.instance.currentPlank))
+            if (!ReferenceEquals(rayHit.collider.gameObject, CurrentHeldPart.instance.part))
             {
                 float distFromMouse = Vector2.Distance(mousePos, rayHit.point);
                 if (distFromMouse < maxDist)
@@ -67,13 +72,30 @@ public class PartCreationSelector : MonoBehaviour
         if (selectedPart == null) return;
         selectingObject = true;
 
+        if (selectedPart.GetComponent<Plank>())
+        {
+            SelectPlank();
+        }
+
+        else if (selectedPart.GetComponent<SimplePart>())
+        {
+            SelectSimplePart(selectedPart);
+        }
+    }
+
+    void SelectPlank()
+    {
         Plank plank = selectedPart.GetComponent<Plank>();
-        Vector2 startPoint = plank.startPoint; 
+        Vector2 startPoint = plank.startPoint;
         Vector2 endPoint = plank.endPoint;
 
         selectionPoint = Instantiate(selectionPointPrefab, PlankLengthSelection(startPoint, endPoint, mousePos), Quaternion.identity);
     }
 
+    void SelectSimplePart(GameObject part)
+    {
+        selectionPoint = Instantiate(selectionPointPrefab, part.transform.position, Quaternion.identity);
+    }
 
 
     Vector2 PlankLengthSelection(Vector3 startPoint, Vector3 endPoint, Vector3 point)
