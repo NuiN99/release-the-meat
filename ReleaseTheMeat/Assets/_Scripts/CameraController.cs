@@ -12,6 +12,9 @@ public class CameraController : MonoBehaviour
 
     [SerializeField] float minSize, maxSize;
 
+    [SerializeField] float sizeDivider;
+    [SerializeField] float verticalOffsetPercent;
+
     private void Update()
     {
         if (GamePhase.instance.currentPhase == GamePhase.CurrentPhase.LEVEL)
@@ -75,7 +78,7 @@ public class CameraController : MonoBehaviour
         float distX = maxX - minX;
         float distY = maxY - minY;
 
-        float cartSize = distX + distY;
+        float cartSize = (distX + distY) / sizeDivider;
 
         if (cartSize < minSize) return minSize;
         else if (cartSize > maxSize) return maxSize;
