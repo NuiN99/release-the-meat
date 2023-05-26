@@ -1,11 +1,10 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Attachable : MonoBehaviour
+public class Part : MonoBehaviour
 {
-    public bool isAttached;
+
     void Start()
     {
         
@@ -13,6 +12,9 @@ public class Attachable : MonoBehaviour
 
     void Update()
     {
-
+        if(gameObject == CurrentHeldPart.instance.part)
+        {
+            print(gameObject.name);
+        }
     }
 }

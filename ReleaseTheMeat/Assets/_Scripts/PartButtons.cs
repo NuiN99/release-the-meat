@@ -6,13 +6,15 @@ using UnityEngine.UI;
 
 public class PartButtons : MonoBehaviour
 {
+    public static PartButtons instance;
+
     public enum PartType
     {
-        NULL, PLANK, WHEEL
+        NULL, 
+        PLANK, 
+        WHEEL,
     }
     public PartType partType;
-
-    public static PartButtons instance;
 
     void Awake()
     {
@@ -30,19 +32,6 @@ public class PartButtons : MonoBehaviour
             case "WHEEL":
                 partType = PartType.WHEEL;
                 break;
-        }
-    }
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Attachable[] parts = FindObjectsOfType<Attachable>();
-            foreach(Attachable part in parts)
-            {
-                Rigidbody2D partRB = part.gameObject.GetComponent<Rigidbody2D>();
-                partRB.bodyType = RigidbodyType2D.Dynamic;
-            }
         }
     }
 }

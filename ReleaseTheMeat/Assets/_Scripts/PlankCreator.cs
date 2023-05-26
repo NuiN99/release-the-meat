@@ -16,6 +16,10 @@ public class PlankCreator : MonoBehaviour
     public GameObject currentPlank;
 
     public static PlankCreator instance;
+
+    GameObject currentConnectedPart;
+
+
     private void Awake()
     {
         if(instance == null) 
@@ -29,7 +33,11 @@ public class PlankCreator : MonoBehaviour
 
     void Update()
     {
-        if (PartButtons.instance.partType != PartButtons.PartType.PLANK) return;
+        if (PartButtons.instance.partType != PartButtons.PartType.PLANK) 
+        {
+            draggingPlank = false; 
+            return;
+        } 
 
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         PlankPlacement();
@@ -64,6 +72,8 @@ public class PlankCreator : MonoBehaviour
 
     void PlaceStartPoint(GameObject selectedPart, GameObject selectionPointObj)
     {
+        if (IsMouseOverUI.instance.overUI) return;
+
         draggingPlank = true;
 
         
@@ -74,6 +84,8 @@ public class PlankCreator : MonoBehaviour
 
         currentPlank = Instantiate(plankPrefab, startPoint, Quaternion.identity);
         currentPlank.name = "Plank";
+
+        currentConnectedPart = selectedPart;
 
         CurrentHeldPart.instance.part = currentPlank;
 
@@ -111,6 +123,17 @@ public class PlankCreator : MonoBehaviour
             endPoint = selectionPointObj.transform.position;
             currentPlank.GetComponent<Plank>().objAttachedToEnd = selectedPart;
 
+            if (selectedPart != null && selectedPart != currentPlank && selectedPart.TryGetComponent(out Plank plankScript))
+            {
+                //plankScript.CreateHingeJoint(endPoint, plankRB);
+                //plankScript.CreateDistanceJoint(endPoint, plankRB);
+            }
+
+            if (currentConnectedPart != null && currentConnectedPart.TryGetComponent(out Plank currentConnectedPartScript))
+            {
+                //currentConnectedPartScript.CreateHingeJoint(startPoint, plankRB); ;
+                //currentConnectedPartScript.CreateDistanceJoint(startPoint, plankRB);
+            }
 
             if (selectedPart.GetComponent<Wheel>())
             {
@@ -120,6 +143,11 @@ public class PlankCreator : MonoBehaviour
         else
         {
             endPoint = mousePos;
+            if (currentConnectedPart != null && currentConnectedPart.TryGetComponent(out Plank currentConnectedPartScript))
+            {
+                //currentConnectedPartScript.CreateHingeJoint(startPoint, plankRB); ;
+                //currentConnectedPartScript.CreateDistanceJoint(startPoint, plankRB);
+            }
         }
 
         if (currentPlank.TryGetComponent(out Plank plank))
@@ -130,6 +158,8 @@ public class PlankCreator : MonoBehaviour
             plank.CheckForAttachedParts();
         }
 
+
+        currentConnectedPart = null;
         currentPlank = null;
         draggingPlank = false;
     }

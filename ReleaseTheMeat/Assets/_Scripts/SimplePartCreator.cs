@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SimplePartCreator : MonoBehaviour
@@ -29,6 +30,7 @@ public class SimplePartCreator : MonoBehaviour
     {
         CheckType(PartButtons.instance.partType);
         MoveSelectedPartIcon();
+        PlacePart();
     }
 
     void CheckType(PartButtons.PartType partType)
@@ -37,7 +39,7 @@ public class SimplePartCreator : MonoBehaviour
         {
             placingPart = true;
         }
-        else if(partType == PartButtons.PartType.NULL || partType == PartButtons.PartType.PLANK)
+        else if(partType == PartButtons.PartType.NULL)
         {
             placingPart = false;
         }
@@ -49,6 +51,7 @@ public class SimplePartCreator : MonoBehaviour
             case PartButtons.PartType.NULL:
 
                 currentHeldPart = null;
+                placingPart = false;
                 selectedPartObjSR.sprite = null;
 
                 return;
@@ -56,6 +59,7 @@ public class SimplePartCreator : MonoBehaviour
             case PartButtons.PartType.PLANK:
 
                 currentHeldPart = null;
+                placingPart = true;
                 selectedPartObjSR.sprite = null;
 
                 return;
@@ -63,13 +67,11 @@ public class SimplePartCreator : MonoBehaviour
             case PartButtons.PartType.WHEEL:
 
                 currentHeldPart = wheelPrefab;
+                placingPart = true;
                 selectedPartObjSR.sprite = wheelIcon;
 
                 break;
         }
-
-
-        PlacePart();
     }
 
     void MoveSelectedPartIcon()
@@ -88,10 +90,12 @@ public class SimplePartCreator : MonoBehaviour
 
     void PlacePart()
     {
-        if(!placingPart) return;
+        if (!placingPart) return;
+        if (IsMouseOverUI.instance.overUI) return;
 
         if (Input.GetMouseButtonDown(0))
         {
+            if (currentHeldPart == null) return;
             GameObject newPart = Instantiate(currentHeldPart, placementPos, Quaternion.identity);
             newPart.name = currentHeldPart.name;
 
@@ -105,22 +109,38 @@ public class SimplePartCreator : MonoBehaviour
             }*/
             
             GameObject selection = PartSelection.instance.selectedPart;
-            if(selection == null) return;
-            Rigidbody2D selectionRB = selection.GetComponent<Rigidbody2D>();
-
-            switch (PartButtons.instance.partType)
+            if(selection != null)
             {
-                case PartButtons.PartType.NULL:
-                    break;
-                case PartButtons.PartType.PLANK:
-                    break;
-                case PartButtons.PartType.WHEEL:
-                    SetWheelJoint(newPart, selectionRB);
-                    break;
-            }
+                Rigidbody2D selectionRB = selection.GetComponent<Rigidbody2D>();
 
-            CurrentHeldPart.instance.part = null;
+                switch (PartButtons.instance.partType)
+                {
+                    case PartButtons.PartType.NULL:
+                        break;
+                    case PartButtons.PartType.PLANK:
+                        break;
+                    case PartButtons.PartType.WHEEL:
+                        SetWheelJoint(newPart, selectionRB);
+                        break;
+                }
+
+                CurrentHeldPart.instance.part = null;
+            }
         }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            CancelPartPlacement();
+            
+        }
+    }
+    
+    void CancelPartPlacement()
+    {
+        PartButtons.instance.partType = PartButtons.PartType.NULL;
+        placingPart = false;
+        currentHeldPart = null;
+        CurrentHeldPart.instance.part = null;
     }
 
 

@@ -18,7 +18,6 @@ public class PartSelection : MonoBehaviour
     public GameObject selectionPoint;
     public GameObject selectedPart;
 
-
     bool selectingObject;
 
     public enum PartType 
@@ -34,6 +33,8 @@ public class PartSelection : MonoBehaviour
 
     void Update()
     {
+        if (GamePhase.instance.currentPhase != GamePhase.CurrentPhase.BUILDING) return;
+
         selectingObject = false;
 
         ChangeEnum();
