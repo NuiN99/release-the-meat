@@ -90,48 +90,56 @@ public class SimplePartCreator : MonoBehaviour
 
     void PlacePart()
     {
-        if (!placingPart) return;
-        if (IsMouseOverUI.instance.overUI) return;
-
-        if (Input.GetMouseButtonDown(0))
+        if (placingPart)
         {
-            if (currentHeldPart == null) return;
-            GameObject newPart = Instantiate(currentHeldPart, placementPos, Quaternion.identity);
-            newPart.name = currentHeldPart.name;
+            if (IsMouseOverUI.instance.overUI) return;
 
-            /*if (PartSelection.instance.selectedPart != null) 
+            if (Input.GetMouseButtonDown(0))
             {
-                if(newPart.GetComponent<SimplePart>() && PartSelection.instance.selectedPart.GetComponent<SimplePart>())
-                {
-                    Destroy(newPart);
-                    return;
-                }
-            }*/
-            
-            GameObject selection = PartSelection.instance.selectedPart;
-            if(selection != null)
-            {
-                Rigidbody2D selectionRB = selection.GetComponent<Rigidbody2D>();
+                if (currentHeldPart == null) return;
+                GameObject newPart = Instantiate(currentHeldPart, placementPos, Quaternion.identity);
+                newPart.name = currentHeldPart.name;
 
-                switch (PartButtons.instance.partType)
+                /*if (PartSelection.instance.selectedPart != null) 
                 {
-                    case PartButtons.PartType.NULL:
-                        break;
-                    case PartButtons.PartType.PLANK:
-                        break;
-                    case PartButtons.PartType.WHEEL:
-                        SetWheelJoint(newPart, selectionRB);
-                        break;
-                }
+                    if(newPart.GetComponent<SimplePart>() && PartSelection.instance.selectedPart.GetComponent<SimplePart>())
+                    {
+                        Destroy(newPart);
+                        return;
+                    }
+                }*/
 
-                CurrentHeldPart.instance.part = null;
+                GameObject selection = PartSelection.instance.selectedPart;
+                if (selection != null)
+                {
+                    Rigidbody2D selectionRB = selection.GetComponent<Rigidbody2D>();
+
+                    switch (PartButtons.instance.partType)
+                    {
+                        case PartButtons.PartType.NULL:
+                            break;
+                        case PartButtons.PartType.PLANK:
+                            break;
+                        case PartButtons.PartType.WHEEL:
+                            SetWheelJoint(newPart, selectionRB);
+                            break;
+                    }
+
+                    CurrentHeldPart.instance.part = null;
+                }
             }
         }
 
         if (Input.GetMouseButtonDown(1))
         {
-            CancelPartPlacement();
-            
+            if (placingPart)
+            {
+                CancelPartPlacement();
+            }
+            else
+            {
+                PartSelection.instance.DeleteSelectedPart();
+            }
         }
     }
     

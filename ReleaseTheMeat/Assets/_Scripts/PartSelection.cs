@@ -28,7 +28,8 @@ public class PartSelection : MonoBehaviour
 
     void Awake()
     {
-        if (instance == null) instance = this;
+        if (instance == null) 
+            instance = this;
     }
 
     void Update()
@@ -41,8 +42,6 @@ public class PartSelection : MonoBehaviour
 
 
         SelectNearestPart();
-
-        
 
         if (!selectingObject)
             ResetSelectionPoint();
@@ -124,6 +123,14 @@ public class PartSelection : MonoBehaviour
     {
         Destroy(selectionPoint);
         selectionPoint = null;
+    }
+
+    public void DeleteSelectedPart()
+    {
+        if(selectedPart == null) return;
+        if (PartButtons.instance.partType != PartButtons.PartType.NULL) return;
+        print(PartButtons.instance.partType);
+        Destroy(selectedPart);
     }
 
     void ChangeEnum()

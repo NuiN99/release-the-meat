@@ -626,7 +626,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 7.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -650,7 +650,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5784928, y: 1.1620317, z: -9.241129}
+  m_LocalPosition: {x: 0.5784928, y: 1.1620317, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1651,8 +1651,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1563594189}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -4.4073, z: 0}
-  m_LocalScale: {x: 20, y: 2.1853, z: 1}
+  m_LocalPosition: {x: 0, y: -13.07, z: 0}
+  m_LocalScale: {x: 71.25, y: 16.161606, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1042864819}
@@ -1669,6 +1669,7 @@ GameObject:
   - component: {fileID: 1727039849}
   - component: {fileID: 1727039850}
   - component: {fileID: 1727039851}
+  - component: {fileID: 1727039852}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -1762,6 +1763,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   overUI: 0
+--- !u!114 &1727039852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727039848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef2681b08958cfb489e933bfd65bf5d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 519420031}
+  minSize: 5
+  maxSize: 50
 --- !u!1 &1753315211
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CartCompletor : MonoBehaviour
-{  
+{
     public void CompleteCart()
     {
         Part[] parts = FindObjectsOfType<Part>();

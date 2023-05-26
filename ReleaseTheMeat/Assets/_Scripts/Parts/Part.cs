@@ -12,9 +12,6 @@ public class Part : MonoBehaviour
 
     void Update()
     {
-        if(gameObject == CurrentHeldPart.instance.part)
-        {
-            print(gameObject.name);
-        }
+
     }
 }
