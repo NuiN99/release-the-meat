@@ -11,9 +11,9 @@ public class GamePhase : MonoBehaviour
     public UnityEvent ChangeToBuildingPhase;
     public UnityEvent ChangeToLevelPhase;
 
-    public CurrentPhase currentPhase;
+    public Phase currentPhase;
 
-    public enum CurrentPhase
+    public enum Phase
     {
         MENU,
         BUILDING,
@@ -25,20 +25,20 @@ public class GamePhase : MonoBehaviour
 
     }
 
-    void ChangePhase(CurrentPhase phase)
+    void ChangePhase(Phase phase)
     {
         currentPhase = phase;
         switch (currentPhase)
         {
-            case CurrentPhase.MENU:
+            case Phase.MENU:
                 ChangeToMenuPhase.Invoke();
                 break;
 
-            case CurrentPhase.BUILDING:
+            case Phase.BUILDING:
                 ChangeToBuildingPhase.Invoke();
                 break;
 
-            case CurrentPhase.LEVEL:
+            case Phase.LEVEL:
                 ChangeToLevelPhase.Invoke();
                 break;
         }
@@ -46,12 +46,12 @@ public class GamePhase : MonoBehaviour
 
     public void GoToBuilding()
     {
-        ChangePhase(CurrentPhase.BUILDING);
+        ChangePhase(Phase.BUILDING);
     }
 
     public void GoToLevel()
     {
-        ChangePhase(CurrentPhase.LEVEL);
+        ChangePhase(Phase.LEVEL);
     }
 
     void Awake()

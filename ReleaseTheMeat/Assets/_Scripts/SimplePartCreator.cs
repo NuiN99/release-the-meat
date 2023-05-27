@@ -132,7 +132,7 @@ public class SimplePartCreator : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1))
         {
-            if (placingPart)
+            if (PartSelection.instance.selectedPart == null)
             {
                 CancelPartPlacement();
             }

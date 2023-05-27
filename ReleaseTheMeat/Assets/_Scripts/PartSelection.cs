@@ -34,7 +34,7 @@ public class PartSelection : MonoBehaviour
 
     void Update()
     {
-        if (GamePhase.instance.currentPhase != GamePhase.CurrentPhase.BUILDING) return;
+        if (GamePhase.instance.currentPhase != GamePhase.Phase.BUILDING) return;
 
         selectingObject = false;
 
@@ -66,6 +66,19 @@ public class PartSelection : MonoBehaviour
                     maxDist = distFromMouse;
                     selectedPart = rayHit.collider.gameObject;
                 }
+
+                if(rayHit.collider.gameObject.TryGetComponent(out SpriteRenderer spriteRenderer))
+                {
+                    Color ogColor = spriteRenderer.color;
+                    if (selectedPart != null && rayHit.collider.gameObject != selectedPart)
+                    {
+                        spriteRenderer.color = ogColor;
+                    }
+                    else if(selectedPart != null)
+                    {
+                        spriteRenderer.color = Color.green;
+                    }
+                }
             }
         }
 
@@ -81,6 +94,11 @@ public class PartSelection : MonoBehaviour
         {
             SelectSimplePart(selectedPart);
         }
+    }
+
+    void ChangeSelectedPartColor()
+    {
+
     }
 
     void SelectPlank()
@@ -128,8 +146,7 @@ public class PartSelection : MonoBehaviour
     public void DeleteSelectedPart()
     {
         if(selectedPart == null) return;
-        if (PartButtons.instance.partType != PartButtons.PartType.NULL) return;
-        print(PartButtons.instance.partType);
+        //if (PartButtons.instance.partType != PartButtons.PartType.NULL) return;
         Destroy(selectedPart);
     }
 

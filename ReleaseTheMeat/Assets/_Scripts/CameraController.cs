@@ -17,7 +17,7 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        if (GamePhase.instance.currentPhase == GamePhase.CurrentPhase.LEVEL)
+        if (GamePhase.instance.currentPhase == GamePhase.Phase.LEVEL)
         {
             GetPartPositions();
             MoveCamToCart(MiddleOfCart());
