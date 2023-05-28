@@ -19,10 +19,16 @@ public class PartSelection : MonoBehaviour
     public GameObject selectedPart;
 
     bool selectingObject;
+    public bool tooFar = false;
 
     public enum PartType 
     {
-        NULL, PLANK, WHEEL
+        NULL, 
+        PLANK,
+        ROD,
+        ROPE,
+        ELASTIC,
+        WHEEL,
     }
     public PartType hoveredPartType;
 
@@ -66,28 +72,15 @@ public class PartSelection : MonoBehaviour
                     maxDist = distFromMouse;
                     selectedPart = rayHit.collider.gameObject;
                 }
-
-                if(rayHit.collider.gameObject.TryGetComponent(out SpriteRenderer spriteRenderer))
-                {
-                    Color ogColor = spriteRenderer.color;
-                    if (selectedPart != null && rayHit.collider.gameObject != selectedPart)
-                    {
-                        spriteRenderer.color = ogColor;
-                    }
-                    else if(selectedPart != null)
-                    {
-                        spriteRenderer.color = Color.green;
-                    }
-                }
             }
         }
 
-        if (selectedPart == null) return;
+        if (selectedPart == null || tooFar) return;
         selectingObject = true;
 
-        if (selectedPart.GetComponent<Plank>())
+        if (selectedPart.GetComponent<ExtendablePart>() )
         {
-            SelectPlank();
+            SelectExtendablePart();
         }
 
         else if (selectedPart.GetComponent<SimplePart>())
@@ -96,18 +89,13 @@ public class PartSelection : MonoBehaviour
         }
     }
 
-    void ChangeSelectedPartColor()
+    void SelectExtendablePart()
     {
+        ExtendablePart extendablePart = selectedPart.GetComponent<ExtendablePart>();
+        Vector2 startPoint = extendablePart.startPoint;
+        Vector2 endPoint = extendablePart.endPoint;
 
-    }
-
-    void SelectPlank()
-    {
-        Plank plank = selectedPart.GetComponent<Plank>();
-        Vector2 startPoint = plank.startPoint;
-        Vector2 endPoint = plank.endPoint;
-
-        selectionPoint = Instantiate(selectionPointPrefab, PlankLengthSelection(startPoint, endPoint, mousePos), Quaternion.identity);
+        selectionPoint = Instantiate(selectionPointPrefab, LengthSelection(startPoint, endPoint, mousePos), Quaternion.identity);
     }
 
     void SelectSimplePart(GameObject part)
@@ -116,7 +104,7 @@ public class PartSelection : MonoBehaviour
     }
 
 
-    Vector2 PlankLengthSelection(Vector3 startPoint, Vector3 endPoint, Vector3 point)
+    Vector2 LengthSelection(Vector3 startPoint, Vector3 endPoint, Vector3 point)
     {
         var vVector1 = point - startPoint;
         var vVector2 = (endPoint - startPoint).normalized;
@@ -137,7 +125,7 @@ public class PartSelection : MonoBehaviour
         return vClosestPoint;
     }
 
-    void ResetSelectionPoint()
+    public void ResetSelectionPoint()
     {
         Destroy(selectionPoint);
         selectionPoint = null;
@@ -160,6 +148,9 @@ public class PartSelection : MonoBehaviour
         
 
         else if (selectedPart.GetComponent<Plank>()) hoveredPartType = PartType.PLANK;
+        else if (selectedPart.GetComponent<Rod>()) hoveredPartType = PartType.ROD;
+        else if (selectedPart.GetComponent<Rope>()) hoveredPartType = PartType.ROPE;
+        else if (selectedPart.GetComponent<Elastic>()) hoveredPartType = PartType.ELASTIC;
         else if (selectedPart.GetComponent<Wheel>()) hoveredPartType = PartType.WHEEL;
     }
 }

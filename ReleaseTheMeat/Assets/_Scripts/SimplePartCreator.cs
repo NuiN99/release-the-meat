@@ -28,18 +28,18 @@ public class SimplePartCreator : MonoBehaviour
 
     void Update()
     {
-        CheckType(PartButtons.instance.partType);
+        CheckType(PartButtons.instance.selectedPartType);
         MoveSelectedPartIcon();
         PlacePart();
     }
 
-    void CheckType(PartButtons.PartType partType)
+    void CheckType(PartSelection.PartType partType)
     {
-        if (partType != PartButtons.PartType.NULL)
+        if (partType != PartSelection.PartType.NULL)
         {
             placingPart = true;
         }
-        else if(partType == PartButtons.PartType.NULL)
+        else if(partType == PartSelection.PartType.NULL)
         {
             placingPart = false;
         }
@@ -48,7 +48,7 @@ public class SimplePartCreator : MonoBehaviour
 
         switch (partType)
         {
-            case PartButtons.PartType.NULL:
+            case PartSelection.PartType.NULL:
 
                 currentHeldPart = null;
                 placingPart = false;
@@ -56,7 +56,7 @@ public class SimplePartCreator : MonoBehaviour
 
                 return;
 
-            case PartButtons.PartType.PLANK:
+            case PartSelection.PartType.PLANK:
 
                 currentHeldPart = null;
                 placingPart = true;
@@ -64,7 +64,31 @@ public class SimplePartCreator : MonoBehaviour
 
                 return;
 
-            case PartButtons.PartType.WHEEL:
+            case PartSelection.PartType.ROD:
+
+                currentHeldPart = null;
+                placingPart = true;
+                selectedPartObjSR.sprite = null;
+
+                return;
+
+            case PartSelection.PartType.ROPE:
+
+                currentHeldPart = null;
+                placingPart = true;
+                selectedPartObjSR.sprite = null;
+
+                return;
+
+            case PartSelection.PartType.ELASTIC:
+
+                currentHeldPart = null;
+                placingPart = true;
+                selectedPartObjSR.sprite = null;
+
+                return;
+
+            case PartSelection.PartType.WHEEL:
 
                 currentHeldPart = wheelPrefab;
                 placingPart = true;
@@ -114,13 +138,19 @@ public class SimplePartCreator : MonoBehaviour
                 {
                     Rigidbody2D selectionRB = selection.GetComponent<Rigidbody2D>();
 
-                    switch (PartButtons.instance.partType)
+                    switch (PartButtons.instance.selectedPartType)
                     {
-                        case PartButtons.PartType.NULL:
+                        case PartSelection.PartType.NULL:
                             break;
-                        case PartButtons.PartType.PLANK:
+                        case PartSelection.PartType.PLANK:
                             break;
-                        case PartButtons.PartType.WHEEL:
+                        case PartSelection.PartType.ROD:
+                            break;
+                        case PartSelection.PartType.ROPE:
+                            break;
+                        case PartSelection.PartType.ELASTIC:
+                            break;
+                        case PartSelection.PartType.WHEEL:
                             SetWheelJoint(newPart, selectionRB);
                             break;
                     }
@@ -145,7 +175,7 @@ public class SimplePartCreator : MonoBehaviour
     
     void CancelPartPlacement()
     {
-        PartButtons.instance.partType = PartButtons.PartType.NULL;
+        PartButtons.instance.selectedPartType = PartSelection.PartType.NULL;
         placingPart = false;
         currentHeldPart = null;
         CurrentHeldPart.instance.part = null;

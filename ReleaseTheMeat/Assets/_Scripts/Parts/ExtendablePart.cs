@@ -1,19 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Net;
 using UnityEngine;
 
-public class Plank : MonoBehaviour
+public class ExtendablePart : MonoBehaviour
 {
-    /*[NonSerialized] public Vector2 startPoint;
+
+    [NonSerialized] public Vector2 startPoint;
     [NonSerialized] public Vector2 endPoint;
 
     [NonSerialized] public GameObject objAttachedToStart;
     [NonSerialized] public GameObject objAttachedToEnd;
-
-    [SerializeField] float springDamp;
-    [SerializeField] float springFrequency;
 
     public void CheckForAttachedParts()
     {
@@ -51,11 +48,10 @@ public class Plank : MonoBehaviour
 
         distanceJoint.maxDistanceOnly = true;
         distanceJoint.autoConfigureConnectedAnchor = false;
-        
+
 
         distanceJoint.connectedBody = body;
         distanceJoint.anchor = transform.InverseTransformPoint(anchor);
         distanceJoint.connectedAnchor = body.transform.InverseTransformPoint(anchor);
-    }*/
+    }
 }
-

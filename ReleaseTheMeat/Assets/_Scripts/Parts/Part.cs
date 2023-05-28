@@ -15,9 +15,9 @@ public class Part : MonoBehaviour
 
     void Update()
     {
-        if (GamePhase.instance.currentPhase != GamePhase.Phase.BUILDING) return;
+        //if (GamePhase.instance.currentPhase != GamePhase.Phase.BUILDING) return;
 
-        ChangeSelectionColor(IsSelected());
+        //ChangeSelectionColor(IsSelected());
     }
 
     bool IsSelected()

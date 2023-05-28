@@ -9,12 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 405934711945403016}
-  - component: {fileID: 3336770364453605594}
   - component: {fileID: -4295862081394383205}
+  - component: {fileID: 8020316994022969153}
+  - component: {fileID: 3336770364453605594}
   - component: {fileID: -5656132380852651032}
   - component: {fileID: -5139772647049054984}
   - component: {fileID: 405934711945403023}
-  m_Layer: 7
+  m_Layer: 18
   m_Name: Plank
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,18 +37,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3336770364453605594
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 405934711945403022}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86e0f61e3581ff5438e5d5279af0abaf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &-4295862081394383205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,8 +49,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d59c787fde9875040a040666ded0af2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  springDamp: 0
-  springFrequency: 50
+--- !u!114 &8020316994022969153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 405934711945403022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc2690182bb1b5545b3479c0ba9d575a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3336770364453605594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 405934711945403022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86e0f61e3581ff5438e5d5279af0abaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!50 &-5656132380852651032
 Rigidbody2D:
   serializedVersion: 4
@@ -151,7 +162,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.5660378, g: 0.4864514, b: 0.4298683, a: 1}
+  m_Color: {r: 0.509434, g: 0.4288631, b: 0.37246352, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

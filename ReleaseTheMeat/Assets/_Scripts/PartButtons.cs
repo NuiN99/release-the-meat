@@ -8,13 +8,7 @@ public class PartButtons : MonoBehaviour
 {
     public static PartButtons instance;
 
-    public enum PartType
-    {
-        NULL, 
-        PLANK, 
-        WHEEL,
-    }
-    public PartType partType;
+    public PartSelection.PartType selectedPartType;
 
     void Awake()
     {
@@ -22,16 +16,28 @@ public class PartButtons : MonoBehaviour
             instance = this;
     }
 
-    public void SelectPart(string partID)
+    public void SelectPlank()
     {
-        switch (partID)
-        {
-            case "PLANK":
-                partType = PartType.PLANK;
-                break;
-            case "WHEEL":
-                partType = PartType.WHEEL;
-                break;
-        }
+        selectedPartType = PartSelection.PartType.PLANK;
+    }
+
+    public void SelectRod()
+    {
+        selectedPartType = PartSelection.PartType.ROD;
+    }
+
+    public void SelectRope()
+    {
+        selectedPartType = PartSelection.PartType.ROPE;
+    }
+
+    public void SelectElastic()
+    {
+        selectedPartType = PartSelection.PartType.ELASTIC;
+    }
+
+    public void SelectWheel()
+    {
+        selectedPartType = PartSelection.PartType.WHEEL;
     }
 }
