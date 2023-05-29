@@ -36,9 +36,9 @@ public class ExtendablePartCreator : MonoBehaviour
     {
         if (!ExtendableIsSelected()) 
         {
-            extendingPart = false; 
+            extendingPart = false;
             return;
-        } 
+        }
 
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -81,8 +81,9 @@ public class ExtendablePartCreator : MonoBehaviour
             PlaceStartPoint(selectedPart, selectionPointObj);
         }
 
-        if (Input.GetMouseButtonDown(1) && extendingPart)
+        if (Input.GetMouseButtonDown(1) && extendingPart && PartSelection.instance.selectedPart == null)
         {
+            PlaceEndPoint(selectedPart, selectionPointObj);
             ResetExtendablePart();
         }
 
@@ -124,13 +125,13 @@ public class ExtendablePartCreator : MonoBehaviour
     {
         if (selectedPart != null && selectionPointObj != null)
         {
-            ScaleToPoint(selectionPointObj.transform.position);
             RotateToPoint(selectionPointObj.transform.position);
+            ScaleToPoint(selectionPointObj.transform.position);
         }
         else
         {
-            ScaleToPoint(mousePos);
             RotateToPoint(mousePos);
+            ScaleToPoint(mousePos);   
         }
     }
 
@@ -153,7 +154,8 @@ public class ExtendablePartCreator : MonoBehaviour
             if (PartSelection.instance.selectionPoint != null && scaleX >= maxLength && (Vector2)PartSelection.instance.selectionPoint.transform.position != pointDir * currentExtendablePart.transform.localScale.x)
             {
                 currentExtendablePart.GetComponent<ExtendablePart>().objAttachedToEnd = null;
-                endPoint = mousePos;
+                endPoint = startPoint * currentExtendablePart.transform.localScale.x;
+                print(endPoint);
             }
         }
         else
@@ -183,7 +185,7 @@ public class ExtendablePartCreator : MonoBehaviour
 
     void RotateToPoint(Vector2 point)
     {
-        Vector2 pointDir = (point - startPoint).normalized;
+        pointDir = (point - startPoint).normalized;
         float angle = Mathf.Atan2(pointDir.y, pointDir.x) * Mathf.Rad2Deg;
         currentExtendablePart.transform.eulerAngles = new Vector3(0, 0, angle);
     }
@@ -192,7 +194,6 @@ public class ExtendablePartCreator : MonoBehaviour
     {
         scaleX = Vector2.Distance(point, startPoint);
         scaleX = Mathf.Clamp(scaleX, 0, maxLength);
-        pointDir = (point - startPoint).normalized;
 
         currentExtendablePart.transform.position = startPoint + (pointDir * (scaleX / 2));
         currentExtendablePart.transform.localScale = new Vector2(scaleX, currentExtendablePart.transform.localScale.y);
