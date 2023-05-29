@@ -27,9 +27,12 @@ public class ExtendablePartCreator : MonoBehaviour
     Vector2 pointDir;
     float scaleX;
 
-    void Start()
+    public static ExtendablePartCreator instance;
+
+    void Awake()
     {
-        
+        if (instance == null)
+            instance = this;
     }
 
     void Update()
@@ -176,7 +179,7 @@ public class ExtendablePartCreator : MonoBehaviour
         extendingPart = false;
     }
 
-    void ResetExtendablePart()
+    public void ResetExtendablePart()
     {
         Destroy(currentExtendablePart);
         currentExtendablePart = null;

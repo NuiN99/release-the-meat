@@ -12,7 +12,7 @@ public class SimplePartCreator : MonoBehaviour
     [SerializeField] Sprite wheelIcon;
 
 
-    bool placingPart;
+    public bool placingPart;
 
     GameObject currentHeldPart;
 
@@ -159,26 +159,12 @@ public class SimplePartCreator : MonoBehaviour
                 }
             }
         }
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            if (PartSelection.instance.selectedPart == null)
-            {
-                CancelPartPlacement();
-            }
-            else
-            {
-                PartSelection.instance.DeleteSelectedPart();
-            }
-        }
     }
     
-    void CancelPartPlacement()
+    public void CancelPartPlacement()
     {
-        PartButtons.instance.selectedPartType = PartSelection.PartType.NULL;
         placingPart = false;
         currentHeldPart = null;
-        CurrentHeldPart.instance.part = null;
     }
 
 

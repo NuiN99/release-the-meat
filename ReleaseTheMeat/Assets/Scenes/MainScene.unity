@@ -269,6 +269,7 @@ GameObject:
   - component: {fileID: 163130260}
   - component: {fileID: 163130266}
   - component: {fileID: 163130261}
+  - component: {fileID: 163130267}
   - component: {fileID: 163130262}
   - component: {fileID: 163130265}
   - component: {fileID: 163130264}
@@ -309,6 +310,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedPartObj: {fileID: 273957399}
   wheelIcon: {fileID: 21300000, guid: 36e6970b84831434a9eac79abd03700b, type: 3}
+  placingPart: 0
   wheelPrefab: {fileID: 4641117914644135560, guid: 257ea09229a41f449bf7a8953a58abd9, type: 3}
 --- !u!114 &163130262
 MonoBehaviour:
@@ -362,6 +364,7 @@ MonoBehaviour:
   selectionPointPrefab: {fileID: 740048008282109977, guid: 611e51bae2596f34b9e7632f1f1cd225, type: 3}
   selectionPoint: {fileID: 0}
   selectedPart: {fileID: 0}
+  tooFar: 0
   hoveredPartType: 0
 --- !u!114 &163130265
 MonoBehaviour:
@@ -390,6 +393,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectsToDisable:
   - {fileID: 1021396579}
+--- !u!114 &163130267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 163130259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df24b7f716cc224489a50f532cebbe5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &252100386
 GameObject:
   m_ObjectHideFlags: 0
