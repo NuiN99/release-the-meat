@@ -6,8 +6,8 @@ using UnityEngine;
 public class ExtendablePart : MonoBehaviour
 {
 
-    [NonSerialized] public Vector2 startPoint;
-    [NonSerialized] public Vector2 endPoint;
+    public Vector2 startPoint;
+    public Vector2 endPoint;
 
     [NonSerialized] public GameObject objAttachedToStart;
     [NonSerialized] public GameObject objAttachedToEnd;
