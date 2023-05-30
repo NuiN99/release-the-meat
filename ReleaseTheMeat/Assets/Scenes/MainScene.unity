@@ -1244,7 +1244,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 815101195}
   m_OnClick:
     m_PersistentCalls:
@@ -1460,8 +1460,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 857473816}
   m_LocalRotation: {x: -0, y: -0, z: 0.0028137201, w: 0.99999607}
-  m_LocalPosition: {x: 164.6, y: -145.8, z: 0}
-  m_LocalScale: {x: 14.206619, y: 16.161606, z: 1}
+  m_LocalPosition: {x: 150.2, y: -141.5, z: 0}
+  m_LocalScale: {x: 4.265253, y: 16.161606, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1042864819}
@@ -1706,8 +1706,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1016885927}
   m_LocalRotation: {x: -0, y: -0, z: -0.22446565, w: 0.97448206}
-  m_LocalPosition: {x: 140.1, y: -139.7, z: 0}
-  m_LocalScale: {x: 14.206619, y: 16.161606, z: 1}
+  m_LocalPosition: {x: 137.5, y: -138.5, z: 0}
+  m_LocalScale: {x: 5.1734824, y: 16.161606, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1042864819}
@@ -1801,7 +1801,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1021396580}
   m_Layer: 5
-  m_Name: CartBuildingUI
+  m_Name: BuildingHUD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1858,14 +1858,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1023963819}
-  m_LocalRotation: {x: -0, y: -0, z: 0.47425497, w: 0.88038754}
-  m_LocalPosition: {x: 190, y: -134.3, z: 0}
-  m_LocalScale: {x: 14.206619, y: 16.161606, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: 0.41596934, w: 0.90937865}
+  m_LocalPosition: {x: 163.2, y: -135.2, z: 0}
+  m_LocalScale: {x: 4.4681234, y: 16.161606, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1042864819}
   m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 56.622}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 49.161}
 --- !u!61 &1023963821
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2143,8 +2143,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1115671913}
   m_LocalRotation: {x: -0, y: -0, z: -0.11495798, w: 0.9933704}
-  m_LocalPosition: {x: 152.1, y: -144.2, z: 0}
-  m_LocalScale: {x: 14.206619, y: 16.161606, z: 1}
+  m_LocalPosition: {x: 143.8, y: -140.7, z: 0}
+  m_LocalScale: {x: 5.3808994, y: 16.161606, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1042864819}
@@ -2444,7 +2444,7 @@ GameObject:
   - component: {fileID: 1558751063}
   - component: {fileID: 1558751062}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: CartBuildingCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2722,7 +2722,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1651498626}
   m_OnClick:
     m_PersistentCalls:
@@ -2803,8 +2803,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1700542087}
   m_LocalRotation: {x: -0, y: -0, z: 0.22819565, w: 0.9736153}
-  m_LocalPosition: {x: 178.4, y: -143.5, z: 0}
-  m_LocalScale: {x: 14.206619, y: 16.161606, z: 1}
+  m_LocalPosition: {x: 157.4, y: -139.7, z: 0}
+  m_LocalScale: {x: 4.1943626, y: 16.161606, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1042864819}

@@ -151,8 +151,8 @@ public class ExtendablePartCreator : MonoBehaviour
             if (PartSelection.instance.selectionPoint != null && scaleX >= maxLength && (Vector2)PartSelection.instance.selectionPoint.transform.position != pointDir * currentExtendablePart.transform.localScale.x)
             {
                 currentExtendablePart.GetComponent<ExtendablePart>().objAttachedToEnd = null;
-                endPoint = pointDir * currentExtendablePart.transform.localScale.x;
-                print(endPoint);
+                endPoint = startPoint + (pointDir * currentExtendablePart.transform.localScale.x);
+                print(currentExtendablePart.transform.position);
             }
         }
         else
