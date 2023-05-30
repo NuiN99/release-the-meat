@@ -7,7 +7,7 @@ using static UnityEditor.PlayerSettings;
 public class CameraController : MonoBehaviour
 {
     [SerializeField] Camera mainCamera;
-    List<Vector3> partPositions = new List<Vector3>();
+    List<Transform> partPositions = new List<Transform>();
 
 
     [SerializeField] float minSize, maxSize;
@@ -19,7 +19,6 @@ public class CameraController : MonoBehaviour
     {
         if (GamePhase.instance.currentPhase == GamePhase.Phase.LEVEL)
         {
-            GetPartPositions();
             MoveCamToCart(MiddleOfCart());
             SizeCamToCart(CartSize());
         }
@@ -36,21 +35,21 @@ public class CameraController : MonoBehaviour
         mainCamera.orthographicSize = cartSize;
     }
 
-    void GetPartPositions()
+    public void GetPartPositions()
     {
-        partPositions.Clear();
-        foreach (Part partType in FindObjectsOfType<Part>())
+        Part[] parts = FindObjectsOfType<Part>();
+        foreach(Part part in parts)
         {
-            partPositions.Add(partType.transform.position);
+            partPositions.Add(part.gameObject.transform);
         }
     }
 
     Vector3 MiddleOfCart()
     {
         Vector3 sum = new Vector3(0, 0);
-        foreach(Vector3 partPos in partPositions)
+        foreach(Transform partPos in partPositions)
         {
-            sum += partPos;
+            sum += partPos.position;
         }
 
         if (partPositions.Count == 0) return mainCamera.transform.position;
@@ -65,9 +64,15 @@ public class CameraController : MonoBehaviour
         float maxX = float.MinValue;
         float maxY = float.MinValue;
 
-        foreach (Vector3 partPos in partPositions)
+        foreach (Transform partPos in partPositions)
         {
-            Vector3 position = partPos;
+            if (Vector2.Distance(MiddleOfCart(), partPos.position) > 50) 
+            {
+                partPositions.Remove(partPos);
+                continue;
+            } 
+
+            Vector3 position = partPos.position;
 
             minX = Mathf.Min(minX, position.x);
             minY = Mathf.Min(minY, position.y);

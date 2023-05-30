@@ -33,13 +33,13 @@ public class ExtendablePart : MonoBehaviour
         switch (PartButtons.instance.selectedPartType)
         {
             case PartSelection.PartType.PLANK:
-                CreateHingeJoint(point, attachedRB, PartCreation.instance.plankBreakForce);
-                CreateDistanceJoint(point, attachedRB, PartCreation.instance.plankBreakForce);
+                CreateHingeJoint(point, attachedRB, CartController.instance.plankBreakForce);
+                //CreateDistanceJoint(point, attachedRB, CartController.instance.plankBreakForce);
                 break;
 
             case PartSelection.PartType.ROD:
-                CreateHingeJoint(point, attachedRB, PartCreation.instance.rodBreakForce);
-                CreateDistanceJoint(point, attachedRB, PartCreation.instance.rodBreakForce);
+                CreateHingeJoint(point, attachedRB, CartController.instance.rodBreakForce);
+                //CreateDistanceJoint(point, attachedRB, CartController.instance.rodBreakForce);
                 break;
         }
     }

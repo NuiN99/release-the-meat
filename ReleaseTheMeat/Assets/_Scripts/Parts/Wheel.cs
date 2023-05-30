@@ -19,6 +19,8 @@ public class Wheel : MonoBehaviour
 
     void MoveWheel()
     {
+        if (wheelJoint == null) return;
+
         float xAxis = Input.GetAxisRaw("Horizontal");
 
         var motor = wheelJoint.motor;

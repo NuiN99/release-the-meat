@@ -4,18 +4,6 @@ using UnityEngine;
 
 public class PartCreation : MonoBehaviour
 {
-    public static PartCreation instance;
-
-    public float plankBreakForce;
-    public float rodBreakForce;
-    public float wheelBreakForce;
-
-    void Awake()
-    {
-        if(instance == null)
-            instance = this;
-    }
-
     void Update()
     {
         if (Input.GetMouseButtonDown(1))
