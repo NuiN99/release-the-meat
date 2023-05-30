@@ -12,13 +12,13 @@ public class Rope : MonoBehaviour
 
     void Update()
     {
-        if(GamePhase.instance.currentPhase == GamePhase.Phase.LEVEL)
+        /*if(GamePhase.instance.currentPhase == GamePhase.Phase.LEVEL)
         {
             HingeJoint2D[] joints = GetComponents<HingeJoint2D>();
             foreach(HingeJoint2D joint in joints)
             {
                 joint.enabled = false;
             }
-        }
+        }*/
     }
 }
