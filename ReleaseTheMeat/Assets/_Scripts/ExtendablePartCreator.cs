@@ -84,12 +84,6 @@ public class ExtendablePartCreator : MonoBehaviour
             PlaceStartPoint(selectedPart, selectionPointObj);
         }
 
-        if (Input.GetMouseButtonDown(1) && extendingPart && PartSelection.instance.selectedPart == null)
-        {
-            PlaceEndPoint(selectedPart, selectionPointObj);
-            ResetExtendablePart();
-        }
-
         if (Input.GetMouseButton(0) && extendingPart)
         {
             ExtendPart(selectedPart, selectionPointObj);
