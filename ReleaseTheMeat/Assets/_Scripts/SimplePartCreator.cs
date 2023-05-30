@@ -151,7 +151,7 @@ public class SimplePartCreator : MonoBehaviour
                         case PartSelection.PartType.ELASTIC:
                             break;
                         case PartSelection.PartType.WHEEL:
-                            SetWheelJoint(newPart, selectionRB);
+                            SetWheelJoint(newPart, selectionRB, PartCreation.instance.wheelBreakForce);
                             break;
                     }
 
@@ -168,12 +168,14 @@ public class SimplePartCreator : MonoBehaviour
     }
 
 
-    public void SetWheelJoint(GameObject wheel, Rigidbody2D connectedBody)
+    public void SetWheelJoint(GameObject wheel, Rigidbody2D connectedBody, float breakForce)
     {
         if (PartSelection.instance.selectedPart == null) return;
         if (PartSelection.instance.selectedPart.GetComponent<Wheel>()) return;
 
         WheelJoint2D joint = wheel.GetComponent<WheelJoint2D>();
+
+        joint.breakForce = breakForce;
 
         joint.connectedBody = connectedBody;
         joint.anchor = wheel.transform.InverseTransformPoint(wheel.transform.position);

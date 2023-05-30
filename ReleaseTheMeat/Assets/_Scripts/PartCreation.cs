@@ -4,22 +4,31 @@ using UnityEngine;
 
 public class PartCreation : MonoBehaviour
 {
-    void Start()
+    public static PartCreation instance;
+
+    public float plankBreakForce;
+    public float rodBreakForce;
+    public float wheelBreakForce;
+
+    void Awake()
     {
-        
+        if(instance == null)
+            instance = this;
     }
 
     void Update()
     {
         if (Input.GetMouseButtonDown(1))
         {
-            if (PartSelection.instance.selectedPart == null)
+
+            if (ExtendablePartCreator.instance.extendingPart)
             {
-                if (ExtendablePartCreator.instance.extendingPart)
-                {
-                    ExtendablePartCreator.instance.ResetExtendablePart();
-                    //PartButtons.instance.selectedPartType = PartSelection.PartType.NULL;
-                }
+                ExtendablePartCreator.instance.ResetExtendablePart();
+                //PartButtons.instance.selectedPartType = PartSelection.PartType.NULL;
+            }
+
+            else if (PartSelection.instance.selectedPart == null)
+            {
                 if (SimplePartCreator.instance.placingPart)
                 {
                     SimplePartCreator.instance.CancelPartPlacement();

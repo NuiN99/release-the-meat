@@ -6,14 +6,11 @@ using UnityEngine;
 
 public class ExtendablePart : MonoBehaviour
 {
-
     public Vector2 startPoint;
     public Vector2 endPoint;
 
     [NonSerialized] public GameObject objAttachedToStart;
     [NonSerialized] public GameObject objAttachedToEnd;
-
-
 
     public void CheckForAttachedParts()
     {
@@ -36,68 +33,45 @@ public class ExtendablePart : MonoBehaviour
         switch (PartButtons.instance.selectedPartType)
         {
             case PartSelection.PartType.PLANK:
-                CreateHingeJoint(point, attachedRB);
-                CreateDistanceJoint(point, attachedRB);
+                CreateHingeJoint(point, attachedRB, PartCreation.instance.plankBreakForce);
+                CreateDistanceJoint(point, attachedRB, PartCreation.instance.plankBreakForce);
                 break;
 
             case PartSelection.PartType.ROD:
-                CreateHingeJoint(point, attachedRB);
-                CreateDistanceJoint(point, attachedRB);
-                break;
-            case PartSelection.PartType.ROPE:
-                CreateHingeJoint(point, attachedRB);
-                CreateRope();
+                CreateHingeJoint(point, attachedRB, PartCreation.instance.rodBreakForce);
+                CreateDistanceJoint(point, attachedRB, PartCreation.instance.rodBreakForce);
                 break;
         }
     }
 
-    void CreateHingeJoint(Vector2 anchor, Rigidbody2D body)
+    void CreateHingeJoint(Vector2 anchor, Rigidbody2D body, float breakForce)
     {
         HingeJoint2D hingeJoint = gameObject.AddComponent<HingeJoint2D>();
+
         hingeJoint.autoConfigureConnectedAnchor = false;
+
         hingeJoint.connectedBody = body;
+
+        hingeJoint.breakForce = breakForce;
+
         hingeJoint.anchor = transform.InverseTransformPoint(anchor);
         hingeJoint.connectedAnchor = body.transform.InverseTransformPoint(anchor);
     }
 
-    void CreateDistanceJoint(Vector2 anchor, Rigidbody2D body)
+    void CreateDistanceJoint(Vector2 anchor, Rigidbody2D body, float breakForce)
     {
         DistanceJoint2D distanceJoint = gameObject.AddComponent<DistanceJoint2D>();
 
         distanceJoint.autoConfigureDistance = false;
         distanceJoint.distance = 0;
 
+        distanceJoint.breakForce = breakForce;
+
         distanceJoint.maxDistanceOnly = true;
         distanceJoint.autoConfigureConnectedAnchor = false;
-
 
         distanceJoint.connectedBody = body;
         distanceJoint.anchor = transform.InverseTransformPoint(anchor);
         distanceJoint.connectedAnchor = body.transform.InverseTransformPoint(anchor);
-    }
-
-    void CreateRope()
-    {
-        if(objAttachedToStart && objAttachedToEnd)
-        {
-            Rigidbody2D startRB = objAttachedToStart.GetComponent<Rigidbody2D>();
-            Rigidbody2D endRB = objAttachedToEnd.GetComponent<Rigidbody2D>();
-            SetRopeValues(startRB, endRB, startPoint, endPoint);
-        }
-    }
-
-    void SetRopeValues(Rigidbody2D startRB, Rigidbody2D endRB, Vector2 startPoint, Vector2 endPoint)
-    {
-        DistanceJoint2D distanceJoint = startRB.gameObject.AddComponent<DistanceJoint2D>();
-
-        distanceJoint.autoConfigureDistance = false;
-        distanceJoint.distance = transform.localScale.x;
-
-        distanceJoint.maxDistanceOnly = true;
-        distanceJoint.autoConfigureConnectedAnchor = false;
-
-        distanceJoint.connectedBody = endRB;
-        distanceJoint.anchor = transform.InverseTransformPoint(startPoint);
-        distanceJoint.connectedAnchor = endRB.transform.InverseTransformPoint(endPoint);
     }
 }
