@@ -66,11 +66,10 @@ public class CameraController : MonoBehaviour
 
         foreach (Transform partPos in partPositions)
         {
-            if (Vector2.Distance(MiddleOfCart(), partPos.position) > 50) 
+            if (Vector2.Distance(MiddleOfCart(), partPos.position) > 25)
             {
-                partPositions.Remove(partPos);
                 continue;
-            } 
+            }
 
             Vector3 position = partPos.position;
 
