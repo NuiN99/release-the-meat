@@ -20,7 +20,6 @@ public class CavemanNameGenerator : MonoBehaviour
         "Glog",
         "Ugg",
         "Krunk",
-        "Grish",
         "Thunk",
         "Gorp",
         "Trog",
@@ -29,10 +28,8 @@ public class CavemanNameGenerator : MonoBehaviour
         "Krug",
         "Sprog",
         "Knork",
-        "Klork",
         "Druk",
         "Skrunk",
-        "Skrunkl",
         "Krog",
         "Gork",
         "Borsk",
@@ -55,10 +52,8 @@ public class CavemanNameGenerator : MonoBehaviour
         "Skag",
         "Trunk",
         "Vug",
-        "Wok",
         "Xog",
         "Yuk",
-        "Zank",
         "Brog",
         "Crank",
         "Dork",
@@ -71,7 +66,6 @@ public class CavemanNameGenerator : MonoBehaviour
         "Mug",
         "Nork",
         "Pruk",
-        "Quark",
         "Rag",
         "Skulk",
         "Trag",
@@ -82,16 +76,12 @@ public class CavemanNameGenerator : MonoBehaviour
         "Zug",
         "Blag",
         "Crog",
-        "Dusk",
         "Hug",
         "Junk",
         "Lunk",
         "Musk",
         "Plog",
-        "Quork",
-        "Rusk",
         "Skork",
-        "Zag",
         "Brusk",
         "Crug",
         "Drunk",
@@ -125,20 +115,22 @@ public class CavemanNameGenerator : MonoBehaviour
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.G))
+
         print(GenerateRandomName());
     }
     string GenerateRandomName()
     {
-        int numberOfNames = Random.Range(1, 4);
+        int numberOfNames = Random.Range(1, 3);
 
         string name = string.Empty;
 
         for (int i = 0; i < numberOfNames; i++)
         {
             name += names[Random.Range(0, names.Length - 1)];
-            if(i != numberOfNames - 1)
+
+            if (numberOfNames == 1 || i != numberOfNames - 1)
             {
-                if (CalculateChance(1, 5))
+                if (CalculateChance(1, 3))
                 {
                     name += connectors[Random.Range(0, connectors.Length - 1)];
                 }
