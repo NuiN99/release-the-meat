@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CavemanNameGenerator : MonoBehaviour
 {
     string[] names = 
     {
+        "Bar",
         "Grug",
         "Grog",
         "Gruk",
@@ -21,7 +23,6 @@ public class CavemanNameGenerator : MonoBehaviour
         "Ugg",
         "Krunk",
         "Thunk",
-        "Gorp",
         "Trog",
         "Flug",
         "Snok",
@@ -88,11 +89,12 @@ public class CavemanNameGenerator : MonoBehaviour
         "Flog",
         "Glug",
         "Husk",
-        "Skog"
+        "Skog",
     };
 
     string[] connectors =
     {
+        "tholomew",
         "en",
         "kr",
         "an",
@@ -109,14 +111,19 @@ public class CavemanNameGenerator : MonoBehaviour
         "ank",
         "esk",
         "unk",
-        "el"
+        "el",
+        "us",
     };
+
+    public string caveManName;
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.G))
-
-        print(GenerateRandomName());
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            caveManName = GenerateRandomName();
+            print(caveManName);
+        }
     }
     string GenerateRandomName()
     {
