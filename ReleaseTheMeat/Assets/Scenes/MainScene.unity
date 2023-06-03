@@ -6026,9 +6026,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugStressMode: 1
-  plankBreakForce: 750
-  rodBreakForce: 500
-  wheelBreakForce: 500
+  plankBreakEnabled: 1
+  rodBreakEnabled: 1
+  wheelBreakEnabled: 1
+  plankBreakForce: 1500
+  rodBreakForce: 1250
+  wheelBreakForce: 1500
 --- !u!1 &1761226116
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,17 +6,41 @@ public class CartController : MonoBehaviour
 {
     public static CartController instance;
 
+
+    [Header("Debug Stress Mode")]
     [SerializeField] bool debugStressMode;
-    
+
+    [Header("Toggle Break Forces")]
+    [SerializeField] bool plankBreakEnabled;
+    [SerializeField] bool rodBreakEnabled;
+    [SerializeField] bool wheelBreakEnabled;
+
+    [Header("Break Forces")]
     public float plankBreakForce;
     public float rodBreakForce;
     public float wheelBreakForce;
+
+    
 
     List<Transform> partPositions = new List<Transform>();
     void Awake()
     {
         if (instance == null)
             instance = this;
+    }
+
+    private void Start()
+    {
+        CheckDisabledBreakForces();
+    }
+
+    void CheckDisabledBreakForces()
+    {
+        if(!plankBreakEnabled) plankBreakForce = Mathf.Infinity;
+
+        if (!rodBreakEnabled) rodBreakForce = Mathf.Infinity;
+
+        if (!wheelBreakEnabled) wheelBreakForce = Mathf.Infinity;
     }
 
     void Update()
