@@ -20,8 +20,7 @@ public class PartSelection : MonoBehaviour
     public GameObject selectionPoint;
     public GameObject selectedPart;
 
-    bool selectingObject;
-    public bool tooFar = false;
+    public bool selectingPart;
 
     public enum PartType 
     {
@@ -44,14 +43,14 @@ public class PartSelection : MonoBehaviour
     {
         if (GamePhase.instance.currentPhase != GamePhase.Phase.BUILDING) return;
 
-        selectingObject = false;
+        selectingPart = false;
 
         ChangeEnum();
 
 
         SelectNearestPart();
 
-        if (!selectingObject)
+        if (!selectingPart)
             ResetSelectionPoint();
     }
 
@@ -84,8 +83,9 @@ public class PartSelection : MonoBehaviour
             }
         }
 
-        if (selectedPart == null || tooFar) return;
-        selectingObject = true;
+        if (selectedPart == null) return;
+
+        selectingPart = true;
 
         if (selectedPart.GetComponent<ExtendablePart>() )
         {
