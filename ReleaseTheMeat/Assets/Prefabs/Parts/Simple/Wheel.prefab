@@ -108,14 +108,14 @@ WheelJoint2D:
   serializedVersion: 4
   m_EnableCollision: 0
   m_ConnectedRigidBody: {fileID: 0}
-  m_BreakForce: Infinity
+  m_BreakForce: 1000
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 0
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_Suspension:
     m_DampingRatio: 0
-    m_Frequency: 150
+    m_Frequency: 1000000
     m_Angle: 90
   m_UseMotor: 1
   m_Motor:

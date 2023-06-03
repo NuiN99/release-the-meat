@@ -64,7 +64,7 @@ public class PartSelection : MonoBehaviour
         ResetSelectionPoint();
 
 
-        if (ExtendablePartCreator.instance.IsMousePastPart()) 
+        if (ExtendablePartCreator.instance.IsMaxLength()) 
         {
             return;
         }

@@ -87,11 +87,27 @@ public class ExtendablePartCreator : MonoBehaviour
         if (Input.GetMouseButton(0) && extendingPart)
         {
             ExtendPart(selectedPart, selectionPointObj);
+
+            if (IsPartIntersecting())
+            {
+                currentExtendablePart.GetComponent<SpriteRenderer>().color = Color.red;
+            }
+            else
+            {
+                currentExtendablePart.GetComponent<SpriteRenderer>().color = Color.white;
+            }
         }
 
         if (Input.GetMouseButtonUp(0) && extendingPart)
         {
             CurrentHeldPart.instance.part = null;
+
+            if (IsPartIntersecting())
+            {
+                ResetExtendablePart();
+                return;
+            }
+
             PlaceEndPoint(selectedPart, selectionPointObj);
         }
     }
@@ -109,8 +125,6 @@ public class ExtendablePartCreator : MonoBehaviour
             startPoint = mousePos;
 
         currentExtendablePart = Instantiate(currentPrefab, startPoint, Quaternion.identity);
-        //currentExtendablePart.name = "Plank";
-
 
         CurrentHeldPart.instance.part = currentExtendablePart;
 
@@ -147,13 +161,6 @@ public class ExtendablePartCreator : MonoBehaviour
         {
             endPoint = selectionPointObj.transform.position;
             currentExtendablePart.GetComponent<ExtendablePart>().objAttachedToEnd = selectedPart;
-
-            /*if (IsMousePastPart(PartSelection.instance.selectionPoint)) 
-            {
-                currentExtendablePart.GetComponent<ExtendablePart>().objAttachedToEnd = null;
-                endPoint = startPoint + (pointDir * currentExtendablePart.transform.localScale.x);
-                print(currentExtendablePart.transform.position);
-            }*/
         }
         else
         {
@@ -177,6 +184,7 @@ public class ExtendablePartCreator : MonoBehaviour
     {
         Destroy(currentExtendablePart);
         currentExtendablePart = null;
+        CurrentHeldPart.instance.part = null;
         extendingPart = false;
     }
 
@@ -194,9 +202,30 @@ public class ExtendablePartCreator : MonoBehaviour
 
         currentExtendablePart.transform.position = startPoint + (pointDir * (scaleX / 2));
         currentExtendablePart.transform.localScale = new Vector2(scaleX, currentExtendablePart.transform.localScale.y);
+
+        IsPartIntersecting();
     }
 
-    public bool IsMousePastPart()
+    bool IsPartIntersecting()
+    {
+        RaycastHit2D[] hits = Physics2D.RaycastAll(mousePos, -pointDir, scaleX);
+
+        foreach (RaycastHit2D hit in hits)
+        {
+            if (hit.collider.gameObject == currentExtendablePart)continue;
+            if (!hit.collider.gameObject.TryGetComponent(out Part part)) continue;
+            if (hit.collider.gameObject == currentExtendablePart.GetComponent<ExtendablePart>().objAttachedToStart) continue;
+
+            if (extendingPart && !PartSelection.instance.selectingPart && hit.collider.gameObject != currentExtendablePart)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public bool IsMaxLength()
     {
         if (extendingPart == false) return false;
         if (scaleX >= maxLength)
