@@ -175,7 +175,7 @@ public class SimplePartCreator : MonoBehaviour
 
         WheelJoint2D joint = wheel.GetComponent<WheelJoint2D>();
 
-        //joint.breakForce = breakForce;
+        joint.breakForce = breakForce;
 
         joint.connectedBody = connectedBody;
         joint.anchor = wheel.transform.InverseTransformPoint(wheel.transform.position);
