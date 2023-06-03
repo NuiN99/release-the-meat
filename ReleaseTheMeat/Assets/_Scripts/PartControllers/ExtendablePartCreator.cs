@@ -208,7 +208,8 @@ public class ExtendablePartCreator : MonoBehaviour
 
     bool IsPartIntersecting()
     {
-        RaycastHit2D[] hits = Physics2D.RaycastAll(mousePos, -pointDir, scaleX);
+        RaycastHit2D[] hits = Physics2D.RaycastAll(startPoint + (pointDir * scaleX), -pointDir, scaleX);
+        Debug.DrawRay(startPoint + (pointDir * scaleX), -pointDir * scaleX, Color.green);
 
         foreach (RaycastHit2D hit in hits)
         {

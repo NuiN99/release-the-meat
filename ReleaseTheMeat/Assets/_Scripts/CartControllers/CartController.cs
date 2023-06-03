@@ -6,6 +6,8 @@ public class CartController : MonoBehaviour
 {
     public static CartController instance;
 
+    [SerializeField] bool debugStressMode;
+    
     public float plankBreakForce;
     public float rodBreakForce;
     public float wheelBreakForce;
@@ -24,10 +26,14 @@ public class CartController : MonoBehaviour
 
     void ShowJointStress()
     {
+        if(debugStressMode)
+        //POSSIBLY SHOW AN INSTANTIATED CIRCLE WHERE JOINT IS AND THAT IS WHAT CHANGES COLOR
         if (GamePhase.instance.currentPhase == GamePhase.Phase.LEVEL && partPositions != null)
         {
             foreach (Transform part in partPositions)
             {
+                part.GetComponent<SpriteRenderer>().color = Color.black;
+
                 if (part.TryGetComponent(out HingeJoint2D joint) && joint.connectedBody != null)
                 {
                     if (part.GetComponent<Plank>())

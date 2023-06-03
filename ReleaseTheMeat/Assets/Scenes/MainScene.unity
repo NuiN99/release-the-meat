@@ -273,7 +273,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &67298819
 Transform:
   m_ObjectHideFlags: 0
@@ -529,6 +529,8 @@ MonoBehaviour:
   minLength: 0.5
   maxLength: 7.5
   massByScaleDivider: 2.5
+  startPoint: {x: 0, y: 0}
+  endPoint: {x: 0, y: 0}
   extendingPart: 0
   plankPrefab: {fileID: 405934711945403022, guid: 87e0f31ec28ec30458a23b59c77959c5, type: 3}
   rodPrefab: {fileID: 405934711945403022, guid: 9457dc45b4b0ffb4ba33dfc452fed5e1, type: 3}
@@ -566,7 +568,7 @@ MonoBehaviour:
   selectionPointPrefab: {fileID: 740048008282109977, guid: 611e51bae2596f34b9e7632f1f1cd225, type: 3}
   selectionPoint: {fileID: 0}
   selectedPart: {fileID: 0}
-  tooFar: 0
+  selectingPart: 0
   hoveredPartType: 0
 --- !u!114 &163130265
 MonoBehaviour:
@@ -6023,9 +6025,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbb8e2f1aa1218b449e287badd07bbd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plankBreakForce: 1000
-  rodBreakForce: 750
-  wheelBreakForce: 0
+  debugStressMode: 1
+  plankBreakForce: 750
+  rodBreakForce: 500
+  wheelBreakForce: 500
 --- !u!1 &1761226116
 GameObject:
   m_ObjectHideFlags: 0
