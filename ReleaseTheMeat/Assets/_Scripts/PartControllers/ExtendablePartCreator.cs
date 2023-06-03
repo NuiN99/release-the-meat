@@ -9,8 +9,8 @@ public class ExtendablePartCreator : MonoBehaviour
     [SerializeField] float maxLength;
     [SerializeField] float massByScaleDivider;
     Vector2 mousePos;
-    Vector2 startPoint;
-    Vector2 endPoint;
+    public Vector2 startPoint;
+    public Vector2 endPoint;
     public bool extendingPart;
 
     [SerializeField] GameObject plankPrefab;
@@ -148,12 +148,12 @@ public class ExtendablePartCreator : MonoBehaviour
             endPoint = selectionPointObj.transform.position;
             currentExtendablePart.GetComponent<ExtendablePart>().objAttachedToEnd = selectedPart;
 
-            if (PartSelection.instance.selectionPoint != null && scaleX >= maxLength && (Vector2)PartSelection.instance.selectionPoint.transform.position != pointDir * currentExtendablePart.transform.localScale.x)
+            /*if (IsMousePastPart(PartSelection.instance.selectionPoint)) 
             {
                 currentExtendablePart.GetComponent<ExtendablePart>().objAttachedToEnd = null;
                 endPoint = startPoint + (pointDir * currentExtendablePart.transform.localScale.x);
                 print(currentExtendablePart.transform.position);
-            }
+            }*/
         }
         else
         {
@@ -194,5 +194,15 @@ public class ExtendablePartCreator : MonoBehaviour
 
         currentExtendablePart.transform.position = startPoint + (pointDir * (scaleX / 2));
         currentExtendablePart.transform.localScale = new Vector2(scaleX, currentExtendablePart.transform.localScale.y);
+    }
+
+    public bool IsMousePastPart()
+    {
+        if (extendingPart == false) return false;
+        if (scaleX >= maxLength)
+        {
+            return true;
+        }
+        return false;
     }
 }

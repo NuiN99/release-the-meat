@@ -5,6 +5,8 @@ using UnityEditor.UI;
 using UnityEngine;
 using System;
 using System.Net;
+using System.Reflection;
+using UnityEngine.UIElements;
 
 public class PartSelection : MonoBehaviour
 {
@@ -59,7 +61,14 @@ public class PartSelection : MonoBehaviour
         RaycastHit2D[] rayHits = Physics2D.CircleCastAll(mousePos, rayRadius, Vector3.zero, 0, selectionMask);
 
         selectedPart = null;
+
         ResetSelectionPoint();
+
+
+        if (ExtendablePartCreator.instance.IsMousePastPart()) 
+        {
+            return;
+        }
 
         float maxDist = Mathf.Infinity;
         foreach(RaycastHit2D rayHit in rayHits)
