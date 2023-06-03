@@ -47,8 +47,20 @@ public class CartController : MonoBehaviour
                         {
                             part.GetComponent<SpriteRenderer>().color = new Color(0, 0, 255, 1);
                         }
+                    } 
+                }
+
+                if (part.TryGetComponent(out WheelJoint2D wheelJoint) && wheelJoint.connectedBody != null)
+                {
+                    if (part.GetComponent<Wheel>())
+                    {
+                        Vector2 reactionForce = wheelJoint.GetReactionForce(Time.deltaTime);
+                        part.GetComponent<SpriteRenderer>().color = new Color((reactionForce.x + reactionForce.y) / plankBreakForce, 0, 0, 1); ;
+                        if (reactionForce.x + reactionForce.y >= wheelBreakForce - 50)
+                        {
+                            part.GetComponent<SpriteRenderer>().color = new Color(0, 0, 255, 1);
+                        }
                     }
-                    
                 }
             }
         }

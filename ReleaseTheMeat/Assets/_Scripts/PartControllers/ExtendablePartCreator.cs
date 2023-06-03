@@ -215,8 +215,9 @@ public class ExtendablePartCreator : MonoBehaviour
             if (hit.collider.gameObject == currentExtendablePart)continue;
             if (!hit.collider.gameObject.TryGetComponent(out Part part)) continue;
             if (hit.collider.gameObject == currentExtendablePart.GetComponent<ExtendablePart>().objAttachedToStart) continue;
+            if (hit.collider.gameObject == PartSelection.instance.selectedPart) continue;
 
-            if (extendingPart && !PartSelection.instance.selectingPart && hit.collider.gameObject != currentExtendablePart)
+            if (extendingPart)
             {
                 return true;
             }
