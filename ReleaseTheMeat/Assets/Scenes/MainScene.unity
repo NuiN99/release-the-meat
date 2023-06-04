@@ -367,7 +367,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 405934711945403022, guid: 6d49ffc40f0209845addbe596ae1d880, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d49ffc40f0209845addbe596ae1d880, type: 3}
@@ -574,6 +574,7 @@ MonoBehaviour:
   startPoint: {x: 0, y: 0}
   endPoint: {x: 0, y: 0}
   extendingPart: 0
+  ignoreIntersectionRadius: 0.25
   plankPrefab: {fileID: 405934711945403022, guid: 87e0f31ec28ec30458a23b59c77959c5, type: 3}
   rodPrefab: {fileID: 405934711945403022, guid: 9457dc45b4b0ffb4ba33dfc452fed5e1, type: 3}
   ropePrefab: {fileID: 405934711945403022, guid: 6d49ffc40f0209845addbe596ae1d880, type: 3}

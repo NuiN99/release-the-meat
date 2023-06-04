@@ -13,6 +13,8 @@ public class ExtendablePartCreator : MonoBehaviour
     public Vector2 endPoint;
     public bool extendingPart;
 
+    [SerializeField] float ignoreIntersectionRadius;
+
     [SerializeField] GameObject plankPrefab;
     [SerializeField] GameObject rodPrefab;
     [SerializeField] GameObject ropePrefab;
@@ -27,6 +29,7 @@ public class ExtendablePartCreator : MonoBehaviour
     float scaleX;
 
     public static ExtendablePartCreator instance;
+
 
     void Awake()
     {
@@ -112,7 +115,6 @@ public class ExtendablePartCreator : MonoBehaviour
         if (IsMouseOverUI.instance.overUI) return;
 
         extendingPart = true;
-
         
         if (selectedPart != null)
             startPoint = selectionPointObj.transform.position;
@@ -204,14 +206,16 @@ public class ExtendablePartCreator : MonoBehaviour
     bool IsPartIntersecting()
     {
         RaycastHit2D[] hits = Physics2D.RaycastAll(startPoint + (pointDir * scaleX), -pointDir, scaleX);
+        
         Debug.DrawRay(startPoint + (pointDir * scaleX), -pointDir * scaleX, Color.green);
 
         foreach (RaycastHit2D hit in hits)
         {
             if (hit.collider.gameObject == currentExtendablePart)continue;
-            if (!hit.collider.gameObject.TryGetComponent(out Part part)) continue;
+            if (!hit.collider.gameObject.GetComponent<Part>()) continue;
             if (hit.collider.gameObject == currentExtendablePart.GetComponent<ExtendablePart>().objAttachedToStart) continue;
             if (hit.collider.gameObject == PartSelection.instance.selectedPart) continue;
+            if (Vector2.Distance(hit.point, startPoint) <= ignoreIntersectionRadius) continue;
 
             if (extendingPart)
             {
