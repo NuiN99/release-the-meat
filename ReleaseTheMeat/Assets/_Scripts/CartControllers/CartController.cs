@@ -45,7 +45,12 @@ public class CartController : MonoBehaviour
 
     void Update()
     {
-       ShowJointStress();
+       
+    }
+
+    private void FixedUpdate()
+    {
+        ShowJointStress();
     }
 
     void ShowJointStress()
