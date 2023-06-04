@@ -28,7 +28,6 @@ public class PartSelection : MonoBehaviour
         PLANK,
         ROD,
         ROPE,
-        ELASTIC,
         WHEEL,
     }
     public PartType hoveredPartType;
@@ -159,7 +158,6 @@ public class PartSelection : MonoBehaviour
         else if (selectedPart.GetComponent<Plank>()) hoveredPartType = PartType.PLANK;
         else if (selectedPart.GetComponent<Rod>()) hoveredPartType = PartType.ROD;
         else if (selectedPart.GetComponent<Rope>()) hoveredPartType = PartType.ROPE;
-        else if (selectedPart.GetComponent<Elastic>()) hoveredPartType = PartType.ELASTIC;
         else if (selectedPart.GetComponent<Wheel>()) hoveredPartType = PartType.WHEEL;
     }
 }

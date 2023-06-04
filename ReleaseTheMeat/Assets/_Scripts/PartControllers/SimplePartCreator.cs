@@ -80,13 +80,6 @@ public class SimplePartCreator : MonoBehaviour
 
                 return;
 
-            case PartSelection.PartType.ELASTIC:
-
-                currentHeldPart = null;
-                placingPart = true;
-                selectedPartObjSR.sprite = null;
-
-                return;
 
             case PartSelection.PartType.WHEEL:
 
@@ -147,8 +140,6 @@ public class SimplePartCreator : MonoBehaviour
                         case PartSelection.PartType.ROD:
                             break;
                         case PartSelection.PartType.ROPE:
-                            break;
-                        case PartSelection.PartType.ELASTIC:
                             break;
                         case PartSelection.PartType.WHEEL:
                             SetWheelJoint(newPart, selectionRB, CartController.instance.wheelBreakForce);

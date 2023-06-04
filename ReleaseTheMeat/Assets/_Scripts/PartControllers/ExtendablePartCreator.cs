@@ -16,7 +16,6 @@ public class ExtendablePartCreator : MonoBehaviour
     [SerializeField] GameObject plankPrefab;
     [SerializeField] GameObject rodPrefab;
     [SerializeField] GameObject ropePrefab;
-    [SerializeField] GameObject elasticPrefab;
 
     GameObject currentPrefab;
 
@@ -62,10 +61,6 @@ public class ExtendablePartCreator : MonoBehaviour
 
             case PartSelection.PartType.ROPE:
                 currentPrefab = ropePrefab;
-                return true;
-
-            case PartSelection.PartType.ELASTIC:
-                currentPrefab = elasticPrefab;
                 return true;
 
             default:

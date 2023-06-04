@@ -31,11 +31,6 @@ public class PartButtons : MonoBehaviour
         selectedPartType = PartSelection.PartType.ROPE;
     }
 
-    public void SelectElastic()
-    {
-        selectedPartType = PartSelection.PartType.ELASTIC;
-    }
-
     public void SelectWheel()
     {
         selectedPartType = PartSelection.PartType.WHEEL;
