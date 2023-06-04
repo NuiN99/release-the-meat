@@ -107,13 +107,14 @@ public class CartController : MonoBehaviour
 
     public Vector3 MiddleOfCart()
     {
-        Vector3 sum = new Vector3(0, 0);
+        Vector3 sum = Vector3.zero;
         foreach (Transform partPos in partPositions)
         {
             sum += partPos.position;
         }
 
         if (partPositions.Count == 0) return Camera.main.transform.position;
+        print(partPositions.Count);
         return sum / partPositions.Count;
     }
 
