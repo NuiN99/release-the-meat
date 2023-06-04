@@ -63,7 +63,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   acceleration: 10
-  maxSpeed: 500
+  maxSpeed: 750
 --- !u!114 &1183352307694257587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,7 +120,7 @@ WheelJoint2D:
   m_UseMotor: 1
   m_Motor:
     m_MotorSpeed: 0
-    m_MaximumMotorForce: 2.5
+    m_MaximumMotorForce: 10
 --- !u!58 &4641117914644135562
 CircleCollider2D:
   m_ObjectHideFlags: 0
