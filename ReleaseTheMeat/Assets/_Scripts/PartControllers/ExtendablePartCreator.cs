@@ -172,11 +172,17 @@ public class ExtendablePartCreator : MonoBehaviour
 
             if (currentExtendablePart.GetComponent<ExtendablePart>().objAttachedToStart != null && currentExtendablePart.GetComponent<ExtendablePart>().objAttachedToStart.TryGetComponent(out SimplePart simplePartStart))
             {
-                simplePartStart.SetWheelJoint(extendablePartRB);
+                if (!simplePartStart.attached)
+                {
+                    simplePartStart.SetWheelJoint(extendablePartRB);
+                }
             }
             if (PartSelection.instance.selectedPart != null && PartSelection.instance.selectedPart.TryGetComponent(out SimplePart simplePart))
             {
-                simplePart.SetWheelJoint(extendablePartRB);
+                if (!simplePart.attached)
+                {
+                    simplePart.SetWheelJoint(extendablePartRB);
+                }
             }
             
             extendablePart.CheckForAttachedParts();
@@ -226,6 +232,7 @@ public class ExtendablePartCreator : MonoBehaviour
             if (hit.collider.gameObject == PartSelection.instance.selectedPart) continue;
             if (hit.collider.gameObject.GetComponent<Wheel>()) continue;
             if (Vector2.Distance(hit.point, startPoint) <= ignoreIntersectionRadius) continue;
+            if (PartSelection.instance.selectingPart && Vector2.Distance(hit.point, PartSelection.instance.selectionPoint.transform.position) <= ignoreIntersectionRadius) continue;
 
             if (extendingPart)
             {

@@ -104,6 +104,7 @@ public class CartController : MonoBehaviour
     public void GetPartPositions()
     {
         Part[] parts = FindObjectsOfType<Part>();
+
         foreach (Part part in parts)
         {
             partPositions.Add(part.gameObject.transform);
@@ -134,7 +135,8 @@ public class CartController : MonoBehaviour
         {
             if (Vector2.Distance(MiddleOfCart(), partPos.position) > 25)
             {
-                continue;
+                partPositions.Remove(partPos);
+                break;
             }
 
             Vector3 position = partPos.position;

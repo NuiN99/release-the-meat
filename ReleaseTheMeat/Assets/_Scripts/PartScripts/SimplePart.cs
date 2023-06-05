@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SimplePart : MonoBehaviour
 {
-
+    public bool attached;
     void Start()
     {
         
@@ -28,5 +28,7 @@ public class SimplePart : MonoBehaviour
         joint.connectedBody = connectedBody;
         joint.anchor = transform.InverseTransformPoint(transform.position);
         joint.connectedAnchor = connectedBody.transform.InverseTransformPoint(transform.position);
+
+        attached = true;
     }
 }
