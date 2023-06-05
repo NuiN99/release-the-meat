@@ -1,8 +1,5 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.iOS;
-using static UnityEngine.Rendering.HableCurve;
 
 public class Rope : MonoBehaviour
 {

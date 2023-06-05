@@ -1,12 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using UnityEditor.UI;
 using UnityEngine;
 using System;
-using System.Net;
-using System.Reflection;
-using UnityEngine.UIElements;
 
 public class PartSelection : MonoBehaviour
 {
