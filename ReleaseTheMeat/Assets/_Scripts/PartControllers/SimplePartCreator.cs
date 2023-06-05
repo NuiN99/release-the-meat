@@ -142,7 +142,7 @@ public class SimplePartCreator : MonoBehaviour
                         case PartSelection.PartType.ROPE:
                             break;
                         case PartSelection.PartType.WHEEL:
-                            SetWheelJoint(newPart, selectionRB, CartController.instance.wheelBreakForce);
+                            newPart.GetComponent<SimplePart>().SetWheelJoint(selectionRB);
                             break;
                     }
 
@@ -156,20 +156,5 @@ public class SimplePartCreator : MonoBehaviour
     {
         placingPart = false;
         currentHeldPart = null;
-    }
-
-
-    public void SetWheelJoint(GameObject wheel, Rigidbody2D connectedBody, float breakForce)
-    {
-        if (PartSelection.instance.selectedPart == null) return;
-        if (PartSelection.instance.selectedPart.GetComponent<Wheel>()) return;
-
-        WheelJoint2D joint = wheel.GetComponent<WheelJoint2D>();
-
-        joint.breakForce = breakForce;
-
-        joint.connectedBody = connectedBody;
-        joint.anchor = wheel.transform.InverseTransformPoint(wheel.transform.position);
-        joint.connectedAnchor = connectedBody.transform.InverseTransformPoint(wheel.transform.position);
     }
 }

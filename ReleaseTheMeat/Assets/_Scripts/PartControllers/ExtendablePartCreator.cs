@@ -23,8 +23,6 @@ public class ExtendablePartCreator : MonoBehaviour
 
     GameObject currentExtendablePart;
 
-
-
     Vector2 pointDir;
     float scaleX;
 
@@ -126,7 +124,10 @@ public class ExtendablePartCreator : MonoBehaviour
         CurrentHeldPart.instance.part = currentExtendablePart;
 
         if (selectedPart != null)
+        {
             currentExtendablePart.GetComponent<ExtendablePart>().objAttachedToStart = selectedPart;
+        }
+            
     }
 
     void ExtendPart(GameObject selectedPart, GameObject selectionPointObj)
@@ -164,12 +165,20 @@ public class ExtendablePartCreator : MonoBehaviour
             endPoint = mousePos;
         }
 
-
         if (currentExtendablePart.TryGetComponent(out ExtendablePart extendablePart))
         {
             extendablePart.startPoint = startPoint;
             extendablePart.endPoint = endPoint;
 
+            if (currentExtendablePart.GetComponent<ExtendablePart>().objAttachedToStart != null && currentExtendablePart.GetComponent<ExtendablePart>().objAttachedToStart.TryGetComponent(out SimplePart simplePartStart))
+            {
+                simplePartStart.SetWheelJoint(extendablePartRB);
+            }
+            if (PartSelection.instance.selectedPart != null && PartSelection.instance.selectedPart.TryGetComponent(out SimplePart simplePart))
+            {
+                simplePart.SetWheelJoint(extendablePartRB);
+            }
+            
             extendablePart.CheckForAttachedParts();
         }
 
@@ -215,6 +224,7 @@ public class ExtendablePartCreator : MonoBehaviour
             if (!hit.collider.gameObject.GetComponent<Part>()) continue;
             if (hit.collider.gameObject == currentExtendablePart.GetComponent<ExtendablePart>().objAttachedToStart) continue;
             if (hit.collider.gameObject == PartSelection.instance.selectedPart) continue;
+            if (hit.collider.gameObject.GetComponent<Wheel>()) continue;
             if (Vector2.Distance(hit.point, startPoint) <= ignoreIntersectionRadius) continue;
 
             if (extendingPart)
@@ -229,10 +239,12 @@ public class ExtendablePartCreator : MonoBehaviour
     public bool IsMaxLength()
     {
         if (extendingPart == false) return false;
+
         if (scaleX >= maxLength)
         {
             return true;
         }
+
         return false;
     }
 }
