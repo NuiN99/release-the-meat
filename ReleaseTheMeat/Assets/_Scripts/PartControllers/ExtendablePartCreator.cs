@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//Remove unused statements
 
+//Namespace
 public class ExtendablePartCreator : MonoBehaviour
 {
     [SerializeField] float minLength;
@@ -26,6 +28,9 @@ public class ExtendablePartCreator : MonoBehaviour
     Vector2 pointDir;
     float scaleX;
 
+
+    //This doesn't need to be a singleton
+    //Like the other one, you need to make a singleton that can handle MonoBehaviour GameObjects so this needs to be changed
     public static ExtendablePartCreator instance;
 
 
@@ -43,6 +48,7 @@ public class ExtendablePartCreator : MonoBehaviour
             return;
         }
 
+        //Cache the camera reference in Start or something. No need to keep grabing the reference
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         PlankPlacement();
