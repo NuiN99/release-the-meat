@@ -2,17 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+//Remove unused statements
 
+//namesapce
 public class GamePhase : MonoBehaviour
 {
+    //This doesn't need to be a singleton/ This needs to be setup for MonoBehaviour
     public static GamePhase instance;
 
+    //Consider switching to Action types. UnityEvents are not great
     public UnityEvent ChangeToMenuPhase;
     public UnityEvent ChangeToBuildingPhase;
     public UnityEvent ChangeToLevelPhase;
 
     public Phase currentPhase;
 
+    //This doesn't need to be in the class, and shouldn't be unless it's private
     public enum Phase
     {
         MENU,
@@ -20,6 +25,7 @@ public class GamePhase : MonoBehaviour
         LEVEL,
     }
 
+    //Remove this if not using it. It's still called by Unity
     void Start()
     {
 
@@ -60,6 +66,8 @@ public class GamePhase : MonoBehaviour
             instance = this;
     }
 
+
+    //Remove this if not using it
     void Update()
     {
         
