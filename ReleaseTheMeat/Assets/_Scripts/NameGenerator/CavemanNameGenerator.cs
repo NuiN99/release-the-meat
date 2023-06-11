@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+//Remove unused statements
 
+
+//namesapce
 public class CavemanNameGenerator : MonoBehaviour
 {
     readonly string[] _firstNames = new CavemanNames().firstNames;
