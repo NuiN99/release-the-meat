@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+//Remove unused statemetns
 
+//namesapce
 public class PartSelection : MonoBehaviour
 {
     
+    //Same singleton statement, don't need it and it needs to be updated for MonoBehaviour
     public static PartSelection instance;
 
     Vector2 mousePos;
@@ -17,6 +20,7 @@ public class PartSelection : MonoBehaviour
 
     public bool selectingPart;
 
+    //Set this outside the class. This should be it's own thing. It can stay within the file but doesn't need to be inside this class
     public enum PartType 
     {
         NULL, 
@@ -94,6 +98,7 @@ public class PartSelection : MonoBehaviour
 
     void SelectExtendablePart()
     {
+        //Needs to be a try get or try/catch
         ExtendablePart extendablePart = selectedPart.GetComponent<ExtendablePart>();
         Vector2 startPoint = extendablePart.startPoint;
         Vector2 endPoint = extendablePart.endPoint;
@@ -150,6 +155,7 @@ public class PartSelection : MonoBehaviour
         }
         
 
+        //These need to be try gets or try/catches. You need to be able to  handle errors gracefully
         else if (selectedPart.GetComponent<Plank>()) hoveredPartType = PartType.PLANK;
         else if (selectedPart.GetComponent<Rod>()) hoveredPartType = PartType.ROD;
         else if (selectedPart.GetComponent<Rope>()) hoveredPartType = PartType.ROPE;

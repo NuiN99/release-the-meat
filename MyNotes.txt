@@ -1,0 +1,31 @@
+#Mike Quinn notes
+
+##Main Scene
+- I would like to see more prefabs in your scenes. While working by yourself, changing the actual scene works fine
+but as you start working with teammates you will run into an issue where changing the scene causes major conflicts.
+The way around this is to have prefabs for all objects that may need to be updated. So get into the habbit of 
+prefabbing all of your objects and then get into the workflow of updating the prefabs instead of the scene.
+
+- I do like your separation and organization within the scene but take the extra step and prefab these objects.
+
+- I'd suggest that you switch the HUD to overlay as your current system won't scale to different screen sizes
+
+##Final Notes
+- Way too many singletons. The point of a singleton is to only have one instance of an object for conflict reasons
+or to have scene persistent data. Your MonoBehaviour class are already the only instance of an object in the scene
+so setting your single instance objects as singletons is not good practice and will lead to more difficulty in debugging.
+You can have the same effect by setting references to other classes within a serialized field in the editor.
+
+- Use namespaces. Not only is this a standard requirement to avoid naming conflicts but you it will force you to address
+the interconnection between your classes.
+
+- Overall it's not bad, there are sections where the code can be formatted better but there isn't anything that screams intervention.
+
+Keep up the good work and feel free to stay in touch!
+
+
+If you want to reach out you can connect with me
+Email - Contact@MikeQ.dev
+LinkedIn - https://www.linkedin.com/in/michael-quinn-a3634a165/
+GitHub - https://github.com/M-Quinn
+Medium Tutorials - https://medium.com/@MJQuinn

@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//remove unused statements
 
+//Namespace
 public class PartsController : MonoBehaviour
 {
     [SerializeField] GameObject[] objectsToDisable;
