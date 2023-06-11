@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//Remove unused using statements
 
+//namespace
 public class PartCreation : MonoBehaviour
 {
+    //This class can grab refernces to other objects and send the part references out
     void Update()
     {
         if (Input.GetMouseButtonDown(1))
