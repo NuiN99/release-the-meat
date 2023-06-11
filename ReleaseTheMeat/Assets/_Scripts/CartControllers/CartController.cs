@@ -45,12 +45,24 @@ public class CartController : MonoBehaviour
 
     void Update()
     {
-       
+        ShowJointStress();
+
+
+        /*Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        RaycastHit2D singleHit = Physics2D.Raycast(mousePos, Vector3.back);
+
+        if (singleHit)
+        {
+            if(Input.GetMouseButtonDown(1)) 
+            {
+                Destroy(singleHit.collider.gameObject);
+            }
+        }*/
     }
 
     private void FixedUpdate()
     {
-        ShowJointStress();
+        
     }
 
     void ShowJointStress()
@@ -61,6 +73,8 @@ public class CartController : MonoBehaviour
         {
             foreach (Transform part in partPositions)
             {
+                if(part == null) continue;
+
                 part.GetComponent<SpriteRenderer>().color = Color.black;
 
                 if (part.TryGetComponent(out HingeJoint2D joint) && joint.connectedBody != null)
@@ -116,11 +130,11 @@ public class CartController : MonoBehaviour
         Vector3 sum = Vector3.zero;
         foreach (Transform partPos in partPositions)
         {
+            if(partPos != null)
             sum += partPos.position;
         }
 
         if (partPositions.Count == 0) return Camera.main.transform.position;
-        print(partPositions.Count);
         return sum / partPositions.Count;
     }
 
@@ -133,18 +147,21 @@ public class CartController : MonoBehaviour
 
         foreach (Transform partPos in partPositions)
         {
-            if (Vector2.Distance(MiddleOfCart(), partPos.position) > 25)
+            if(partPos != null)
             {
-                partPositions.Remove(partPos);
-                break;
+                if (Vector2.Distance(MiddleOfCart(), partPos.position) > 25)
+                {
+                    partPositions.Remove(partPos);
+                    break;
+                }
+
+                Vector3 position = partPos.position;
+
+                minX = Mathf.Min(minX, position.x);
+                minY = Mathf.Min(minY, position.y);
+                maxX = Mathf.Max(maxX, position.x);
+                maxY = Mathf.Max(maxY, position.y);
             }
-
-            Vector3 position = partPos.position;
-
-            minX = Mathf.Min(minX, position.x);
-            minY = Mathf.Min(minY, position.y);
-            maxX = Mathf.Max(maxX, position.x);
-            maxY = Mathf.Max(maxY, position.y);
         }
 
         float distX = maxX - minX;

@@ -5,6 +5,8 @@ using UnityEngine;
 public class PartsController : MonoBehaviour
 {
     [SerializeField] GameObject[] objectsToDisable;
+
+    [SerializeField] GameObject[] parts;
     public void TurnOffPartsController()
     {
         gameObject.SetActive(false);
@@ -12,5 +14,11 @@ public class PartsController : MonoBehaviour
         {
             obj.SetActive(false);
         }
+    }
+
+
+    public void SaveCart()
+    {
+
     }
 }

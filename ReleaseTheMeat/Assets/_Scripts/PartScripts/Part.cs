@@ -7,6 +7,14 @@ public class Part : MonoBehaviour
     Color ogColor;
     SpriteRenderer sr;
 
+
+    private void Awake()
+    {
+        if(GamePhase.instance.currentPhase == GamePhase.Phase.BUILDING)
+        {
+            //DontDestroyOnLoad(this);
+        }
+    }
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();

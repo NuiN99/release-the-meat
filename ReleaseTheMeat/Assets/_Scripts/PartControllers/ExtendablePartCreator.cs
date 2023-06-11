@@ -233,6 +233,7 @@ public class ExtendablePartCreator : MonoBehaviour
             if (hit.collider.gameObject.GetComponent<Wheel>()) continue;
             if (Vector2.Distance(hit.point, startPoint) <= ignoreIntersectionRadius) continue;
             if (PartSelection.instance.selectingPart && Vector2.Distance(hit.point, PartSelection.instance.selectionPoint.transform.position) <= ignoreIntersectionRadius) continue;
+            if (currentExtendablePart.GetComponent<Rod>() && hit.collider.gameObject.GetComponent<Rod>()) continue;
 
             if (extendingPart)
             {

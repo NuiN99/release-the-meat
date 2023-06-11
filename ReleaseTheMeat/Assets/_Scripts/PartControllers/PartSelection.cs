@@ -52,6 +52,7 @@ public class PartSelection : MonoBehaviour
     {
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         RaycastHit2D[] rayHits = Physics2D.CircleCastAll(mousePos, rayRadius, Vector3.zero, 0, selectionMask);
+        RaycastHit2D singleHit = Physics2D.Raycast(mousePos, Vector3.back, selectionMask);
 
         selectedPart = null;
 
@@ -71,6 +72,13 @@ public class PartSelection : MonoBehaviour
                 float distFromMouse = Vector2.Distance(mousePos, rayHit.point);
                 if (distFromMouse < maxDist)
                 {
+                    //check if wheel is already connected, if so dont connect to it because that will make that part get rotated by da wheel
+
+                    if(singleHit.collider != null)
+                    {
+                        if (rayHit.collider.gameObject.TryGetComponent(out Wheel wheel) && wheel.gameObject.GetComponent<WheelJoint2D>().connectedBody != null) continue;
+                    }
+
                     maxDist = distFromMouse;
                     selectedPart = rayHit.collider.gameObject;
                 }
