@@ -1,9 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//Remove unused using statements
 
+//namespace? use one
 public class CartController : MonoBehaviour
 {
+    //This doesn't need to be a singleton. But if you do want it to be a singleton then you need to make this work with monobehaviour
+    //Example
+    /*
+        public static Singleton Instance { get; private set; }
+        private void Awake() 
+        { 
+            // If there is an instance, and it's not me, delete myself.
+    
+            if (Instance != null && Instance != this) 
+            { 
+                Destroy(this); 
+            } 
+            else 
+            { 
+                Instance = this; 
+            } 
+        }
+     */
+    //A MonoBehaviour singleton needs to be able to destroy objects
+
+
+
     public static CartController instance;
 
 
@@ -43,6 +67,7 @@ public class CartController : MonoBehaviour
         if (!wheelBreakEnabled) wheelBreakForce = Mathf.Infinity;
     }
 
+    //If you aren't using Update, then remove it because Unity will still call it
     void Update()
     {
        
@@ -67,9 +92,11 @@ public class CartController : MonoBehaviour
                 {
                     if (part.GetComponent<Plank>())
                     {
+                            //I'm seeing a lot of repeat code here. Make these code blocks into a method so you can easily read this
+                            // and change things. You can easily set the float breakforce as a parameter
                         Vector2 reactionForce = joint.GetReactionForce(Time.deltaTime);
                         part.GetComponent<SpriteRenderer>().color = new Color((reactionForce.x + reactionForce.y) / plankBreakForce, 0, 0, 1);;
-                        if (reactionForce.x + reactionForce.y >= plankBreakForce - 50)
+                        if (reactionForce.x + reactionForce.y >= plankBreakForce - 50) //No magic numbers, replace 50 with a variable
                         {
                             part.GetComponent<SpriteRenderer>().color = new Color(0, 0, 255, 1);
                         }
@@ -101,6 +128,8 @@ public class CartController : MonoBehaviour
         }
     }
 
+    //Try to use callbacks instead of using a FindObjectsOfType. I left an example on CartCompletor
+    //You can even have one object hold the references of all the parts and then call it from there
     public void GetPartPositions()
     {
         Part[] parts = FindObjectsOfType<Part>();
@@ -119,6 +148,7 @@ public class CartController : MonoBehaviour
             sum += partPos.position;
         }
 
+        //Grab the main camera reference in start
         if (partPositions.Count == 0) return Camera.main.transform.position;
         print(partPositions.Count);
         return sum / partPositions.Count;
@@ -133,6 +163,7 @@ public class CartController : MonoBehaviour
 
         foreach (Transform partPos in partPositions)
         {
+            //No magic numbers, make 25 a variable so you can adjust it later if need be
             if (Vector2.Distance(MiddleOfCart(), partPos.position) > 25)
             {
                 partPositions.Remove(partPos);
