@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class SimplePartCreator : MonoBehaviour
@@ -10,7 +7,6 @@ public class SimplePartCreator : MonoBehaviour
     Sprite selectedPartIcon;
 
     [SerializeField] Sprite wheelIcon;
-
 
     public bool placingPart;
 

@@ -62,8 +62,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d756b0a366d134949ae4a32c3f435406, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acceleration: 10
-  maxSpeed: 750
+  acceleration: 15
+  maxSpeed: 1000
 --- !u!114 &1183352307694257587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,6 +76,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 875864d2f048a744ba1c8753e95e8182, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attached: 0
 --- !u!50 &4641117914644135565
 Rigidbody2D:
   serializedVersion: 4
@@ -120,7 +121,7 @@ WheelJoint2D:
   m_UseMotor: 1
   m_Motor:
     m_MotorSpeed: 0
-    m_MaximumMotorForce: 10
+    m_MaximumMotorForce: 15
 --- !u!58 &4641117914644135562
 CircleCollider2D:
   m_ObjectHideFlags: 0

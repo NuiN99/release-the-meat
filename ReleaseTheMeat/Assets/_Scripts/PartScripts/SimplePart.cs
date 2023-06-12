@@ -1,20 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SimplePart : MonoBehaviour
 {
     public bool attached;
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
-
 
     public void SetWheelJoint(Rigidbody2D connectedBody)
     {

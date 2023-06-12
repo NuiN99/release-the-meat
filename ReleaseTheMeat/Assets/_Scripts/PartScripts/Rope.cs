@@ -42,10 +42,4 @@ public class Rope : MonoBehaviour
 
         }
     }
-
-    void Update()
-    {
-        
-    }
-
 }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CurrentHeldPart : MonoBehaviour
@@ -12,10 +10,5 @@ public class CurrentHeldPart : MonoBehaviour
     {
         if (instance == null)
             instance = this;
-    }
-
-    void Update()
-    {
-        
     }
 }

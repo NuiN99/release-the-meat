@@ -1,11 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CartController : MonoBehaviour
 {
     public static CartController instance;
-
 
     [Header("Debug Stress Mode")]
     [SerializeField] bool debugStressMode;
@@ -19,8 +17,6 @@ public class CartController : MonoBehaviour
     public float plankBreakForce;
     public float rodBreakForce;
     public float wheelBreakForce;
-
-    
 
     List<Transform> partPositions = new List<Transform>();
     void Awake()
@@ -46,23 +42,6 @@ public class CartController : MonoBehaviour
     void Update()
     {
         ShowJointStress();
-
-
-        /*Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        RaycastHit2D singleHit = Physics2D.Raycast(mousePos, Vector3.back);
-
-        if (singleHit)
-        {
-            if(Input.GetMouseButtonDown(1)) 
-            {
-                Destroy(singleHit.collider.gameObject);
-            }
-        }*/
-    }
-
-    private void FixedUpdate()
-    {
-        
     }
 
     void ShowJointStress()

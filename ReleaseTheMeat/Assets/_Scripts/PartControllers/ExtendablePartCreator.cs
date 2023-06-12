@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ExtendablePartCreator : MonoBehaviour
@@ -27,7 +24,6 @@ public class ExtendablePartCreator : MonoBehaviour
     float scaleX;
 
     public static ExtendablePartCreator instance;
-
 
     void Awake()
     {

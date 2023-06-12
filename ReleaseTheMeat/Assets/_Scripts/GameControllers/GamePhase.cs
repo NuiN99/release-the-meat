@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -18,11 +16,6 @@ public class GamePhase : MonoBehaviour
         MENU,
         BUILDING,
         LEVEL,
-    }
-
-    void Start()
-    {
-
     }
 
     void ChangePhase(Phase phase)
@@ -58,10 +51,5 @@ public class GamePhase : MonoBehaviour
     {
         if (instance == null)
             instance = this;
-    }
-
-    void Update()
-    {
-        
     }
 }
