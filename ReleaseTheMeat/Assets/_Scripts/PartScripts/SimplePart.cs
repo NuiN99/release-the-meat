@@ -2,16 +2,28 @@ using UnityEngine;
 
 public class SimplePart : MonoBehaviour
 {
+    [Header("Dependencies")]
+    PartSelection partSelection;
+    CartController cartController;
+    PartButtons partButtons;
+
     public bool attached;
+
+    void Awake()
+    {
+        partSelection = FindObjectOfType<PartSelection>();
+        cartController = FindObjectOfType<CartController>();
+        partButtons = FindObjectOfType<PartButtons>();
+    }
 
     public void SetWheelJoint(Rigidbody2D connectedBody)
     {
-        if (PartSelection.instance.selectedPart == null) return;
-        if (PartButtons.instance.selectedPartType == PartSelection.PartType.WHEEL && PartSelection.instance.selectedPart.GetComponent<SimplePart>()) return;
+        if (partSelection.selectedPart == null) return;
+        if (partButtons.selectedPartType == PartSelection.PartType.WHEEL && partSelection.selectedPart.GetComponent<SimplePart>()) return;
 
         WheelJoint2D joint = GetComponent<WheelJoint2D>();
 
-        joint.breakForce = CartController.instance.wheelBreakForce;
+        joint.breakForce = cartController.wheelBreakForce;
 
         joint.connectedBody = connectedBody;
         joint.anchor = transform.InverseTransformPoint(transform.position);

@@ -3,11 +3,21 @@ using UnityEngine;
 
 public class ExtendablePart : MonoBehaviour
 {
+    [Header("Dependencies")]
+    CartController cartController;
+    PartButtons partButtons;
+
     public Vector2 startPoint;
     public Vector2 endPoint;
 
     [NonSerialized] public GameObject objAttachedToStart;
     [NonSerialized] public GameObject objAttachedToEnd;
+
+    void Awake()
+    {
+        cartController = FindObjectOfType<CartController>();
+        partButtons = FindObjectOfType<PartButtons>();
+    }
 
     public void CheckForAttachedParts()
     {
@@ -27,15 +37,15 @@ public class ExtendablePart : MonoBehaviour
 
     void CheckTypeAndCreateJoint(Rigidbody2D attachedRB, Vector2 point)
     {
-        switch (PartButtons.instance.selectedPartType)
+        switch (partButtons.selectedPartType)
         {
             case PartSelection.PartType.PLANK:
-                CreateHingeJoint(point, attachedRB, CartController.instance.plankBreakForce);
+                CreateHingeJoint(point, attachedRB, cartController.plankBreakForce);
                 //CreateDistanceJoint(point, attachedRB, CartController.instance.plankBreakForce);
                 break;
 
             case PartSelection.PartType.ROD:
-                CreateHingeJoint(point, attachedRB, CartController.instance.rodBreakForce);
+                CreateHingeJoint(point, attachedRB, cartController.rodBreakForce);
                 //CreateDistanceJoint(point, attachedRB, CartController.instance.rodBreakForce);
                 break;
         }

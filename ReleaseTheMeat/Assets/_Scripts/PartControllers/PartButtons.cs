@@ -2,15 +2,7 @@ using UnityEngine;
 
 public class PartButtons : MonoBehaviour
 {
-    public static PartButtons instance;
-
     public PartSelection.PartType selectedPartType;
-
-    void Awake()
-    {
-        if(instance == null)
-            instance = this;
-    }
 
     public void SelectPlank()
     {

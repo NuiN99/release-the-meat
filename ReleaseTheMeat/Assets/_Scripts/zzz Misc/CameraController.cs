@@ -2,21 +2,29 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] Camera mainCamera;
+    [Header("Dependencies")]
+    [SerializeField] CartController cartController;
+    [SerializeField] GamePhase gamePhase;
+
+    Camera mainCamera;
    
     [SerializeField] float minSize, maxSize;
 
     [SerializeField] float sizeDivider;
     [SerializeField] float verticalOffsetPercent;
 
+    private void Start()
+    {
+        mainCamera = Camera.main;   
+    }
+
     private void Update()
     {
-        if (GamePhase.instance.currentPhase == GamePhase.Phase.LEVEL)
+        if (gamePhase.currentPhase == GamePhase.Phase.LEVEL)
         {
-            MoveCamToCart(CartController.instance.MiddleOfCart());
-            SizeCamToCart(CartController.instance.CartSize(sizeDivider, minSize, maxSize));
+            MoveCamToCart(cartController.MiddleOfCart());
+            SizeCamToCart(cartController.CartSize(sizeDivider, minSize, maxSize));
         }
-        
     }
 
     void MoveCamToCart(Vector3 pos)

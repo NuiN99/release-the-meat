@@ -2,29 +2,29 @@ using UnityEngine;
 
 public class SimplePartCreator : MonoBehaviour
 {
-    
+    [Header("Dependencies")]
+    [SerializeField] PartSelection partSelection;
+    [SerializeField] IsMouseOverUI isMouseOverUI;
+    [SerializeField] PartButtons partButtons;
+    [SerializeField] CurrentHeldPart currentPartScript;
+
+
     [SerializeField] GameObject selectedPartObj;
-    Sprite selectedPartIcon;
 
     [SerializeField] Sprite wheelIcon;
 
     public bool placingPart;
 
-    GameObject currentHeldPart;
+    GameObject currentPart;
 
     [SerializeField] GameObject wheelPrefab;
     Vector2 placementPos;
 
-    public static SimplePartCreator instance;
-    private void Awake()
-    {
-        if (instance == null)
-            instance = this;
-    }
+    
 
     void Update()
     {
-        CheckType(PartButtons.instance.selectedPartType);
+        CheckType(partButtons.selectedPartType);
         MoveSelectedPartIcon();
         PlacePart();
     }
@@ -46,7 +46,7 @@ public class SimplePartCreator : MonoBehaviour
         {
             case PartSelection.PartType.NULL:
 
-                currentHeldPart = null;
+                currentPart = null;
                 placingPart = false;
                 selectedPartObjSR.sprite = null;
 
@@ -54,7 +54,7 @@ public class SimplePartCreator : MonoBehaviour
 
             case PartSelection.PartType.PLANK:
 
-                currentHeldPart = null;
+                currentPart = null;
                 placingPart = true;
                 selectedPartObjSR.sprite = null;
 
@@ -62,7 +62,7 @@ public class SimplePartCreator : MonoBehaviour
 
             case PartSelection.PartType.ROD:
 
-                currentHeldPart = null;
+                currentPart = null;
                 placingPart = true;
                 selectedPartObjSR.sprite = null;
 
@@ -70,7 +70,7 @@ public class SimplePartCreator : MonoBehaviour
 
             case PartSelection.PartType.ROPE:
 
-                currentHeldPart = null;
+                currentPart = null;
                 placingPart = true;
                 selectedPartObjSR.sprite = null;
 
@@ -79,7 +79,7 @@ public class SimplePartCreator : MonoBehaviour
 
             case PartSelection.PartType.WHEEL:
 
-                currentHeldPart = wheelPrefab;
+                currentPart = wheelPrefab;
                 placingPart = true;
                 selectedPartObjSR.sprite = wheelIcon;
 
@@ -89,14 +89,14 @@ public class SimplePartCreator : MonoBehaviour
 
     void MoveSelectedPartIcon()
     {
-        if(PartSelection.instance.selectionPoint == null)
+        if(partSelection.selectionPoint == null)
         {
             placementPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             selectedPartObj.transform.position = placementPos;
         }
         else
         {
-            placementPos = PartSelection.instance.selectionPoint.transform.position;
+            placementPos = partSelection.selectionPoint.transform.position;
             selectedPartObj.transform.position = placementPos;
         }
     }
@@ -105,13 +105,13 @@ public class SimplePartCreator : MonoBehaviour
     {
         if (placingPart)
         {
-            if (IsMouseOverUI.instance.overUI) return;
+            if (isMouseOverUI.overUI) return;
 
             if (Input.GetMouseButtonDown(0))
             {
-                if (currentHeldPart == null) return;
-                GameObject newPart = Instantiate(currentHeldPart, placementPos, Quaternion.identity);
-                newPart.name = currentHeldPart.name;
+                if (currentPart == null) return;
+                GameObject newPart = Instantiate(currentPart, placementPos, Quaternion.identity);
+                newPart.name = currentPart.name;
 
                 /*if (PartSelection.instance.selectedPart != null) 
                 {
@@ -122,12 +122,12 @@ public class SimplePartCreator : MonoBehaviour
                     }
                 }*/
 
-                GameObject selection = PartSelection.instance.selectedPart;
+                GameObject selection = partSelection.selectedPart;
                 if (selection != null)
                 {
                     Rigidbody2D selectionRB = selection.GetComponent<Rigidbody2D>();
 
-                    switch (PartButtons.instance.selectedPartType)
+                    switch (partButtons.selectedPartType)
                     {
                         case PartSelection.PartType.NULL:
                             break;
@@ -142,7 +142,7 @@ public class SimplePartCreator : MonoBehaviour
                             break;
                     }
 
-                    CurrentHeldPart.instance.part = null;
+                    currentPartScript.part = null;
                 }
             }
         }
@@ -151,6 +151,6 @@ public class SimplePartCreator : MonoBehaviour
     public void CancelPartPlacement()
     {
         placingPart = false;
-        currentHeldPart = null;
+        currentPart = null;
     }
 }

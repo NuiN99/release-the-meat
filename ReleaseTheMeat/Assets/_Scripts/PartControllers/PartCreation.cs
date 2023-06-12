@@ -2,30 +2,34 @@ using UnityEngine;
 
 public class PartCreation : MonoBehaviour
 {
+    [Header("Dependencies")]
+    [SerializeField] ExtendablePartCreator extendablePartCreator;
+    [SerializeField] SimplePartCreator simplePartCreator;
+    [SerializeField] PartSelection partSelection;
+    [SerializeField] CurrentHeldPart currentHeldPart;
+
     void Update()
     {
         if (Input.GetMouseButtonDown(1))
         {
 
-            if (ExtendablePartCreator.instance.extendingPart)
+            if (extendablePartCreator.extendingPart)
             {
-                ExtendablePartCreator.instance.ResetExtendablePart();
-                //PartButtons.instance.selectedPartType = PartSelection.PartType.NULL;
+                extendablePartCreator.ResetExtendablePart();
             }
 
-            else if (PartSelection.instance.selectedPart == null)
+            else if (partSelection.selectedPart == null)
             {
-                if (SimplePartCreator.instance.placingPart)
+                if (simplePartCreator.placingPart)
                 {
-                    SimplePartCreator.instance.CancelPartPlacement();
-                    //PartButtons.instance.selectedPartType = PartSelection.PartType.NULL;
+                    simplePartCreator.CancelPartPlacement();
                 }
 
-                CurrentHeldPart.instance.part = null;
+                currentHeldPart.part = null;
             }
             else
             {
-                PartSelection.instance.DeleteSelectedPart();
+                partSelection.DeleteSelectedPart();
             }
         }
     }

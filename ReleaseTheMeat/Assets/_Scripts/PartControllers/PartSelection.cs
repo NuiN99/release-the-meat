@@ -1,16 +1,20 @@
+using System;
 using UnityEngine;
 
 public class PartSelection : MonoBehaviour
 {
-    
-    public static PartSelection instance;
+    [Header("Dependencies")]
+    [SerializeField] ExtendablePartCreator extendablePartCreator;
+    [SerializeField] GamePhase gamePhase;
+    [SerializeField] CurrentHeldPart currentHeldPart;
 
-    Vector2 mousePos;
     [SerializeField] float rayRadius;
     [SerializeField] LayerMask selectionMask;
     [SerializeField] GameObject selectionPointPrefab;
-    public GameObject selectionPoint;
-    public GameObject selectedPart;
+
+    Vector2 mousePos;
+    [NonSerialized] public GameObject selectionPoint;
+    [NonSerialized] public GameObject selectedPart;
 
     public bool selectingPart;
 
@@ -24,15 +28,9 @@ public class PartSelection : MonoBehaviour
     }
     public PartType hoveredPartType;
 
-    void Awake()
-    {
-        if (instance == null) 
-            instance = this;
-    }
-
     void Update()
     {
-        if (GamePhase.instance.currentPhase != GamePhase.Phase.BUILDING) return;
+        if (gamePhase.currentPhase != GamePhase.Phase.BUILDING) return;
 
         selectingPart = false;
 
@@ -56,7 +54,7 @@ public class PartSelection : MonoBehaviour
         ResetSelectionPoint();
 
 
-        if (ExtendablePartCreator.instance.IsMaxLength()) 
+        if (extendablePartCreator.IsMaxLength()) 
         {
             return;
         }
@@ -64,7 +62,7 @@ public class PartSelection : MonoBehaviour
         float maxDist = Mathf.Infinity;
         foreach(RaycastHit2D rayHit in rayHits)
         {
-            if (!ReferenceEquals(rayHit.collider.gameObject, CurrentHeldPart.instance.part))
+            if (!ReferenceEquals(rayHit.collider.gameObject, currentHeldPart.part))
             {
                 float distFromMouse = Vector2.Distance(mousePos, rayHit.point);
                 if (distFromMouse < maxDist)

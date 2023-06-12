@@ -3,8 +3,6 @@ using UnityEngine.Events;
 
 public class GamePhase : MonoBehaviour
 {
-    public static GamePhase instance;
-
     public UnityEvent ChangeToMenuPhase;
     public UnityEvent ChangeToBuildingPhase;
     public UnityEvent ChangeToLevelPhase;
@@ -45,11 +43,5 @@ public class GamePhase : MonoBehaviour
     public void GoToLevel()
     {
         ChangePhase(Phase.LEVEL);
-    }
-
-    void Awake()
-    {
-        if (instance == null)
-            instance = this;
     }
 }

@@ -2,6 +2,13 @@ using UnityEngine;
 
 public class ExtendablePartCreator : MonoBehaviour
 {
+    [Header("Dependencies")]
+    [SerializeField] PartSelection partSelection;
+    [SerializeField] IsMouseOverUI isMouseOverUI;
+    [SerializeField] CurrentHeldPart currentHeldPart;
+    [SerializeField] PartButtons partButtons;
+
+
     [SerializeField] float minLength;
     [SerializeField] float maxLength;
     [SerializeField] float massByScaleDivider;
@@ -23,14 +30,6 @@ public class ExtendablePartCreator : MonoBehaviour
     Vector2 pointDir;
     float scaleX;
 
-    public static ExtendablePartCreator instance;
-
-    void Awake()
-    {
-        if (instance == null)
-            instance = this;
-    }
-
     void Update()
     {
         if (!ExtendableIsSelected()) 
@@ -46,7 +45,7 @@ public class ExtendablePartCreator : MonoBehaviour
 
     bool ExtendableIsSelected()
     {
-        switch(PartButtons.instance.selectedPartType) 
+        switch(partButtons.selectedPartType) 
         { 
             case PartSelection.PartType.PLANK:
                 currentPrefab = plankPrefab;
@@ -68,8 +67,8 @@ public class ExtendablePartCreator : MonoBehaviour
     
     void PlankPlacement()
     {
-        GameObject selectedPart = PartSelection.instance.selectedPart;
-        GameObject selectionPointObj = PartSelection.instance.selectionPoint;
+        GameObject selectedPart = partSelection.selectedPart;
+        GameObject selectionPointObj = partSelection.selectionPoint;
 
         if (Input.GetMouseButtonDown(0) && !extendingPart)
         {
@@ -92,7 +91,7 @@ public class ExtendablePartCreator : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0) && extendingPart)
         {
-            CurrentHeldPart.instance.part = null;
+            currentHeldPart.part = null;
 
             if (IsPartIntersecting())
             {
@@ -106,7 +105,7 @@ public class ExtendablePartCreator : MonoBehaviour
 
     void PlaceStartPoint(GameObject selectedPart, GameObject selectionPointObj)
     {
-        if (IsMouseOverUI.instance.overUI) return;
+        if (isMouseOverUI.overUI) return;
 
         extendingPart = true;
         
@@ -117,7 +116,7 @@ public class ExtendablePartCreator : MonoBehaviour
 
         currentExtendablePart = Instantiate(currentPrefab, startPoint, Quaternion.identity);
 
-        CurrentHeldPart.instance.part = currentExtendablePart;
+        currentHeldPart.part = currentExtendablePart;
 
         if (selectedPart != null)
         {
@@ -173,7 +172,7 @@ public class ExtendablePartCreator : MonoBehaviour
                     simplePartStart.SetWheelJoint(extendablePartRB);
                 }
             }
-            if (PartSelection.instance.selectedPart != null && PartSelection.instance.selectedPart.TryGetComponent(out SimplePart simplePart))
+            if (partSelection.selectedPart != null && partSelection.selectedPart.TryGetComponent(out SimplePart simplePart))
             {
                 if (!simplePart.attached)
                 {
@@ -192,7 +191,7 @@ public class ExtendablePartCreator : MonoBehaviour
     {
         Destroy(currentExtendablePart);
         currentExtendablePart = null;
-        CurrentHeldPart.instance.part = null;
+        currentHeldPart.part = null;
         extendingPart = false;
     }
 
@@ -225,10 +224,10 @@ public class ExtendablePartCreator : MonoBehaviour
             if (hit.collider.gameObject == currentExtendablePart)continue;
             if (!hit.collider.gameObject.GetComponent<Part>()) continue;
             if (hit.collider.gameObject == currentExtendablePart.GetComponent<ExtendablePart>().objAttachedToStart) continue;
-            if (hit.collider.gameObject == PartSelection.instance.selectedPart) continue;
+            if (hit.collider.gameObject == partSelection.selectedPart) continue;
             if (hit.collider.gameObject.GetComponent<Wheel>()) continue;
             if (Vector2.Distance(hit.point, startPoint) <= ignoreIntersectionRadius) continue;
-            if (PartSelection.instance.selectingPart && Vector2.Distance(hit.point, PartSelection.instance.selectionPoint.transform.position) <= ignoreIntersectionRadius) continue;
+            if (partSelection.selectingPart && Vector2.Distance(hit.point, partSelection.selectionPoint.transform.position) <= ignoreIntersectionRadius) continue;
             if (currentExtendablePart.GetComponent<Rod>() && hit.collider.gameObject.GetComponent<Rod>()) continue;
 
             if (extendingPart)
