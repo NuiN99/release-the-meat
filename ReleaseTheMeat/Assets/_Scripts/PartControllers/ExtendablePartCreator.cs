@@ -165,18 +165,24 @@ public class ExtendablePartCreator : MonoBehaviour
             extendablePart.startPoint = startPoint;
             extendablePart.endPoint = endPoint;
 
-            if (currentExtendablePart.GetComponent<ExtendablePart>().objAttachedToStart != null && currentExtendablePart.GetComponent<ExtendablePart>().objAttachedToStart.TryGetComponent(out SimplePart simplePartStart))
+            if (extendablePart.objAttachedToStart != null && extendablePart.objAttachedToStart.TryGetComponent(out SimplePart simplePartStart))
             {
                 if (!simplePartStart.attached)
                 {
-                    simplePartStart.SetWheelJoint(extendablePartRB);
+                    if(simplePartStart.TryGetComponent(out Wheel wheel))
+                    {
+                        simplePartStart.SetWheelJoint(extendablePartRB);
+                    }
                 }
             }
-            if (partSelection.selectedPart != null && partSelection.selectedPart.TryGetComponent(out SimplePart simplePart))
+            if (partSelection.selectedPart != null && partSelection.selectedPart.TryGetComponent(out SimplePart simplePartEnd))
             {
-                if (!simplePart.attached)
+                if (!simplePartEnd.attached)
                 {
-                    simplePart.SetWheelJoint(extendablePartRB);
+                    if (simplePartEnd.TryGetComponent(out Wheel wheel))
+                    {
+                        simplePartEnd.SetWheelJoint(extendablePartRB);
+                    }
                 }
             }
             

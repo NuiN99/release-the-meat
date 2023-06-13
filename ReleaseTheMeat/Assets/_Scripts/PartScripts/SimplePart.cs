@@ -18,8 +18,8 @@ public class SimplePart : MonoBehaviour
 
     public void SetWheelJoint(Rigidbody2D connectedBody)
     {
-        if (partSelection.selectedPart == null) return;
-        if (partButtons.selectedPartType == PartSelection.PartType.WHEEL && partSelection.selectedPart.GetComponent<SimplePart>()) return;
+        //if (partSelection.selectedPart == null) return;
+        //if (partButtons.selectedPartType == PartSelection.PartType.WHEEL && partSelection.selectedPart.GetComponent<SimplePart>()) return;
 
         WheelJoint2D joint = GetComponent<WheelJoint2D>();
 

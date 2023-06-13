@@ -53,22 +53,19 @@ public class CartController : MonoBehaviour
 
                 spriteRenderer.color = baseColor;
 
-                if (part.TryGetComponent(out HingeJoint2D hingeJoint) && hingeJoint.connectedBody != null)
+                if (part.TryGetComponent(out Joint2D joint) && joint.connectedBody != null)
                 {
                     if (part.GetComponent<Plank>())
                     {
-                        CheckStressAndSetColor(spriteRenderer, hingeJoint.GetReactionForce(Time.fixedDeltaTime), plankBreakForce, baseColor);
+                        CheckStressAndSetColor(spriteRenderer, joint.GetReactionForce(Time.deltaTime), plankBreakForce, baseColor);
                     }
                     else if (part.GetComponent<Rod>())
                     {
-                        CheckStressAndSetColor(spriteRenderer, hingeJoint.GetReactionForce(Time.fixedDeltaTime), rodBreakForce, baseColor);
+                        CheckStressAndSetColor(spriteRenderer, joint.GetReactionForce(Time.deltaTime), rodBreakForce, baseColor);
                     }
-                }
-                else if (part.TryGetComponent(out WheelJoint2D wheelJoint) && wheelJoint.connectedBody != null)
-                {
                     if (part.GetComponent<Wheel>())
                     {
-                        CheckStressAndSetColor(spriteRenderer, wheelJoint.GetReactionForce(Time.fixedDeltaTime), wheelBreakForce, baseColor);
+                        CheckStressAndSetColor(spriteRenderer, joint.GetReactionForce(Time.deltaTime), wheelBreakForce, baseColor);
                     }
                 }
             }
@@ -78,7 +75,6 @@ public class CartController : MonoBehaviour
     void CheckStressAndSetColor(SpriteRenderer spriteRenderer, Vector2 reactionForce, float breakForce, Color baseColor)
     {
         spriteRenderer.color = new Color((reactionForce.x + reactionForce.y) / breakForce, 0, 0, 1);
-
         if (reactionForce.x + reactionForce.y >= breakForce - 50)
         {
             spriteRenderer.color = new Color(0, 0, 255, 1);

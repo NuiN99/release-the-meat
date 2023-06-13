@@ -9,6 +9,12 @@ public class GamePhase : MonoBehaviour
 
     public Phase currentPhase;
 
+    public delegate void ChangedToMenu();
+    public static event ChangedToMenu OnMenu;
+
+    public delegate void ChangedToBuilding();
+    public static event ChangedToBuilding onBuilding;
+
     public enum Phase
     {
         MENU,
