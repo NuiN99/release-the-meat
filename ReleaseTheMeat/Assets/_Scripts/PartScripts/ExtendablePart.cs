@@ -40,18 +40,16 @@ public class ExtendablePart : MonoBehaviour
         switch (partButtons.selectedPartType)
         {
             case PartSelection.PartType.PLANK:
-                CreateHingeJoint(point, attachedRB, cartController.plankBreakForce);
-                //CreateDistanceJoint(point, attachedRB, CartController.instance.plankBreakForce);
+                CreateHingeJoint(point, attachedRB);
                 break;
 
             case PartSelection.PartType.ROD:
-                CreateHingeJoint(point, attachedRB, cartController.rodBreakForce);
-                //CreateDistanceJoint(point, attachedRB, CartController.instance.rodBreakForce);
+                CreateHingeJoint(point, attachedRB);
                 break;
         }
     }
 
-    void CreateHingeJoint(Vector2 anchor, Rigidbody2D body, float breakForce)
+    void CreateHingeJoint(Vector2 anchor, Rigidbody2D body)
     {
         HingeJoint2D hingeJoint = gameObject.AddComponent<HingeJoint2D>();
 
@@ -59,13 +57,11 @@ public class ExtendablePart : MonoBehaviour
 
         hingeJoint.connectedBody = body;
 
-        hingeJoint.breakForce = breakForce;
-
         hingeJoint.anchor = transform.InverseTransformPoint(anchor);
         hingeJoint.connectedAnchor = body.transform.InverseTransformPoint(anchor);
     }
 
-    void CreateDistanceJoint(Vector2 anchor, Rigidbody2D body, float breakForce)
+    /*void CreateDistanceJoint(Vector2 anchor, Rigidbody2D body, float breakForce)
     {
         DistanceJoint2D distanceJoint = gameObject.AddComponent<DistanceJoint2D>();
 
@@ -80,5 +76,5 @@ public class ExtendablePart : MonoBehaviour
         distanceJoint.connectedBody = body;
         distanceJoint.anchor = transform.InverseTransformPoint(anchor);
         distanceJoint.connectedAnchor = body.transform.InverseTransformPoint(anchor);
-    }
+    }*/
 }

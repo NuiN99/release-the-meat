@@ -21,6 +21,20 @@ public class CartController : MonoBehaviour
 
     List<Transform> partPositions = new List<Transform>();
 
+
+    private void OnEnable()
+    {
+        GamePhase.OnLevel += GetPartPositions;
+        GamePhase.OnLevel += SetBreakForces;
+    }
+    private void OnDisable()
+    {
+        GamePhase.OnLevel -= GetPartPositions;
+        GamePhase.OnLevel -= SetBreakForces;
+
+    }
+
+
     private void Start()
     {
         CheckDisabledBreakForces();
@@ -53,19 +67,25 @@ public class CartController : MonoBehaviour
 
                 spriteRenderer.color = baseColor;
 
-                if (part.TryGetComponent(out Joint2D joint) && joint.connectedBody != null)
+                Joint2D[] joints = part.GetComponents<Joint2D>();
+                if (joints == null) continue;
+
+                foreach(Joint2D joint in joints) 
                 {
-                    if (part.GetComponent<Plank>())
+                    if(joint.connectedBody != null)
                     {
-                        CheckStressAndSetColor(spriteRenderer, joint.GetReactionForce(Time.deltaTime), plankBreakForce, baseColor);
-                    }
-                    else if (part.GetComponent<Rod>())
-                    {
-                        CheckStressAndSetColor(spriteRenderer, joint.GetReactionForce(Time.deltaTime), rodBreakForce, baseColor);
-                    }
-                    if (part.GetComponent<Wheel>())
-                    {
-                        CheckStressAndSetColor(spriteRenderer, joint.GetReactionForce(Time.deltaTime), wheelBreakForce, baseColor);
+                        if (part.GetComponent<Plank>())
+                        {
+                            CheckStressAndSetColor(spriteRenderer, joint.GetReactionForce(Time.deltaTime), plankBreakForce, baseColor);
+                        }
+                        else if (part.GetComponent<Rod>())
+                        {
+                            CheckStressAndSetColor(spriteRenderer, joint.GetReactionForce(Time.deltaTime), rodBreakForce, baseColor);
+                        }
+                        if (part.GetComponent<Wheel>())
+                        {
+                            CheckStressAndSetColor(spriteRenderer, joint.GetReactionForce(Time.deltaTime), wheelBreakForce, baseColor);
+                        }
                     }
                 }
             }
@@ -81,8 +101,36 @@ public class CartController : MonoBehaviour
         }
     }
 
+    void SetBreakForces()
+    {
+        foreach(Transform part in partPositions)
+        {
+            HingeJoint2D[] hingeJoints = part.GetComponents<HingeJoint2D>();
+            WheelJoint2D[] wheelJoints = part.GetComponents<WheelJoint2D>();
 
-    public void GetPartPositions()
+            foreach(HingeJoint2D hingeJoint in hingeJoints) 
+            {
+                if (part.GetComponent<Plank>())
+                {
+                    hingeJoint.breakForce = plankBreakForce;
+                }
+                if (part.GetComponent<Rod>())
+                {
+                    hingeJoint.breakForce = rodBreakForce;
+                }
+            }
+
+            foreach (WheelJoint2D wheelJoint in wheelJoints)
+            {
+                if (part.GetComponent<Wheel>())
+                {
+                    wheelJoint.breakForce = wheelBreakForce;
+                }
+            }
+        }
+    }
+
+    void GetPartPositions()
     {
         Part[] parts = FindObjectsOfType<Part>();
 

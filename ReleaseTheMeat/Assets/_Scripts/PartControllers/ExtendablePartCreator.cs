@@ -171,6 +171,7 @@ public class ExtendablePartCreator : MonoBehaviour
                 {
                     if(simplePartStart.TryGetComponent(out Wheel wheel))
                     {
+                        extendablePart.objAttachedToStart = null;
                         simplePartStart.SetWheelJoint(extendablePartRB);
                     }
                 }
@@ -181,6 +182,7 @@ public class ExtendablePartCreator : MonoBehaviour
                 {
                     if (simplePartEnd.TryGetComponent(out Wheel wheel))
                     {
+                        extendablePart.objAttachedToEnd = null;
                         simplePartEnd.SetWheelJoint(extendablePartRB);
                     }
                 }

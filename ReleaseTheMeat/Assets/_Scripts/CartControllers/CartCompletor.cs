@@ -2,6 +2,18 @@ using UnityEngine;
 
 public class CartCompletor : MonoBehaviour
 {
+    private void OnEnable()
+    {
+        GamePhase.OnLevel += CompleteCart;
+    }
+
+    private void OnDisable()
+    {
+        GamePhase.OnLevel -= CompleteCart;
+    }
+
+
+
     public void CompleteCart()
     {
         Part[] parts = FindObjectsOfType<Part>();

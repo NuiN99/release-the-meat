@@ -153,4 +153,20 @@ public class SimplePartCreator : MonoBehaviour
         placingPart = false;
         currentPart = null;
     }
+
+
+    private void OnEnable()
+    {
+        GamePhase.OnLevel += DisablePartIcon;   
+    }
+
+    private void OnDisable()
+    {
+        GamePhase.OnLevel -= DisablePartIcon;
+    }
+
+    void DisablePartIcon()
+    {
+        selectedPartObj.SetActive(false);
+    }
 }
