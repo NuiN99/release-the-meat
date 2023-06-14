@@ -31,7 +31,6 @@ public class CartController : MonoBehaviour
     {
         GamePhase.OnLevel -= GetPartPositions;
         GamePhase.OnLevel -= SetBreakForces;
-
     }
 
 
@@ -132,6 +131,7 @@ public class CartController : MonoBehaviour
 
     void GetPartPositions()
     {
+        partPositions.Clear();
         Part[] parts = FindObjectsOfType<Part>();
 
         foreach (Part part in parts)

@@ -267,7 +267,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 163130260}
-  - component: {fileID: 163130266}
+  - component: {fileID: 163130268}
   - component: {fileID: 163130261}
   - component: {fileID: 163130267}
   - component: {fileID: 163130262}
@@ -390,21 +390,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   part: {fileID: 0}
---- !u!114 &163130266
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 163130259}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85e21387e54d48c48b771c7022fcbfe0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectsToDisable:
-  - {fileID: 1021396579}
-  parts: []
 --- !u!114 &163130267
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -421,6 +406,19 @@ MonoBehaviour:
   simplePartCreator: {fileID: 163130261}
   partSelection: {fileID: 163130264}
   currentHeldPart: {fileID: 163130265}
+--- !u!114 &163130268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 163130259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85e21387e54d48c48b771c7022fcbfe0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parts: []
 --- !u!1 &252100386
 GameObject:
   m_ObjectHideFlags: 0
@@ -4738,6 +4736,7 @@ GameObject:
   - component: {fileID: 1727039849}
   - component: {fileID: 1727039850}
   - component: {fileID: 1727039851}
+  - component: {fileID: 1727039852}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -4772,75 +4771,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb56e08711d25dc45aeba89cea857283, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ChangeToMenuPhase:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 163130266}
-        m_TargetAssemblyTypeName: PartsController, Assembly-CSharp
-        m_MethodName: TurnOffPartsController
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 0
-  ChangeToBuildingPhase:
-    m_PersistentCalls:
-      m_Calls: []
-  ChangeToLevelPhase:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 273957399}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 0
-      - m_Target: {fileID: 1753315213}
-        m_TargetAssemblyTypeName: CartCompletor, Assembly-CSharp
-        m_MethodName: CompleteCart
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 0
-      - m_Target: {fileID: 163130266}
-        m_TargetAssemblyTypeName: PartsController, Assembly-CSharp
-        m_MethodName: TurnOffPartsController
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 0
-      - m_Target: {fileID: 1753315214}
-        m_TargetAssemblyTypeName: CartController, Assembly-CSharp
-        m_MethodName: GetPartPositions
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 0
   currentPhase: 1
 --- !u!114 &1727039851
 MonoBehaviour:
@@ -4855,6 +4785,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   overUI: 0
+--- !u!114 &1727039852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727039848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c0ed9c20f0ebb14f8a73ff73be729db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildingObjects:
+  - {fileID: 273957399}
+  - {fileID: 1558751060}
 --- !u!1 &1734895122
 GameObject:
   m_ObjectHideFlags: 0
@@ -5548,6 +5493,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74984d1e210aad44fa45cd170835f27c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2064783883
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2064783885}
+  - component: {fileID: 2064783884}
+  m_Layer: 0
+  m_Name: PartContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2064783884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2064783883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 573eee1d00271784e9416cd2319ac420, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &2064783885
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2064783883}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2134404119
 GameObject:
   m_ObjectHideFlags: 0

@@ -112,6 +112,7 @@ public class SimplePartCreator : MonoBehaviour
                 if (currentPart == null) return;
                 GameObject newPart = Instantiate(currentPart, placementPos, Quaternion.identity);
                 newPart.name = currentPart.name;
+                newPart.transform.parent = FindObjectOfType<PartContainer>().gameObject.transform;
 
                 /*if (PartSelection.instance.selectedPart != null) 
                 {
@@ -152,21 +153,5 @@ public class SimplePartCreator : MonoBehaviour
     {
         placingPart = false;
         currentPart = null;
-    }
-
-
-    private void OnEnable()
-    {
-        GamePhase.OnLevel += DisablePartIcon;   
-    }
-
-    private void OnDisable()
-    {
-        GamePhase.OnLevel -= DisablePartIcon;
-    }
-
-    void DisablePartIcon()
-    {
-        selectedPartObj.SetActive(false);
     }
 }

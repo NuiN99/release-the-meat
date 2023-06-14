@@ -1,36 +1,33 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PartsController : MonoBehaviour
 {
-    [SerializeField] GameObject[] objectsToDisable;
+    [SerializeField] List<GameObject> parts = new List<GameObject>();
+    [SerializeField] GameObject partContainer;
+    [SerializeField] GameObject newPartContainer;
 
-    [SerializeField] GameObject[] parts;
-
-
-    void OnEnable()
+    private void OnEnable()
     {
-        GamePhase.OnMenu += TurnOffPartsController;
-        GamePhase.OnLevel += TurnOffPartsController;
+        GamePhase.OnLevel += SaveCart;
+        GamePhase.OnLevelReset += LoadCart;
+    }
+    private void OnDisable()
+    {
+        GamePhase.OnLevel -= SaveCart;
+        GamePhase.OnLevelReset -= LoadCart;
     }
 
-    void OnDisable()
+    void SaveCart()
     {
-        GamePhase.OnMenu -= TurnOffPartsController;
-        GamePhase.OnLevel -= TurnOffPartsController;
+        newPartContainer = Instantiate(partContainer);
+        newPartContainer.SetActive(false);
     }
 
-    public void TurnOffPartsController()
+    void LoadCart()
     {
-        gameObject.SetActive(false);
-        foreach(var obj in objectsToDisable)
-        {
-            obj.SetActive(false);
-        }
-    }
-
-
-    public void SaveCart()
-    {
-
+        Destroy(partContainer);
+        newPartContainer.SetActive(true);
+        partContainer = newPartContainer;
     }
 }

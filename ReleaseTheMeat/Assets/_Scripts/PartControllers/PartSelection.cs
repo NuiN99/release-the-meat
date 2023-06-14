@@ -68,10 +68,9 @@ public class PartSelection : MonoBehaviour
                 if (distFromMouse < maxDist)
                 {
                     //check if wheel is already connected, if so dont connect to it because that will make that part get rotated by da wheel
-
                     if(singleHit.collider != null)
                     {
-                        if (rayHit.collider.gameObject.TryGetComponent(out Wheel wheel) && wheel.gameObject.GetComponent<WheelJoint2D>().connectedBody != null) continue;
+                        //if (rayHit.collider.gameObject.TryGetComponent(out Wheel wheel) && wheel.gameObject.GetComponent<WheelJoint2D>().connectedBody != null) continue;
                     }
 
                     maxDist = distFromMouse;

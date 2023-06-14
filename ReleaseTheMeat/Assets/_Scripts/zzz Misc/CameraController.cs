@@ -6,6 +6,9 @@ public class CameraController : MonoBehaviour
     [SerializeField] CartController cartController;
     [SerializeField] GamePhase gamePhase;
 
+    Vector3 camStartPos;
+    float camStartSize;
+
     Camera mainCamera;
    
     [SerializeField] float minSize, maxSize;
@@ -13,9 +16,21 @@ public class CameraController : MonoBehaviour
     [SerializeField] float sizeDivider;
     [SerializeField] float verticalOffsetPercent;
 
+    void OnEnable()
+    {
+        GamePhase.OnLevelReset += ResetCam;
+    }
+
+    void OnDisable()
+    {
+        GamePhase.OnLevelReset -= ResetCam;
+    }
+
     private void Start()
     {
-        mainCamera = Camera.main;   
+        mainCamera = Camera.main;
+        camStartPos = mainCamera.transform.position;
+        camStartSize = mainCamera.orthographicSize;
     }
 
     private void Update()
@@ -35,5 +50,11 @@ public class CameraController : MonoBehaviour
     void SizeCamToCart(float cartSize)
     {
         mainCamera.orthographicSize = cartSize;
+    }
+    
+    void ResetCam()
+    {
+        mainCamera.transform.position = camStartPos;
+        mainCamera.orthographicSize = camStartSize;
     }
 }

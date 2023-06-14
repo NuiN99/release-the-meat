@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class GamePhase : MonoBehaviour
 {
@@ -9,9 +9,11 @@ public class GamePhase : MonoBehaviour
     public delegate void ChangedToBuilding();
     public static event ChangedToBuilding OnBuilding;
 
-
     public delegate void ChangedToLevel();
-    public static event ChangedToBuilding OnLevel;
+    public static event ChangedToLevel OnLevel;
+
+    public delegate void ResetLevel();
+    public static event ResetLevel OnLevelReset;
 
     public Phase currentPhase;
     public enum Phase
@@ -19,6 +21,15 @@ public class GamePhase : MonoBehaviour
         MENU,
         BUILDING,
         LEVEL,
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.R) && currentPhase == Phase.LEVEL)
+        {
+            ChangePhase(Phase.BUILDING);
+            if (OnLevelReset != null) OnLevelReset();
+        }   
     }
 
     void ChangePhase(Phase phase)
