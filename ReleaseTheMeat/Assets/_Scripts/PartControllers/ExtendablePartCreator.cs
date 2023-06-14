@@ -115,7 +115,7 @@ public class ExtendablePartCreator : MonoBehaviour
             startPoint = mousePos;
 
         currentExtendablePart = Instantiate(currentPrefab, startPoint, Quaternion.identity);
-        currentExtendablePart.transform.parent = FindObjectOfType<PartContainer>().gameObject.transform;
+        currentExtendablePart.transform.parent = FindObjectOfType<CartContainer>().gameObject.transform;
 
         currentHeldPart.part = currentExtendablePart;
 

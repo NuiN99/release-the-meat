@@ -112,7 +112,7 @@ public class SimplePartCreator : MonoBehaviour
                 if (currentPart == null) return;
                 GameObject newPart = Instantiate(currentPart, placementPos, Quaternion.identity);
                 newPart.name = currentPart.name;
-                newPart.transform.parent = FindObjectOfType<PartContainer>().gameObject.transform;
+                newPart.transform.parent = FindObjectOfType<CartContainer>().gameObject.transform;
 
                 /*if (PartSelection.instance.selectedPart != null) 
                 {

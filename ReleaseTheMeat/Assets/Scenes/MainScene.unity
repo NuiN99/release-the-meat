@@ -267,10 +267,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 163130260}
-  - component: {fileID: 163130268}
   - component: {fileID: 163130261}
-  - component: {fileID: 163130267}
   - component: {fileID: 163130262}
+  - component: {fileID: 163130267}
   - component: {fileID: 163130265}
   - component: {fileID: 163130264}
   - component: {fileID: 163130263}
@@ -406,19 +405,6 @@ MonoBehaviour:
   simplePartCreator: {fileID: 163130261}
   partSelection: {fileID: 163130264}
   currentHeldPart: {fileID: 163130265}
---- !u!114 &163130268
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 163130259}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85e21387e54d48c48b771c7022fcbfe0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parts: []
 --- !u!1 &252100386
 GameObject:
   m_ObjectHideFlags: 0
@@ -4800,6 +4786,7 @@ MonoBehaviour:
   buildingObjects:
   - {fileID: 273957399}
   - {fileID: 1558751060}
+  - {fileID: 163130259}
 --- !u!1 &1734895122
 GameObject:
   m_ObjectHideFlags: 0
@@ -4857,6 +4844,7 @@ GameObject:
   - component: {fileID: 1753315212}
   - component: {fileID: 1753315213}
   - component: {fileID: 1753315214}
+  - component: {fileID: 1753315215}
   m_Layer: 0
   m_Name: CartController
   m_TagString: Untagged
@@ -4911,6 +4899,20 @@ MonoBehaviour:
   plankBreakForce: 1750
   rodBreakForce: 1500
   wheelBreakForce: 5000
+--- !u!114 &1753315215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753315211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85e21387e54d48c48b771c7022fcbfe0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cartContainer: {fileID: 2064783883}
+  newCartContainer: {fileID: 0}
 --- !u!1 &1761226116
 GameObject:
   m_ObjectHideFlags: 0
