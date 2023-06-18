@@ -24,7 +24,6 @@ public class SimplePart : MonoBehaviour
         WheelJoint2D joint = GetComponent<WheelJoint2D>();
 
         joint.breakForce = cartController.wheelBreakForce;
-
         joint.connectedBody = connectedBody;
         joint.anchor = transform.InverseTransformPoint(transform.position);
         joint.connectedAnchor = connectedBody.transform.InverseTransformPoint(transform.position);

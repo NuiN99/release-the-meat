@@ -21,6 +21,13 @@ public class CartSaver : MonoBehaviour
     {
         newCartContainer = Instantiate(cartContainer);
         newCartContainer.name = "CartContainer";
+        foreach(Part part in FindObjectsOfType<Part>())
+        {
+            if(part.gameObject.TryGetComponent(out Rigidbody2D rb))
+            {
+                rb.bodyType = RigidbodyType2D.Static;
+            }
+        }
         newCartContainer.SetActive(false);
     }
 
