@@ -5,7 +5,7 @@ public class SimplePartCreator : MonoBehaviour
     [Header("Dependencies")]
     [SerializeField] PartSelection partSelection;
     [SerializeField] IsMouseOverUI isMouseOverUI;
-    [SerializeField] PartButtons partButtons;
+    [SerializeField] CartBuildingHUD cartBuildingHUD;
     [SerializeField] CurrentHeldPart currentPartScript;
 
 
@@ -24,7 +24,7 @@ public class SimplePartCreator : MonoBehaviour
 
     void Update()
     {
-        CheckType(partButtons.selectedPartType);
+        CheckType(cartBuildingHUD.selectedPartType);
         MoveSelectedPartIcon();
         PlacePart();
     }
@@ -128,7 +128,7 @@ public class SimplePartCreator : MonoBehaviour
                 {
                     Rigidbody2D selectionRB = selection.GetComponent<Rigidbody2D>();
 
-                    switch (partButtons.selectedPartType)
+                    switch (cartBuildingHUD.selectedPartType)
                     {
                         case PartSelection.PartType.NULL:
                             break;

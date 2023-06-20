@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: -5209000808702882201}
   - component: {fileID: 1183352307694257587}
   - component: {fileID: 4641117914644135565}
-  - component: {fileID: 4641117914644135567}
   - component: {fileID: 4641117914644135562}
   - component: {fileID: 4641117914644135563}
   m_Layer: 8
@@ -62,6 +61,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d756b0a366d134949ae4a32c3f435406, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wheelJoint: {fileID: 0}
   acceleration: 15
   maxSpeed: 1000
 --- !u!114 &1183352307694257587
@@ -76,6 +76,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 875864d2f048a744ba1c8753e95e8182, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wheelFrequency: 1000000
+  wheelMaxMotorForce: 15
+  wheelDampingRatio: 0
+  attachedObj: {fileID: 0}
   attached: 0
 --- !u!50 &4641117914644135565
 Rigidbody2D:
@@ -98,30 +102,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!235 &4641117914644135567
-WheelJoint2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4641117914644135560}
-  m_Enabled: 1
-  serializedVersion: 4
-  m_EnableCollision: 0
-  m_ConnectedRigidBody: {fileID: 0}
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_AutoConfigureConnectedAnchor: 0
-  m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0, y: 0}
-  m_Suspension:
-    m_DampingRatio: 0
-    m_Frequency: 1000000
-    m_Angle: 90
-  m_UseMotor: 1
-  m_Motor:
-    m_MotorSpeed: 0
-    m_MaximumMotorForce: 15
 --- !u!58 &4641117914644135562
 CircleCollider2D:
   m_ObjectHideFlags: 0

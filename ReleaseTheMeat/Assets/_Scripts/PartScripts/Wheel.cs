@@ -2,12 +2,14 @@ using UnityEngine;
 
 public class Wheel : MonoBehaviour
 {
-    WheelJoint2D wheelJoint;
+    public WheelJoint2D wheelJoint;
     [SerializeField] float acceleration;
     [SerializeField] float maxSpeed;
+
+    Rigidbody2D rb;
     void Start()
     {
-        wheelJoint = GetComponent<WheelJoint2D>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     void FixedUpdate()
@@ -25,7 +27,7 @@ public class Wheel : MonoBehaviour
         motor.motorSpeed += xAxis * acceleration;
 
         if(xAxis == 0)
-            motor.motorSpeed = -GetComponent<Rigidbody2D>().angularVelocity * Mathf.Sign(motor.motorSpeed);
+            motor.motorSpeed = -rb.angularVelocity * Mathf.Sign(motor.motorSpeed);
 
         if (Mathf.Abs(motor.motorSpeed) > maxSpeed)
             motor.motorSpeed = maxSpeed * Mathf.Sign(motor.motorSpeed);

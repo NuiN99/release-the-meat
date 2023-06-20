@@ -4,19 +4,17 @@ using UnityEngine;
 public class ExtendablePart : MonoBehaviour
 {
     [Header("Dependencies")]
-    CartController cartController;
-    PartButtons partButtons;
+    [SerializeField] CartBuildingHUD cartBuildingHUD;
 
     public Vector2 startPoint;
     public Vector2 endPoint;
 
-    [NonSerialized] public GameObject objAttachedToStart;
-    [NonSerialized] public GameObject objAttachedToEnd;
+    public GameObject objAttachedToStart;
+    public GameObject objAttachedToEnd;
 
-    void Awake()
+    void OnEnable()
     {
-        cartController = FindObjectOfType<CartController>();
-        partButtons = FindObjectOfType<PartButtons>();
+        cartBuildingHUD = FindObjectOfType<CartBuildingHUD>();
     }
 
     public void CheckForAttachedParts()
@@ -37,7 +35,7 @@ public class ExtendablePart : MonoBehaviour
 
     void CheckTypeAndCreateJoint(Rigidbody2D attachedRB, Vector2 point)
     {
-        switch (partButtons.selectedPartType)
+        switch (cartBuildingHUD.selectedPartType)
         {
             case PartSelection.PartType.PLANK:
                 CreateHingeJoint(point, attachedRB);

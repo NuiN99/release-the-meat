@@ -3,17 +3,23 @@ using UnityEngine;
 public class SimplePart : MonoBehaviour
 {
     [Header("Dependencies")]
-    PartSelection partSelection;
     CartController cartController;
-    PartButtons partButtons;
+
+    [SerializeField] float wheelFrequency;
+    [SerializeField] float wheelMaxMotorForce;
+    [SerializeField] float wheelDampingRatio;
+
+    public GameObject attachedObj;
 
     public bool attached;
-
-    void Awake()
+    void OnEnable()
     {
-        partSelection = FindObjectOfType<PartSelection>();
         cartController = FindObjectOfType<CartController>();
-        partButtons = FindObjectOfType<PartButtons>();
+    }
+
+    void Start()
+    {
+        
     }
 
     public void SetWheelJoint(Rigidbody2D connectedBody)
@@ -21,13 +27,24 @@ public class SimplePart : MonoBehaviour
         //if (partSelection.selectedPart == null) return;
         //if (partButtons.selectedPartType == PartSelection.PartType.WHEEL && partSelection.selectedPart.GetComponent<SimplePart>()) return;
 
-        WheelJoint2D joint = GetComponent<WheelJoint2D>();
+        if(TryGetComponent(out Wheel wheel))
+        {
+            WheelJoint2D joint = gameObject.AddComponent<WheelJoint2D>();
+            wheel.wheelJoint = joint;
 
-        joint.breakForce = cartController.wheelBreakForce;
-        joint.connectedBody = connectedBody;
-        joint.anchor = transform.InverseTransformPoint(transform.position);
-        joint.connectedAnchor = connectedBody.transform.InverseTransformPoint(transform.position);
+            var suspension = joint.suspension;
+            suspension.frequency = wheelFrequency;
+            suspension.dampingRatio = wheelDampingRatio;
+            joint.suspension = suspension;
 
-        attached = true;
+            joint.breakForce = cartController.wheelBreakForce;
+            joint.connectedBody = connectedBody;
+            joint.anchor = transform.InverseTransformPoint(transform.position);
+            joint.connectedAnchor = connectedBody.transform.InverseTransformPoint(transform.position);
+
+            attachedObj = connectedBody.gameObject;
+
+            attached = true;
+        }
     }
 }

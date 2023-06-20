@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class PartSelection : MonoBehaviour
@@ -50,14 +51,9 @@ public class PartSelection : MonoBehaviour
         RaycastHit2D singleHit = Physics2D.Raycast(mousePos, Vector3.back, selectionMask);
 
         selectedPart = null;
-
         ResetSelectionPoint();
 
-
-        if (extendablePartCreator.IsMaxLength()) 
-        {
-            return;
-        }
+        if (extendablePartCreator.IsMaxLength()) return;
 
         float maxDist = Mathf.Infinity;
         foreach(RaycastHit2D rayHit in rayHits)
@@ -139,8 +135,28 @@ public class PartSelection : MonoBehaviour
     public void DeleteSelectedPart()
     {
         if(selectedPart == null) return;
-        //if (PartButtons.instance.partType != PartButtons.PartType.NULL) return;
+
+        CheckMissingParts(selectedPart);
         Destroy(selectedPart);
+    }
+
+    void CheckMissingParts(GameObject partToCheck)
+    {
+        foreach(Part part in FindObjectsOfType<Part>())
+        {
+            if (part.gameObject == null) return; //dont need this?
+
+            Joint2D[] joints = part.gameObject.GetComponents<Joint2D>();
+            foreach(Joint2D joint in joints)
+            {
+                if (joint == null) return; //dont need this?
+
+                if (joint.connectedBody.gameObject != null && joint.connectedBody.gameObject == partToCheck)
+                {
+                    Destroy(joint);
+                }
+            }
+        }
     }
 
     void ChangeEnum()

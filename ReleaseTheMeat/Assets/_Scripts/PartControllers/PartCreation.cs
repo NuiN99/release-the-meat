@@ -12,7 +12,6 @@ public class PartCreation : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1))
         {
-
             if (extendablePartCreator.extendingPart)
             {
                 extendablePartCreator.ResetExtendablePart();

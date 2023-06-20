@@ -6,7 +6,7 @@ public class ExtendablePartCreator : MonoBehaviour
     [SerializeField] PartSelection partSelection;
     [SerializeField] IsMouseOverUI isMouseOverUI;
     [SerializeField] CurrentHeldPart currentHeldPart;
-    [SerializeField] PartButtons partButtons;
+    [SerializeField] CartBuildingHUD cartBuildingHUD;
 
 
     [SerializeField] float minLength;
@@ -45,7 +45,7 @@ public class ExtendablePartCreator : MonoBehaviour
 
     bool ExtendableIsSelected()
     {
-        switch(partButtons.selectedPartType) 
+        switch(cartBuildingHUD.selectedPartType) 
         { 
             case PartSelection.PartType.PLANK:
                 currentPrefab = plankPrefab;
