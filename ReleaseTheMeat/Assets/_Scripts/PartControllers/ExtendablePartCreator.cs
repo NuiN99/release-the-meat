@@ -231,7 +231,7 @@ public class ExtendablePartCreator : MonoBehaviour
         foreach (RaycastHit2D hit in hits)
         {
             if (hit.collider.gameObject == currentExtendablePart)continue;
-            if (!hit.collider.gameObject.GetComponent<Part>()) continue;
+            if (!hit.collider.gameObject.GetComponent<Part>() && !hit.collider.gameObject.CompareTag("Ground")) continue;
             if (hit.collider.gameObject == currentExtendablePart.GetComponent<ExtendablePart>().objAttachedToStart) continue;
             if (hit.collider.gameObject == partSelection.selectedPart) continue;
             if (hit.collider.gameObject.GetComponent<Wheel>()) continue;

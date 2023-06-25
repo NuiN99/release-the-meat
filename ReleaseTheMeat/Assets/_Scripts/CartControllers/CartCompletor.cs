@@ -12,8 +12,6 @@ public class CartCompletor : MonoBehaviour
         GamePhase.OnLevel -= CompleteCart;
     }
 
-
-
     public void CompleteCart()
     {
         Part[] parts = FindObjectsOfType<Part>();

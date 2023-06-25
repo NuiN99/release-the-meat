@@ -292,7 +292,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2134404120}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &163130261
 MonoBehaviour:
@@ -559,6 +559,7 @@ GameObject:
   m_Component:
   - component: {fileID: 273957401}
   - component: {fileID: 273957400}
+  - component: {fileID: 273957402}
   m_Layer: 0
   m_Name: SelectedPartIcon
   m_TagString: Untagged
@@ -633,6 +634,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &273957402
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 273957399}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.32466254
 --- !u!1 &424479683
 GameObject:
   m_ObjectHideFlags: 0
@@ -714,7 +731,7 @@ GameObject:
   - component: {fileID: 507498330}
   m_Layer: 13
   m_Name: Ground (1)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1155,7 +1172,7 @@ GameObject:
   - component: {fileID: 674618700}
   m_Layer: 13
   m_Name: Ground (8)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1698,7 +1715,7 @@ GameObject:
   - component: {fileID: 857473818}
   m_Layer: 13
   m_Name: Ground (4)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1810,7 +1827,7 @@ GameObject:
   - component: {fileID: 864843741}
   m_Layer: 0
   m_Name: Closed Sprite Shape (1)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2541,7 +2558,7 @@ GameObject:
   - component: {fileID: 1016885929}
   m_Layer: 13
   m_Name: Ground (2)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2703,7 +2720,7 @@ GameObject:
   - component: {fileID: 1042864819}
   m_Layer: 13
   m_Name: WORLD
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2881,7 +2898,7 @@ GameObject:
   - component: {fileID: 1094371562}
   m_Layer: 13
   m_Name: Ground (5)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2992,7 +3009,7 @@ GameObject:
   - component: {fileID: 1115671915}
   m_Layer: 13
   m_Name: Ground (3)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3543,7 +3560,7 @@ GameObject:
   - component: {fileID: 1559414260}
   m_Layer: 0
   m_Name: Closed Sprite Shape
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4364,7 +4381,7 @@ GameObject:
   - component: {fileID: 1563594190}
   m_Layer: 13
   m_Name: Ground
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4618,7 +4635,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 1651498626}
   m_OnClick:
     m_PersistentCalls:
@@ -4686,7 +4703,7 @@ GameObject:
   - component: {fileID: 1666953157}
   m_Layer: 13
   m_Name: Ground (7)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4814,7 +4831,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2134404120}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1687446834
 MonoBehaviour:
@@ -4866,7 +4883,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2134404120}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1727039850
 MonoBehaviour:
@@ -4988,7 +5005,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2134404120}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1753315213
 MonoBehaviour:
@@ -5604,7 +5621,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2134404120}
-  m_RootOrder: 0
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1982797393
 MonoBehaviour:
@@ -5629,7 +5646,7 @@ GameObject:
   - component: {fileID: 2064783885}
   - component: {fileID: 2064783884}
   m_Layer: 0
-  m_Name: PartContainer
+  m_Name: CartContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5825,11 +5842,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1982797392}
-  - {fileID: 1753315212}
-  - {fileID: 163130260}
   - {fileID: 1727039849}
+  - {fileID: 163130260}
+  - {fileID: 1753315212}
   - {fileID: 1687446833}
+  - {fileID: 1982797392}
   - {fileID: 1734895123}
   m_Father: {fileID: 0}
   m_RootOrder: 1

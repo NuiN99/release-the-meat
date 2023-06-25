@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4641117914644135564}
-  - component: {fileID: -7377070895251231625}
   - component: {fileID: -5209000808702882201}
   - component: {fileID: 1183352307694257587}
+  - component: {fileID: -7377070895251231625}
   - component: {fileID: 4641117914644135565}
   - component: {fileID: 4641117914644135562}
   - component: {fileID: 4641117914644135563}
@@ -37,18 +37,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-7377070895251231625
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4641117914644135560}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86e0f61e3581ff5438e5d5279af0abaf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &-5209000808702882201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,8 +50,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wheelJoint: {fileID: 0}
-  acceleration: 15
-  maxSpeed: 1000
 --- !u!114 &1183352307694257587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,11 +62,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 875864d2f048a744ba1c8753e95e8182, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wheelFrequency: 1000000
-  wheelMaxMotorForce: 15
-  wheelDampingRatio: 0
-  attachedObj: {fileID: 0}
   attached: 0
+  wheelFrequency: 1000000
+  wheelDampingRatio: 0
+  wheelMaxMotorForce: 15
+  wheelAcceleration: 15
+  wheelMaxSpeed: 1000
+--- !u!114 &-7377070895251231625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4641117914644135560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86e0f61e3581ff5438e5d5279af0abaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!50 &4641117914644135565
 Rigidbody2D:
   serializedVersion: 4
@@ -93,7 +92,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.5
   m_LinearDrag: 0
   m_AngularDrag: 1
   m_GravityScale: 1

@@ -23,16 +23,22 @@ public class CavemanNameGenerator : MonoBehaviour
         _nameText.text = _caveManName;
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            string twoName = $"{RandomFirstName()} {RandomLastName()}";
-            string describingName = RandomDescribingName();
+        GamePhase.OnLevelReset += FinalizeName;
+    }
+    private void OnDisable()
+    {
+        GamePhase.OnLevelReset -= FinalizeName;
+    }
 
-            _caveManName = GenerateRandomName(twoName, describingName);
-            _nameText.text = _caveManName;
-        }
+    void FinalizeName()
+    {
+        string twoName = $"{RandomFirstName()} {RandomLastName()}";
+        string describingName = RandomDescribingName();
+
+        _caveManName = GenerateRandomName(twoName, describingName);
+        _nameText.text = _caveManName;
     }
 
     string RandomFirstName()

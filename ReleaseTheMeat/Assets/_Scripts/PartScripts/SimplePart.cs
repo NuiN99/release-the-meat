@@ -1,17 +1,23 @@
+using System;
 using UnityEngine;
 
 public class SimplePart : MonoBehaviour
 {
+    
     [Header("Dependencies")]
     CartController cartController;
 
-    [SerializeField] float wheelFrequency;
-    [SerializeField] float wheelMaxMotorForce;
-    [SerializeField] float wheelDampingRatio;
-
-    public GameObject attachedObj;
 
     public bool attached;
+    [NonSerialized] public GameObject attachedObj;
+
+    [Header("Wheel Properties")]
+    [SerializeField] float wheelFrequency;
+    [SerializeField] float wheelDampingRatio;
+    public float wheelMaxMotorForce;
+    public float wheelAcceleration;
+    public float wheelMaxSpeed;
+    
     void OnEnable()
     {
         cartController = FindObjectOfType<CartController>();
@@ -36,6 +42,10 @@ public class SimplePart : MonoBehaviour
             suspension.frequency = wheelFrequency;
             suspension.dampingRatio = wheelDampingRatio;
             joint.suspension = suspension;
+
+            var motor = joint.motor;
+            motor.maxMotorTorque = wheelMaxMotorForce;
+            joint.motor = motor;
 
             joint.breakForce = cartController.wheelBreakForce;
             joint.connectedBody = connectedBody;

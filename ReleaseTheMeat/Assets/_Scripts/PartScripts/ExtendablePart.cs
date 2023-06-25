@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.MPE;
 using UnityEngine;
 
 public class ExtendablePart : MonoBehaviour
@@ -11,6 +14,8 @@ public class ExtendablePart : MonoBehaviour
 
     public GameObject objAttachedToStart;
     public GameObject objAttachedToEnd;
+
+    [SerializeField] GameObject ropePrefab; 
 
     void OnEnable()
     {
@@ -31,6 +36,11 @@ public class ExtendablePart : MonoBehaviour
 
             CheckTypeAndCreateJoint(objAttachedToEndRB, endPoint);
         }
+
+        if (GetComponent<Rope>())
+        {
+            CreateRope();
+        }
     }
 
     void CheckTypeAndCreateJoint(Rigidbody2D attachedRB, Vector2 point)
@@ -38,18 +48,18 @@ public class ExtendablePart : MonoBehaviour
         switch (cartBuildingHUD.selectedPartType)
         {
             case PartSelection.PartType.PLANK:
-                CreateHingeJoint(point, attachedRB);
+                CreateHingeJoint(gameObject, point, attachedRB);
                 break;
 
             case PartSelection.PartType.ROD:
-                CreateHingeJoint(point, attachedRB);
+                CreateHingeJoint(gameObject, point, attachedRB);
                 break;
         }
     }
 
-    void CreateHingeJoint(Vector2 anchor, Rigidbody2D body)
+    void CreateHingeJoint(GameObject parentObject, Vector2 anchor, Rigidbody2D body)
     {
-        HingeJoint2D hingeJoint = gameObject.AddComponent<HingeJoint2D>();
+        HingeJoint2D hingeJoint = parentObject.AddComponent<HingeJoint2D>();
 
         hingeJoint.autoConfigureConnectedAnchor = false;
 
@@ -57,6 +67,38 @@ public class ExtendablePart : MonoBehaviour
 
         hingeJoint.anchor = transform.InverseTransformPoint(anchor);
         hingeJoint.connectedAnchor = body.transform.InverseTransformPoint(anchor);
+    }
+
+    void CreateRope()
+    {
+        float segmentLength = 0.25f;
+        int segmentCount = 0;
+        float ropeDist = Vector2.Distance(startPoint, endPoint);
+        Vector2 ropeDir = (endPoint - startPoint).normalized;
+        Vector2 segmentPosition = startPoint;
+
+        List<GameObject> segments = new List<GameObject> ();
+        
+        if(objAttachedToStart != null) segments.Add(objAttachedToStart);
+        else segments.Add(new GameObject());
+
+        for(float i = 0; i < ropeDist; i += segmentLength)
+        {
+            segmentCount++;
+            segmentPosition += (ropeDir * segmentLength);
+
+            GameObject ropeSegment = Instantiate(ropePrefab, segmentPosition, Quaternion.identity);
+
+            segments.Add(ropeSegment);
+            ropeSegment.transform.localScale = new Vector2(segmentLength, ropeSegment.transform.localScale.y);
+
+            GameObject prevSegment = segments[segmentCount - 1];
+            Vector2 prevSegmentEndPos = (Vector2)prevSegment.transform.position + (ropeDir * prevSegment.transform.localScale.x / 2);
+
+            Rigidbody2D ropeRB = ropeSegment.GetComponent<Rigidbody2D>();
+            CreateHingeJoint(prevSegment, prevSegmentEndPos, ropeRB);
+        }
+        Destroy(gameObject);
     }
 
     /*void CreateDistanceJoint(Vector2 anchor, Rigidbody2D body, float breakForce)

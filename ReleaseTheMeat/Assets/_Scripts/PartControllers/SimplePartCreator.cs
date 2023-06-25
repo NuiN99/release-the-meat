@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SimplePartCreator : MonoBehaviour
@@ -19,8 +20,6 @@ public class SimplePartCreator : MonoBehaviour
 
     [SerializeField] GameObject wheelPrefab;
     Vector2 placementPos;
-
-    
 
     void Update()
     {
@@ -110,18 +109,11 @@ public class SimplePartCreator : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 if (currentPart == null) return;
+                if (partSelection.selectedPart != null && partSelection.selectedPart.GetComponent<SimplePart>()) return;
+
                 GameObject newPart = Instantiate(currentPart, placementPos, Quaternion.identity);
                 newPart.name = currentPart.name;
                 newPart.transform.parent = FindObjectOfType<CartContainer>().gameObject.transform;
-
-                /*if (PartSelection.instance.selectedPart != null) 
-                {
-                    if(newPart.GetComponent<SimplePart>() && PartSelection.instance.selectedPart.GetComponent<SimplePart>())
-                    {
-                        Destroy(newPart);
-                        return;
-                    }
-                }*/
 
                 GameObject selection = partSelection.selectedPart;
                 if (selection != null)
@@ -153,5 +145,27 @@ public class SimplePartCreator : MonoBehaviour
     {
         placingPart = false;
         currentPart = null;
+    }
+
+    bool IsOverlapping()
+    {
+        if(currentPart == null) return false;
+
+        Collider2D currentCollider = currentPart.GetComponent<Collider2D>();
+
+        ContactFilter2D contactFilter = new ContactFilter2D();
+        contactFilter.useTriggers = false;
+
+        Collider2D[] results = new Collider2D[1];
+
+        if (currentCollider.OverlapCollider(contactFilter, results) > 0)
+        {
+            Debug.Log("Overlap detected!");
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
