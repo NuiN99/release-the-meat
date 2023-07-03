@@ -12,6 +12,9 @@ public class ExtendablePartCreator : MonoBehaviour
     [SerializeField] float minLength;
     [SerializeField] float maxLength;
     [SerializeField] float massByScaleDivider;
+
+    [SerializeField] public float ropeSegmentLength;
+
     Vector2 mousePos;
     public Vector2 startPoint;
     public Vector2 endPoint;
@@ -158,7 +161,7 @@ public class ExtendablePartCreator : MonoBehaviour
         }
         else
         {
-            endPoint = mousePos;
+            endPoint = (Vector2)currentExtendablePart.transform.position + (pointDir * currentExtendablePart.transform.localScale.x / 2);
         }
 
         if (currentExtendablePart.TryGetComponent(out ExtendablePart extendablePart))
@@ -238,6 +241,7 @@ public class ExtendablePartCreator : MonoBehaviour
             if (Vector2.Distance(hit.point, startPoint) <= ignoreIntersectionRadius) continue;
             if (partSelection.selectingPart && Vector2.Distance(hit.point, partSelection.selectionPoint.transform.position) <= ignoreIntersectionRadius) continue;
             if (currentExtendablePart.GetComponent<Rod>() && hit.collider.gameObject.GetComponent<Rod>()) continue;
+            if (currentExtendablePart.GetComponent<Rope>() && hit.collider.gameObject.GetComponent<Rope>()) continue;
 
             if (extendingPart)
             {

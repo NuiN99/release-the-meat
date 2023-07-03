@@ -62,6 +62,8 @@ public class CartController : MonoBehaviour
                 if (part == null) continue;
 
                 SpriteRenderer spriteRenderer = part.GetComponent<SpriteRenderer>();
+                if (spriteRenderer == null) continue;
+
                 Color baseColor = Color.black;
 
                 spriteRenderer.color = baseColor;

@@ -333,6 +333,7 @@ MonoBehaviour:
   minLength: 0.25
   maxLength: 7.5
   massByScaleDivider: 2.5
+  ropeSegmentLength: 0.5
   startPoint: {x: 0, y: 0}
   endPoint: {x: 0, y: 0}
   extendingPart: 0

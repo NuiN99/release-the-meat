@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 3336770364453605594}
   - component: {fileID: 8691786051318675527}
   - component: {fileID: -5656132380852651032}
-  - component: {fileID: -5139772647049054984}
   - component: {fileID: 405934711945403023}
   m_Layer: 20
   m_Name: Rope
@@ -79,6 +78,7 @@ MonoBehaviour:
   objAttachedToStart: {fileID: 0}
   objAttachedToEnd: {fileID: 0}
   ropePrefab: {fileID: 8685284923688341282, guid: 21f49d8fbbcc4664cb4708f760ee5dcc, type: 3}
+  segmentLength: 1
 --- !u!50 &-5656132380852651032
 Rigidbody2D:
   serializedVersion: 4
@@ -100,32 +100,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!61 &-5139772647049054984
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 405934711945403022}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!212 &405934711945403023
 SpriteRenderer:
   m_ObjectHideFlags: 0
