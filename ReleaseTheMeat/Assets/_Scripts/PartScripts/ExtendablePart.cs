@@ -171,6 +171,28 @@ public class ExtendablePart : MonoBehaviour
         {
             CreateHingeJoint(segments[segments.Count - 2], secondLastSegPos, endSegment.GetComponent<Rigidbody2D>());
         }
+
+        if(objAttachedToStart != null)
+        {
+            foreach(var segment in segments)
+            {
+                if(segment != objAttachedToStart && segment != objAttachedToEnd)
+                {
+                    Physics2D.IgnoreCollision(segment.GetComponent<Collider2D>(), objAttachedToStart.GetComponent<Collider2D>());
+                }
+            }
+        }
+        if (objAttachedToEnd != null)
+        {
+            foreach (var segment in segments)
+            {
+                if (segment != objAttachedToStart && segment != objAttachedToEnd)
+                {
+                    Physics2D.IgnoreCollision(segment.GetComponent<Collider2D>(), objAttachedToEnd.GetComponent<Collider2D>());
+                }
+            }
+        }
+
         Destroy(gameObject);
     }
 

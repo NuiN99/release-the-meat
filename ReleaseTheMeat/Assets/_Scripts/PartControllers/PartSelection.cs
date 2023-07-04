@@ -134,9 +134,7 @@ public class PartSelection : MonoBehaviour
     public void DeleteSelectedPart()
     {
         if(selectedPart == null) return;
-
         CheckMissingParts(selectedPart);
-
         if (selectedPart.GetComponent<Rope>())
         {
             foreach(Transform ropeSegment in selectedPart.transform.parent)
@@ -145,7 +143,6 @@ public class PartSelection : MonoBehaviour
             }
             Destroy(selectedPart.transform.parent.gameObject);
         }
-
         Destroy(selectedPart);
     }
 
@@ -160,7 +157,7 @@ public class PartSelection : MonoBehaviour
             {
                 if (joint == null) return; //dont need this?
 
-                if (joint.connectedBody.gameObject != null && joint.connectedBody.gameObject == partToCheck)
+                if (joint.connectedBody != null && joint.connectedBody.gameObject == partToCheck)
                 {
                     Destroy(joint);
                 }
