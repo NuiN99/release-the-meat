@@ -102,41 +102,41 @@ public class SimplePartCreator : MonoBehaviour
 
     void PlacePart()
     {
-        if (placingPart)
+        if (placingPart && Input.GetMouseButtonDown(0))
         {
             if (isMouseOverUI.overUI) return;
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector3.back);
+            if (hit && hit.collider.gameObject.CompareTag("Ground")) return;
 
-            if (Input.GetMouseButtonDown(0))
+            if (currentPart == null) return;
+            if (partSelection.selectedPart != null && partSelection.selectedPart.GetComponent<SimplePart>()) return;
+
+            GameObject newPart = Instantiate(currentPart, placementPos, Quaternion.identity);
+            newPart.name = currentPart.name;
+            newPart.transform.parent = FindObjectOfType<CartContainer>().gameObject.transform;
+
+            GameObject selection = partSelection.selectedPart;
+            if (selection != null)
             {
-                if (currentPart == null) return;
-                if (partSelection.selectedPart != null && partSelection.selectedPart.GetComponent<SimplePart>()) return;
+                Rigidbody2D selectionRB = selection.GetComponent<Rigidbody2D>();
 
-                GameObject newPart = Instantiate(currentPart, placementPos, Quaternion.identity);
-                newPart.name = currentPart.name;
-                newPart.transform.parent = FindObjectOfType<CartContainer>().gameObject.transform;
-
-                GameObject selection = partSelection.selectedPart;
-                if (selection != null)
+                switch (cartBuildingHUD.selectedPartType)
                 {
-                    Rigidbody2D selectionRB = selection.GetComponent<Rigidbody2D>();
-
-                    switch (cartBuildingHUD.selectedPartType)
-                    {
-                        case PartSelection.PartType.NULL:
-                            break;
-                        case PartSelection.PartType.PLANK:
-                            break;
-                        case PartSelection.PartType.ROD:
-                            break;
-                        case PartSelection.PartType.ROPE:
-                            break;
-                        case PartSelection.PartType.WHEEL:
-                            newPart.GetComponent<SimplePart>().SetWheelJoint(selectionRB);
-                            break;
-                    }
-
-                    currentPartScript.part = null;
+                    case PartSelection.PartType.NULL:
+                        break;
+                    case PartSelection.PartType.PLANK:
+                        break;
+                    case PartSelection.PartType.ROD:
+                        break;
+                    case PartSelection.PartType.ROPE:
+                        break;
+                    case PartSelection.PartType.WHEEL:
+                        newPart.GetComponent<SimplePart>().SetWheelJoint(selectionRB);
+                        break;
                 }
+
+                currentPartScript.part = null;
             }
         }
     }
