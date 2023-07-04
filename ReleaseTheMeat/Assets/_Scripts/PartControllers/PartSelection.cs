@@ -136,6 +136,16 @@ public class PartSelection : MonoBehaviour
         if(selectedPart == null) return;
 
         CheckMissingParts(selectedPart);
+
+        if (selectedPart.GetComponent<Rope>())
+        {
+            foreach(Transform ropeSegment in selectedPart.transform.parent)
+            {
+                Destroy(ropeSegment.gameObject);
+            }
+            Destroy(selectedPart.transform.parent.gameObject);
+        }
+
         Destroy(selectedPart);
     }
 
