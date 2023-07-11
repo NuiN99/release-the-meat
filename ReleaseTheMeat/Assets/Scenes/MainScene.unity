@@ -333,6 +333,7 @@ MonoBehaviour:
   minLength: 0.25
   maxLength: 7.5
   massByScaleDivider: 2.5
+  collisionIgnoreRadius: 1
   ropeSegmentLength: 0.5
   startPoint: {x: 0, y: 0}
   endPoint: {x: 0, y: 0}
@@ -642,7 +643,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 273957399}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -5020,6 +5021,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95cbb3e8c401e644d9289c73dfd13d6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collisionIgnoreRadius: 0.25
 --- !u!114 &1753315214
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -28,13 +28,13 @@ public class SimplePartCreator : MonoBehaviour
         PlacePart();
     }
 
-    void CheckType(PartSelection.PartType partType)
+    void CheckType(PartTypes.Type partType)
     {
-        if (partType != PartSelection.PartType.NULL)
+        if (partType != PartTypes.Type.NULL)
         {
             placingPart = true;
         }
-        else if(partType == PartSelection.PartType.NULL)
+        else if(partType == PartTypes.Type.NULL)
         {
             placingPart = false;
         }
@@ -43,7 +43,7 @@ public class SimplePartCreator : MonoBehaviour
 
         switch (partType)
         {
-            case PartSelection.PartType.NULL:
+            case PartTypes.Type.NULL:
 
                 currentPart = null;
                 placingPart = false;
@@ -51,7 +51,7 @@ public class SimplePartCreator : MonoBehaviour
 
                 return;
 
-            case PartSelection.PartType.PLANK:
+            case PartTypes.Type.PLANK:
 
                 currentPart = null;
                 placingPart = true;
@@ -59,7 +59,7 @@ public class SimplePartCreator : MonoBehaviour
 
                 return;
 
-            case PartSelection.PartType.ROD:
+            case PartTypes.Type.ROD:
 
                 currentPart = null;
                 placingPart = true;
@@ -67,7 +67,7 @@ public class SimplePartCreator : MonoBehaviour
 
                 return;
 
-            case PartSelection.PartType.ROPE:
+            case PartTypes.Type.ROPE:
 
                 currentPart = null;
                 placingPart = true;
@@ -76,7 +76,7 @@ public class SimplePartCreator : MonoBehaviour
                 return;
 
 
-            case PartSelection.PartType.WHEEL:
+            case PartTypes.Type.WHEEL:
 
                 currentPart = wheelPrefab;
                 placingPart = true;
@@ -123,15 +123,15 @@ public class SimplePartCreator : MonoBehaviour
 
                 switch (cartBuildingHUD.selectedPartType)
                 {
-                    case PartSelection.PartType.NULL:
+                    case PartTypes.Type.NULL:
                         break;
-                    case PartSelection.PartType.PLANK:
+                    case PartTypes.Type.PLANK:
                         break;
-                    case PartSelection.PartType.ROD:
+                    case PartTypes.Type.ROD:
                         break;
-                    case PartSelection.PartType.ROPE:
+                    case PartTypes.Type.ROPE:
                         break;
-                    case PartSelection.PartType.WHEEL:
+                    case PartTypes.Type.WHEEL:
                         newPart.GetComponent<SimplePart>().SetWheelJoint(selectionRB);
                         break;
                 }

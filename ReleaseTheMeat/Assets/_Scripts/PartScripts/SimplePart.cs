@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class SimplePart : MonoBehaviour
+public class SimplePart : Part
 {
     
     [Header("Dependencies")]
@@ -9,7 +9,7 @@ public class SimplePart : MonoBehaviour
 
 
     public bool attached;
-    [NonSerialized] public GameObject attachedObj;
+     public GameObject attachedObj;
 
     [Header("Wheel Properties")]
     [SerializeField] float wheelFrequency;
@@ -47,7 +47,6 @@ public class SimplePart : MonoBehaviour
             motor.maxMotorTorque = wheelMaxMotorForce;
             joint.motor = motor;
 
-            joint.breakForce = cartController.wheelBreakForce;
             joint.connectedBody = connectedBody;
             joint.anchor = transform.InverseTransformPoint(transform.position);
             joint.connectedAnchor = connectedBody.transform.InverseTransformPoint(transform.position);
@@ -56,5 +55,10 @@ public class SimplePart : MonoBehaviour
 
             attached = true;
         }
+    }
+
+    private void OnJointBreak2D(Joint2D joint)
+    {
+
     }
 }

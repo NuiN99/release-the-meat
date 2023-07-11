@@ -1,12 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Reflection;
-using Unity.VisualScripting;
-using UnityEditor.MPE;
 using UnityEngine;
 
-public class ExtendablePart : MonoBehaviour
+public class ExtendablePart : Part
 {
     [Header("Dependencies")]
     [SerializeField] CartBuildingHUD cartBuildingHUD;
@@ -44,11 +40,10 @@ public class ExtendablePart : MonoBehaviour
         if (objAttachedToEnd)
         {
             Rigidbody2D objAttachedToEndRB = objAttachedToEnd.GetComponent<Rigidbody2D>();
-
             CheckTypeAndCreateJoint(objAttachedToEndRB, endPoint);
         }
 
-        if (GetComponent<Rope>())
+        if (partType == PartTypes.Type.ROPE)
         {
             CreateRope();
         }
@@ -58,11 +53,11 @@ public class ExtendablePart : MonoBehaviour
     {
         switch (cartBuildingHUD.selectedPartType)
         {
-            case PartSelection.PartType.PLANK:
+            case PartTypes.Type.PLANK:
                 CreateHingeJoint(gameObject, point, attachedRB);
                 break;
 
-            case PartSelection.PartType.ROD:
+            case PartTypes.Type.ROD:
                 CreateHingeJoint(gameObject, point, attachedRB);
                 break;
         }
@@ -98,6 +93,8 @@ public class ExtendablePart : MonoBehaviour
         GameObject ropeContainer = new GameObject();
         ropeContainer.name = "Rope";
         ropeContainer.transform.parent = FindObjectOfType<CartContainer>().transform;
+        ExtendablePart ropeContainerPart = ropeContainer.AddComponent<ExtendablePart>();
+        ropeContainerPart.partOfCamera = false;
 
         float angle = Mathf.Atan2(ropeDir.y, ropeDir.x) * Mathf.Rad2Deg;
 
@@ -134,20 +131,18 @@ public class ExtendablePart : MonoBehaviour
 
             if(prevSegment != gameObject)
             CreateHingeJoint(prevSegment, prevSegmentEndPos, ropeRB);
+
+            if(prevSegment.TryGetComponent(out ExtendablePart prevExtendablePart))
+            {
+                prevExtendablePart.objAttachedToEnd = ropeSegment;
+            }
+            if(ropeSegment.TryGetComponent(out ExtendablePart curExtendablePart))
+            {
+                if(prevSegment != null)
+                curExtendablePart.objAttachedToStart = prevSegment;
+            }
         }
 
-        if(objAttachedToStart == null && segmentCount <= 1)
-        {
-            Destroy(ropeContainer);
-            Destroy(gameObject);
-            return;
-        }
-        if (objAttachedToStart != null && segmentCount <= 2)
-        {
-            Destroy(ropeContainer);
-            Destroy(gameObject);
-            return;
-        }
         Vector2 secondLastSegPos = (Vector2)segments[segments.Count - 1].transform.position + (ropeDir * segmentLength / 2);
         Vector2 between = (secondLastSegPos + endPoint) / 2;
         GameObject endSegment = Instantiate(ropePrefab, between, Quaternion.identity);
@@ -155,6 +150,15 @@ public class ExtendablePart : MonoBehaviour
         endSegment.transform.localScale = new Vector2(Vector2.Distance(secondLastSegPos, endPoint), endSegment.transform.localScale.y);
         endSegment.transform.eulerAngles = new Vector3(0, 0, angle);
         segments.Add(endSegment);
+        segmentCount++;
+
+        foreach(GameObject segment in segments)
+        {
+            if (objAttachedToEnd == segment)
+            {
+                objAttachedToEnd = null;
+            }
+        }
 
         if (endSegment.TryGetComponent(out ExtendablePart endExtendablePart))
         {
@@ -172,7 +176,14 @@ public class ExtendablePart : MonoBehaviour
             CreateHingeJoint(segments[segments.Count - 2], secondLastSegPos, endSegment.GetComponent<Rigidbody2D>());
         }
 
-        if(objAttachedToStart != null)
+        if (segmentCount < 2)
+        {
+            Destroy(ropeContainer);
+            Destroy(gameObject);
+            return;
+        }
+
+        if (objAttachedToStart != null)
         {
             foreach(var segment in segments)
             {
@@ -194,6 +205,21 @@ public class ExtendablePart : MonoBehaviour
         }
 
         Destroy(gameObject);
+    }
+
+    private void OnJointBreak2D(Joint2D joint)
+    {
+        int numJoints = 0;
+        foreach(Joint2D j in GetComponents<Joint2D>()) numJoints++;
+
+        //if there will be 0 left when this joint breaks
+        if(numJoints == 1)
+        {
+            foreach (Collider2D collider in ignoredColliders)
+            {
+                Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), collider, false);
+            }
+        }
     }
 
     /*void CreateDistanceJoint(GameObject parentObject, Vector2 anchor, Rigidbody2D body, float distance)

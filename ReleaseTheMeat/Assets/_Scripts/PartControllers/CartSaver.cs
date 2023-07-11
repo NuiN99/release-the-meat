@@ -34,7 +34,10 @@ public class CartSaver : MonoBehaviour
     void LoadCart()
     {
         Destroy(cartContainer);
-        newCartContainer.SetActive(true);
-        cartContainer = newCartContainer;
+        if(newCartContainer != null)
+        {
+            newCartContainer.SetActive(true);
+            cartContainer = newCartContainer;
+        }
     }
 }

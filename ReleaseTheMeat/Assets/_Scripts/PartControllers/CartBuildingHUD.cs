@@ -2,26 +2,26 @@ using UnityEngine;
 
 public class CartBuildingHUD : MonoBehaviour
 {
-    public PartSelection.PartType selectedPartType;
+    public PartTypes.Type selectedPartType;
 
     public void SelectPlank()
     {
-        selectedPartType = PartSelection.PartType.PLANK;
+        selectedPartType = PartTypes.Type.PLANK;
     }
 
     public void SelectRod()
     {
-        selectedPartType = PartSelection.PartType.ROD;
+        selectedPartType = PartTypes.Type.ROD;
     }
 
     public void SelectRope()
     {
-        selectedPartType = PartSelection.PartType.ROPE;
+        selectedPartType = PartTypes.Type.ROPE;
     }
 
     public void SelectWheel()
     {
-        selectedPartType = PartSelection.PartType.WHEEL;
+        selectedPartType = PartTypes.Type.WHEEL;
     }
 
     public void DeleteAllParts()

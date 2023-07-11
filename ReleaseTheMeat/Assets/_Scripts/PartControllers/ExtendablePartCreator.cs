@@ -50,15 +50,15 @@ public class ExtendablePartCreator : MonoBehaviour
     {
         switch(cartBuildingHUD.selectedPartType) 
         { 
-            case PartSelection.PartType.PLANK:
+            case PartTypes.Type.PLANK:
                 currentPrefab = plankPrefab;
                 return true;
 
-            case PartSelection.PartType.ROD:
+            case PartTypes.Type.ROD:
                 currentPrefab = rodPrefab;
                 return true;
 
-            case PartSelection.PartType.ROPE:
+            case PartTypes.Type.ROPE:
                 currentPrefab = ropePrefab;
                 return true;
 
@@ -101,7 +101,6 @@ public class ExtendablePartCreator : MonoBehaviour
                 ResetExtendablePart();
                 return;
             }
-
             PlaceEndPoint(selectedPart, selectionPointObj);
         }
     }
@@ -125,8 +124,7 @@ public class ExtendablePartCreator : MonoBehaviour
         if (selectedPart != null)
         {
             currentExtendablePart.GetComponent<ExtendablePart>().objAttachedToStart = selectedPart;
-        }
-            
+        }  
     }
 
     void ExtendPart(GameObject selectedPart, GameObject selectionPointObj)
@@ -151,8 +149,10 @@ public class ExtendablePartCreator : MonoBehaviour
             return;
         }
 
-        Rigidbody2D extendablePartRB = currentExtendablePart.GetComponent<Rigidbody2D>();
-        extendablePartRB.mass = currentExtendablePart.transform.localScale.x * currentExtendablePart.transform.localScale.y / massByScaleDivider;
+        if(currentExtendablePart.TryGetComponent(out Rigidbody2D extendablePartRB))
+        {
+            extendablePartRB.mass = currentExtendablePart.transform.localScale.x * currentExtendablePart.transform.localScale.y / massByScaleDivider;
+        }        
 
         if (selectedPart != null && selectionPointObj != null)
         {
@@ -169,14 +169,27 @@ public class ExtendablePartCreator : MonoBehaviour
             extendablePart.startPoint = startPoint;
             extendablePart.endPoint = endPoint;
 
-            if (extendablePart.objAttachedToStart != null && extendablePart.objAttachedToStart.TryGetComponent(out SimplePart simplePartStart))
+            if (extendablePart.objAttachedToStart != null)
             {
-                if (!simplePartStart.attached)
+                if (selectedPart == extendablePart.objAttachedToStart)
                 {
-                    if(simplePartStart.TryGetComponent(out Wheel wheel))
+                    ResetExtendablePart();
+                    return;
+                }
+
+                if(extendablePart.objAttachedToStart.TryGetComponent(out SimplePart simplePartStart))
+                {
+                    if (!simplePartStart.attached)
                     {
-                        extendablePart.objAttachedToStart = null;
-                        simplePartStart.SetWheelJoint(extendablePartRB);
+                        if (simplePartStart.TryGetComponent(out Wheel wheel))
+                        {
+                            extendablePart.objAttachedToStart = null;
+
+                            if(extendablePartRB != null)
+                            {
+                                simplePartStart.SetWheelJoint(extendablePartRB);
+                            }
+                        }
                     }
                 }
             }
@@ -187,7 +200,10 @@ public class ExtendablePartCreator : MonoBehaviour
                     if (simplePartEnd.TryGetComponent(out Wheel wheel))
                     {
                         extendablePart.objAttachedToEnd = null;
-                        simplePartEnd.SetWheelJoint(extendablePartRB);
+                        if (extendablePartRB != null)
+                        {
+                            simplePartEnd.SetWheelJoint(extendablePartRB);
+                        }
                     }
                 }
             }
@@ -242,6 +258,8 @@ public class ExtendablePartCreator : MonoBehaviour
             if (partSelection.selectingPart && Vector2.Distance(hit.point, partSelection.selectionPoint.transform.position) <= ignoreIntersectionRadius) continue;
             if (currentExtendablePart.GetComponent<Rod>() && hit.collider.gameObject.GetComponent<Rod>()) continue;
             if (currentExtendablePart.GetComponent<Rope>() && hit.collider.gameObject.GetComponent<Rope>()) continue;
+
+            if (hit.collider.gameObject.GetComponent<Rod>() || hit.collider.gameObject.GetComponent<Rope>()) continue; //temp?
 
             if (extendingPart)
             {

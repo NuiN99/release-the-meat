@@ -9,18 +9,7 @@ public class CartController : MonoBehaviour
     [Header("Debug Stress Mode")]
     [SerializeField] bool debugStressMode;
 
-    [Header("Toggle Break Forces")]
-    [SerializeField] bool plankBreakEnabled;
-    [SerializeField] bool rodBreakEnabled;
-    [SerializeField] bool wheelBreakEnabled;
-
-    [Header("Break Forces")]
-    public float plankBreakForce;
-    public float rodBreakForce;
-    public float wheelBreakForce;
-
-    List<Transform> partPositions = new List<Transform>();
-
+    List<Part> parts = new List<Part>();
 
     private void OnEnable()
     {
@@ -41,11 +30,13 @@ public class CartController : MonoBehaviour
 
     void CheckDisabledBreakForces()
     {
-        if(!plankBreakEnabled) plankBreakForce = Mathf.Infinity;
-
-        if (!rodBreakEnabled) rodBreakForce = Mathf.Infinity;
-
-        if (!wheelBreakEnabled) wheelBreakForce = Mathf.Infinity;
+        foreach (Part part in FindObjectsOfType<Part>())
+        {
+            if(!part.canBreak)
+            {
+                part.breakForce = Mathf.Infinity;
+            }
+        }
     }
 
     void Update()
@@ -55,9 +46,9 @@ public class CartController : MonoBehaviour
 
     void ShowJointStress()
     {
-        if (debugStressMode && gamePhase.currentPhase == GamePhase.Phase.LEVEL && partPositions != null)
+        if (debugStressMode && gamePhase.currentPhase == GamePhase.Phase.LEVEL)
         {
-            foreach (Transform part in partPositions)
+            foreach (Part part in parts)
             {
                 if (part == null) continue;
 
@@ -75,18 +66,7 @@ public class CartController : MonoBehaviour
                 {
                     if(joint.connectedBody != null)
                     {
-                        if (part.GetComponent<Plank>())
-                        {
-                            CheckStressAndSetColor(spriteRenderer, joint.GetReactionForce(Time.deltaTime), plankBreakForce, baseColor);
-                        }
-                        else if (part.GetComponent<Rod>())
-                        {
-                            CheckStressAndSetColor(spriteRenderer, joint.GetReactionForce(Time.deltaTime), rodBreakForce, baseColor);
-                        }
-                        if (part.GetComponent<Wheel>())
-                        {
-                            CheckStressAndSetColor(spriteRenderer, joint.GetReactionForce(Time.deltaTime), wheelBreakForce, baseColor);
-                        }
+                        CheckStressAndSetColor(spriteRenderer, joint.GetReactionForce(Time.deltaTime), part.breakForce, baseColor);
                     }
                 }
             }
@@ -104,55 +84,39 @@ public class CartController : MonoBehaviour
 
     void SetBreakForces()
     {
-        foreach(Transform part in partPositions)
+        foreach(Part part in parts)
         {
-            HingeJoint2D[] hingeJoints = part.GetComponents<HingeJoint2D>();
-            WheelJoint2D[] wheelJoints = part.GetComponents<WheelJoint2D>();
+            Joint2D[] joints = part.GetComponents<Joint2D>();
 
-            foreach(HingeJoint2D hingeJoint in hingeJoints) 
+            foreach (Joint2D joint in joints) 
             {
-                if (part.GetComponent<Plank>())
-                {
-                    hingeJoint.breakForce = plankBreakForce;
-                }
-                if (part.GetComponent<Rod>())
-                {
-                    hingeJoint.breakForce = rodBreakForce;
-                }
-            }
-
-            foreach (WheelJoint2D wheelJoint in wheelJoints)
-            {
-                if (part.GetComponent<Wheel>())
-                {
-                    wheelJoint.breakForce = wheelBreakForce;
-                }
+                joint.breakForce = part.breakForce;
             }
         }
     }
 
     void GetPartPositions()
     {
-        partPositions.Clear();
-        Part[] parts = FindObjectsOfType<Part>();
-
-        foreach (Part part in parts)
+        parts.Clear();
+        foreach(Part part in FindObjectsOfType<Part>())
         {
-            partPositions.Add(part.gameObject.transform);
-        }
+            if (part.partOfCamera)
+            {
+                parts.Add(part);
+            }
+        } 
     }
 
     public Vector3 MiddleOfCart()
     {
         Vector3 sum = Vector3.zero;
-        foreach (Transform partPos in partPositions)
+        foreach (Part part in parts)
         {
-            if(partPos != null)
-            sum += partPos.position;
+            sum += part.transform.position;
         }
 
-        if (partPositions.Count == 0) return Camera.main.transform.position;
-        return sum / partPositions.Count;
+        if (parts.Count == 0) return Camera.main.transform.position;
+        return sum / parts.Count;
     }
 
     public float CartSize(float sizeDivider, float minSize, float maxSize)
@@ -162,23 +126,19 @@ public class CartController : MonoBehaviour
         float maxX = float.MinValue;
         float maxY = float.MinValue;
 
-        foreach (Transform partPos in partPositions)
+        foreach (Part part in parts)
         {
-            if(partPos != null)
+            if (Vector2.Distance(MiddleOfCart(), part.transform.position) > 25)
             {
-                if (Vector2.Distance(MiddleOfCart(), partPos.position) > 25)
-                {
-                    partPositions.Remove(partPos);
-                    break;
-                }
-
-                Vector3 position = partPos.position;
-
-                minX = Mathf.Min(minX, position.x);
-                minY = Mathf.Min(minY, position.y);
-                maxX = Mathf.Max(maxX, position.x);
-                maxY = Mathf.Max(maxY, position.y);
+                parts.Remove(part);
+                break;
             }
+            Vector3 position = part.transform.position;
+
+            minX = Mathf.Min(minX, position.x);
+            minY = Mathf.Min(minY, position.y);
+            maxX = Mathf.Max(maxX, position.x);
+            maxY = Mathf.Max(maxY, position.y);
         }
 
         float distX = maxX - minX;

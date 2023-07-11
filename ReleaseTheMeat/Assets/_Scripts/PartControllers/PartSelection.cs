@@ -9,7 +9,7 @@ public class PartSelection : MonoBehaviour
     [SerializeField] CurrentHeldPart currentHeldPart;
 
     [SerializeField] float rayRadius;
-    [SerializeField] LayerMask selectionMask;
+    [SerializeField] public LayerMask selectionMask;
     [SerializeField] GameObject selectionPointPrefab;
 
     Vector2 mousePos;
@@ -18,15 +18,8 @@ public class PartSelection : MonoBehaviour
 
     public bool selectingPart;
 
-    public enum PartType 
-    {
-        NULL, 
-        PLANK,
-        ROD,
-        ROPE,
-        WHEEL,
-    }
-    public PartType hoveredPartType;
+    
+    public PartTypes.Type hoveredPartType;
 
     void Update()
     {
@@ -169,14 +162,9 @@ public class PartSelection : MonoBehaviour
     {
         if (selectedPart == null) 
         {
-            hoveredPartType = PartType.NULL;
+            hoveredPartType = PartTypes.Type.NULL;
             return;
         }
-        
-
-        else if (selectedPart.GetComponent<Plank>()) hoveredPartType = PartType.PLANK;
-        else if (selectedPart.GetComponent<Rod>()) hoveredPartType = PartType.ROD;
-        else if (selectedPart.GetComponent<Rope>()) hoveredPartType = PartType.ROPE;
-        else if (selectedPart.GetComponent<Wheel>()) hoveredPartType = PartType.WHEEL;
+        hoveredPartType = selectedPart.GetComponent<Part>().partType;
     }
 }
