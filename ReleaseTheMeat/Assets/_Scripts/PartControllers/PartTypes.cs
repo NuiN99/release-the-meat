@@ -10,7 +10,7 @@ public static class PartTypes
         PLANK,
         ROD,
         ROPE,
-        WHEEL,
         SPRING,
+        WHEEL,
     }
 }

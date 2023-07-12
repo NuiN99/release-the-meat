@@ -1,27 +1,15 @@
+using System;
 using UnityEngine;
 
 public class CartBuildingHUD : MonoBehaviour
 {
     public PartTypes.Type selectedPartType;
 
-    public void SelectPlank()
+    public void SelectPart(SelectPartButton button)
     {
-        selectedPartType = PartTypes.Type.PLANK;
-    }
-
-    public void SelectRod()
-    {
-        selectedPartType = PartTypes.Type.ROD;
-    }
-
-    public void SelectRope()
-    {
-        selectedPartType = PartTypes.Type.ROPE;
-    }
-
-    public void SelectWheel()
-    {
-        selectedPartType = PartTypes.Type.WHEEL;
+        selectedPartType = button.partType;
+        if (selectedPartType == PartTypes.Type.NULL)
+            Debug.LogWarning($"{button.name} has a null PartType");
     }
 
     public void DeleteAllParts()
