@@ -8,10 +8,10 @@ public class ExtendablePartCreator : MonoBehaviour
     [SerializeField] CurrentHeldPart currentHeldPart;
     [SerializeField] CartBuildingHUD cartBuildingHUD;
 
-
-    [SerializeField] float minLength;
-    [SerializeField] float maxLength;
-    [SerializeField] float massByScaleDivider;
+    [Header("Fallbacks")]
+    [SerializeField] float defaultMaxLength;
+    [SerializeField] float defaultMinLength;
+    [SerializeField] float defaultMassByScaleDivider;
 
     [SerializeField] public float ropeSegmentLength;
 
@@ -143,15 +143,22 @@ public class ExtendablePartCreator : MonoBehaviour
 
     void PlaceEndPoint(GameObject selectedPart, GameObject selectionPointObj)
     {
-        if (currentExtendablePart.transform.localScale.x < minLength)
+        if (currentExtendablePart.transform.localScale.x < defaultMinLength)
         {
             ResetExtendablePart();
             return;
         }
 
-        if(currentExtendablePart.TryGetComponent(out Rigidbody2D extendablePartRB))
+        if(currentExtendablePart.TryGetComponent(out Rigidbody2D extendablePartRB) && currentExtendablePart.TryGetComponent(out ExtendablePart extendablePartScript))
         {
-            extendablePartRB.mass = currentExtendablePart.transform.localScale.x * currentExtendablePart.transform.localScale.y / massByScaleDivider;
+            if (extendablePartScript.massByScaleDivider > 0)
+            {
+                extendablePartRB.mass = currentExtendablePart.transform.localScale.x * currentExtendablePart.transform.localScale.y / extendablePartScript.massByScaleDivider;
+            }
+            else
+            {
+                extendablePartRB.mass = currentExtendablePart.transform.localScale.x * currentExtendablePart.transform.localScale.y / defaultMassByScaleDivider;
+            }
         }        
 
         if (selectedPart != null && selectionPointObj != null)
@@ -233,8 +240,23 @@ public class ExtendablePartCreator : MonoBehaviour
     void ScaleToPoint(Vector2 point)
     {
         scaleX = Vector2.Distance(point, startPoint);
-        scaleX = Mathf.Clamp(scaleX, 0, maxLength);
 
+        if(currentExtendablePart.TryGetComponent(out ExtendablePart extendablePartScript))
+        {
+            if(extendablePartScript.maxLength > 0)
+            {
+                scaleX = Mathf.Clamp(scaleX, 0, extendablePartScript.maxLength);
+            }
+            else
+            {
+                scaleX = Mathf.Clamp(scaleX, 0, defaultMaxLength);
+            }
+        }
+        else
+        {
+            scaleX = Mathf.Clamp(scaleX, 0, defaultMaxLength);
+        }
+        
         currentExtendablePart.transform.position = startPoint + (pointDir * (scaleX / 2));
         currentExtendablePart.transform.localScale = new Vector2(scaleX, currentExtendablePart.transform.localScale.y);
 
@@ -274,7 +296,7 @@ public class ExtendablePartCreator : MonoBehaviour
     {
         if (extendingPart == false) return false;
 
-        if (scaleX >= maxLength)
+        if (scaleX >= defaultMaxLength)
         {
             return true;
         }

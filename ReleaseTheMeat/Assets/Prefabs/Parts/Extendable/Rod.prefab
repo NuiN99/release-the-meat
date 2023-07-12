@@ -63,9 +63,12 @@ MonoBehaviour:
   breakForce: 1500
   partType: 2
   canBreak: 1
+  partOfCamera: 1
   ignoredColliders: []
   cartBuildingHUD: {fileID: 0}
   extendablePartCreator: {fileID: 0}
+  maxLength: 7
+  massByScaleDivider: 2
   startPoint: {x: 0, y: 0}
   endPoint: {x: 0, y: 0}
   objAttachedToStart: {fileID: 0}

@@ -8,6 +8,10 @@ public class ExtendablePart : Part
     [SerializeField] CartBuildingHUD cartBuildingHUD;
     [SerializeField] ExtendablePartCreator extendablePartCreator;
 
+    [Header("Part Creation")]
+    public float maxLength;
+    public float massByScaleDivider;
+
     public Vector2 startPoint;
     public Vector2 endPoint;
 

@@ -132,6 +132,7 @@ public class PartSelection : MonoBehaviour
         {
             foreach(Transform ropeSegment in selectedPart.transform.parent)
             {
+                CheckMissingParts(ropeSegment.gameObject);
                 Destroy(ropeSegment.gameObject);
             }
             Destroy(selectedPart.transform.parent.gameObject);

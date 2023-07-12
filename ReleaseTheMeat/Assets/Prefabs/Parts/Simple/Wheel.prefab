@@ -43,7 +43,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4641117914644135560}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d756b0a366d134949ae4a32c3f435406, type: 3}
   m_Name: 
@@ -64,6 +64,7 @@ MonoBehaviour:
   breakForce: 5000
   partType: 4
   canBreak: 1
+  partOfCamera: 1
   ignoredColliders: []
   attached: 0
   attachedObj: {fileID: 0}
