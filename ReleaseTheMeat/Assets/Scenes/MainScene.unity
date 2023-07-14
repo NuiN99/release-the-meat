@@ -332,12 +332,12 @@ MonoBehaviour:
   cartBuildingHUD: {fileID: 1021396581}
   defaultMaxLength: 10
   defaultMinLength: 0.4
-  defaultMassByScaleDivider: 0
+  defaultMassByScaleDivider: 2.5
   ropeSegmentLength: 0.5
   startPoint: {x: 0, y: 0}
   endPoint: {x: 0, y: 0}
   extendingPart: 0
-  ignoreIntersectionRadius: 0.25
+  ignoreIntersectionRadius: 0.35
   plankPrefab: {fileID: 405934711945403022, guid: 87e0f31ec28ec30458a23b59c77959c5, type: 3}
   rodPrefab: {fileID: 405934711945403022, guid: 9457dc45b4b0ffb4ba33dfc452fed5e1, type: 3}
   ropePrefab: {fileID: 405934711945403022, guid: 6d49ffc40f0209845addbe596ae1d880, type: 3}
@@ -5075,7 +5075,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95cbb3e8c401e644d9289c73dfd13d6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collisionIgnoreRadius: 0.25
+  collisionIgnoreRadius: 0.35
 --- !u!114 &1753315214
 MonoBehaviour:
   m_ObjectHideFlags: 0
