@@ -75,6 +75,14 @@ public class SimplePartCreator : MonoBehaviour
 
                 return;
 
+            case PartTypes.Type.SPRING:
+
+                currentPart = null;
+                placingPart = true;
+                selectedPartObjSR.sprite = null;
+
+                return;
+
 
             case PartTypes.Type.WHEEL:
 

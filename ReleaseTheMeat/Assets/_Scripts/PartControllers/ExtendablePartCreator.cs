@@ -25,6 +25,7 @@ public class ExtendablePartCreator : MonoBehaviour
     [SerializeField] GameObject plankPrefab;
     [SerializeField] GameObject rodPrefab;
     [SerializeField] GameObject ropePrefab;
+    [SerializeField] GameObject springPrefab;
 
     GameObject currentPrefab;
 
@@ -43,7 +44,7 @@ public class ExtendablePartCreator : MonoBehaviour
 
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        PlankPlacement();
+        Placement();
     }
 
     bool ExtendableIsSelected()
@@ -62,13 +63,17 @@ public class ExtendablePartCreator : MonoBehaviour
                 currentPrefab = ropePrefab;
                 return true;
 
+            case PartTypes.Type.SPRING:
+                currentPrefab = springPrefab;
+                return true;
+
             default:
                 currentPrefab = null;
                 return false;
         }
     }
     
-    void PlankPlacement()
+    void Placement()
     {
         GameObject selectedPart = partSelection.selectedPart;
         GameObject selectionPointObj = partSelection.selectionPoint;
@@ -88,7 +93,7 @@ public class ExtendablePartCreator : MonoBehaviour
             }
             else
             {
-                currentExtendablePart.GetComponent<SpriteRenderer>().color = Color.white;
+                currentExtendablePart.GetComponent<SpriteRenderer>().color = currentPrefab.GetComponent<SpriteRenderer>().color;
             }
         }
 
@@ -161,18 +166,18 @@ public class ExtendablePartCreator : MonoBehaviour
             }
         }        
 
-        if (selectedPart != null && selectionPointObj != null)
-        {
-            endPoint = selectionPointObj.transform.position;
-            currentExtendablePart.GetComponent<ExtendablePart>().objAttachedToEnd = selectedPart;
-        }
-        else
-        {
-            endPoint = (Vector2)currentExtendablePart.transform.position + (pointDir * currentExtendablePart.transform.localScale.x / 2);
-        }
-
         if (currentExtendablePart.TryGetComponent(out ExtendablePart extendablePart))
         {
+            if (selectedPart != null && selectionPointObj != null)
+            {
+                endPoint = selectionPointObj.transform.position;
+                extendablePart.objAttachedToEnd = selectedPart;
+            }
+            else
+            {
+                endPoint = (Vector2)currentExtendablePart.transform.position + (pointDir * currentExtendablePart.transform.localScale.x / 2);
+            }
+
             extendablePart.startPoint = startPoint;
             extendablePart.endPoint = endPoint;
 
@@ -214,7 +219,6 @@ public class ExtendablePartCreator : MonoBehaviour
                     }
                 }
             }
-            
             extendablePart.CheckForAttachedParts();
         }
 

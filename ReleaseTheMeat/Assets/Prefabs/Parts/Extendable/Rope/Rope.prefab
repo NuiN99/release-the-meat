@@ -72,7 +72,9 @@ MonoBehaviour:
   endPoint: {x: 0, y: 0}
   objAttachedToStart: {fileID: 0}
   objAttachedToEnd: {fileID: 0}
-  ropePrefab: {fileID: 8685284923688341282, guid: 21f49d8fbbcc4664cb4708f760ee5dcc, type: 3}
+  ropeSegmentPrefab: {fileID: 8685284923688341282, guid: 21f49d8fbbcc4664cb4708f760ee5dcc, type: 3}
+  springFrequency: 0
+  springDampingRatio: 0
 --- !u!50 &-5656132380852651032
 Rigidbody2D:
   serializedVersion: 4
@@ -136,7 +138,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.7169812, g: 0.6752037, b: 0.64595944, a: 1}
+  m_Color: {r: 0.6132076, g: 0.5046078, b: 0.44255075, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

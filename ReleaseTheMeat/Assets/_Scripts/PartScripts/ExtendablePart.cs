@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class ExtendablePart : Part
@@ -18,7 +20,10 @@ public class ExtendablePart : Part
     public GameObject objAttachedToStart;
     public GameObject objAttachedToEnd;
 
-    [SerializeField] GameObject ropePrefab;
+    [Header("Part Specific Values")]
+    [SerializeField] GameObject ropeSegmentPrefab;
+    [SerializeField] float springFrequency;
+    [SerializeField] float springDampingRatio;
 
     float segmentLength;
 
@@ -51,6 +56,10 @@ public class ExtendablePart : Part
         {
             CreateRope();
         }
+        if (partType == PartTypes.Type.SPRING)
+        {
+            CreateSpringJoint(objAttachedToEnd.GetComponent<Rigidbody2D>(), objAttachedToStart.GetComponent<Rigidbody2D>());
+        }
     }
 
     void CheckTypeAndCreateJoint(Rigidbody2D attachedRB, Vector2 point)
@@ -79,6 +88,23 @@ public class ExtendablePart : Part
         hingeJoint.connectedAnchor = body.transform.InverseTransformPoint(anchor);
     }
 
+    void CreateSpringJoint(Rigidbody2D startRB, Rigidbody2D endRB)
+    {
+        //working on this
+        SpringJoint2D springJoint = startRB.gameObject.AddComponent<SpringJoint2D>();
+
+        springJoint.autoConfigureConnectedAnchor = false;
+        springJoint.autoConfigureDistance = false;
+
+        springJoint.connectedBody = endRB;
+        springJoint.distance = Vector2.Distance(startPoint, endPoint);
+        springJoint.dampingRatio = springDampingRatio;
+        springJoint.frequency = springFrequency;
+
+        springJoint.anchor = gameObject.transform.InverseTransformPoint(startPoint);
+        springJoint.connectedAnchor = endRB.transform.InverseTransformPoint(endPoint);
+    }
+
     void CreateRope()
     {
         int segmentCount = 0;
@@ -93,6 +119,8 @@ public class ExtendablePart : Part
         {
             segments.Add(gameObject);
         }
+
+        GameObject objAttachedToEndBefore = objAttachedToEnd;
 
         GameObject ropeContainer = new GameObject();
         ropeContainer.name = "Rope";
@@ -109,12 +137,14 @@ public class ExtendablePart : Part
             if (segmentCount > 1)
                 segmentPosition += ropeDir * segmentLength;
 
-            GameObject ropeSegment = Instantiate(ropePrefab, segmentPosition, Quaternion.identity);
+            GameObject ropeSegment = Instantiate(ropeSegmentPrefab, segmentPosition, Quaternion.identity);
             ropeSegment.transform.parent = ropeContainer.transform;
             segments.Add(ropeSegment);
 
             ropeSegment.transform.localScale = new Vector2(segmentLength, ropeSegment.transform.localScale.y);
             ropeSegment.transform.eulerAngles = new Vector3(0, 0, angle);
+
+            ropeSegment.GetComponent<RopeSegment>().parentContainer = ropeContainer;
 
             if (ropeSegment.TryGetComponent(out ExtendablePart extendablePart))
             {
@@ -149,10 +179,22 @@ public class ExtendablePart : Part
 
         Vector2 secondLastSegPos = (Vector2)segments[segments.Count - 1].transform.position + (ropeDir * segmentLength / 2);
         Vector2 between = (secondLastSegPos + endPoint) / 2;
-        GameObject endSegment = Instantiate(ropePrefab, between, Quaternion.identity);
+        GameObject endSegment = Instantiate(ropeSegmentPrefab, between, Quaternion.identity);
         endSegment.transform.parent = ropeContainer.transform;
         endSegment.transform.localScale = new Vector2(Vector2.Distance(secondLastSegPos, endPoint), endSegment.transform.localScale.y);
         endSegment.transform.eulerAngles = new Vector3(0, 0, angle);
+
+        if(endSegment.TryGetComponent(out RopeSegment endSegmentScript))
+        {
+            endSegmentScript.parentContainer = ropeContainer;
+            endSegmentScript.isEndSegment = true;
+        }
+        if (segments[0].TryGetComponent(out RopeSegment startSegmentScript))
+        {
+            startSegmentScript.parentContainer = ropeContainer;
+            startSegmentScript.isStartSegment = true;
+        }
+
         segments.Add(endSegment);
         segmentCount++;
 
@@ -160,7 +202,7 @@ public class ExtendablePart : Part
         {
             if (objAttachedToEnd == segment)
             {
-                objAttachedToEnd = null;
+                objAttachedToEnd = objAttachedToEndBefore;
             }
         }
 
@@ -168,14 +210,15 @@ public class ExtendablePart : Part
         {
             endExtendablePart.startPoint = (Vector2)endSegment.transform.position - (ropeDir * endSegment.transform.localScale.x / 2);
             endExtendablePart.endPoint = (Vector2)endSegment.transform.position + (ropeDir * endSegment.transform.localScale.x / 2);
+            endExtendablePart.objAttachedToEnd = objAttachedToEndBefore;
         }
 
         if (objAttachedToEnd != null && objAttachedToEnd.TryGetComponent(out Rigidbody2D objAttachedToEndRB))
         {
-            CreateHingeJoint(segments[segments.Count - 1], endPoint, objAttachedToEndRB);
+            CreateHingeJoint(endSegment, endPoint, objAttachedToEndRB);
             CreateHingeJoint(segments[segments.Count - 2], secondLastSegPos, endSegment.GetComponent<Rigidbody2D>());
         }
-        else
+        else if(objAttachedToEnd == null)
         {
             CreateHingeJoint(segments[segments.Count - 2], secondLastSegPos, endSegment.GetComponent<Rigidbody2D>());
         }
@@ -191,9 +234,10 @@ public class ExtendablePart : Part
         {
             foreach(var segment in segments)
             {
-                if(segment != objAttachedToStart && segment != objAttachedToEnd)
+                if (segment != objAttachedToStart && segment != objAttachedToEnd)
                 {
-                    Physics2D.IgnoreCollision(segment.GetComponent<Collider2D>(), objAttachedToStart.GetComponent<Collider2D>());
+                    if (segment.TryGetComponent(out Collider2D segmentCollider) && objAttachedToStart.TryGetComponent(out Collider2D objAttachedToStartCollider))
+                        Physics2D.IgnoreCollision(segmentCollider, objAttachedToStartCollider);
                 }
             }
         }
@@ -203,7 +247,8 @@ public class ExtendablePart : Part
             {
                 if (segment != objAttachedToStart && segment != objAttachedToEnd)
                 {
-                    Physics2D.IgnoreCollision(segment.GetComponent<Collider2D>(), objAttachedToEnd.GetComponent<Collider2D>());
+                    if(segment.TryGetComponent(out Collider2D segmentCollider) && objAttachedToEnd.TryGetComponent(out Collider2D objAttachedToEndCollider))
+                    Physics2D.IgnoreCollision(segmentCollider, objAttachedToEndCollider);
                 }
             }
         }

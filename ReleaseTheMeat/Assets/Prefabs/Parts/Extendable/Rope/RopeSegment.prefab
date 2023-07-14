@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8685284923688341294}
   - component: {fileID: -549899935838919187}
+  - component: {fileID: 969492380225053821}
   - component: {fileID: 8120512070935818203}
   - component: {fileID: 8685284923688341295}
   - component: {fileID: 8685284923688341281}
@@ -48,6 +49,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d14f91c1995da042b3a7b1ef74efe62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &969492380225053821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8685284923688341282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cf42e923c80f6d4bb670ff0f4814498, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8120512070935818203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,7 +86,9 @@ MonoBehaviour:
   endPoint: {x: 0, y: 0}
   objAttachedToStart: {fileID: 0}
   objAttachedToEnd: {fileID: 0}
-  ropePrefab: {fileID: 0}
+  ropeSegmentPrefab: {fileID: 8685284923688341282}
+  springFrequency: 0
+  springDampingRatio: 0
 --- !u!212 &8685284923688341295
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -116,7 +131,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.6156863, g: 0.5058824, b: 0.44313726, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

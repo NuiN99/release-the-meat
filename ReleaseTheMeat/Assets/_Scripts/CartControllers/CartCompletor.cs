@@ -52,13 +52,17 @@ public class CartCompletor : MonoBehaviour
         foreach (RaycastHit2D hit in collisionDisabler)
         {
             if (hit.collider.gameObject.GetComponent<Part>() == null) continue;
+            if (part.TryGetComponent(out RopeSegment ropeSegment))
+            {
+                if (ropeSegment.isStartSegment || ropeSegment.isEndSegment) continue;
+            }
+
             if (part.TryGetComponent(out Collider2D partCollider))
             {
                 if(part.TryGetComponent(out Part partScript))
                 {
                     partScript.ignoredColliders.Add(hit.collider);
                 }
-
                 Physics2D.IgnoreCollision(hit.collider, partCollider, true);
             }
         }

@@ -4,7 +4,7 @@ using UnityEngine;
 public class CartSaver : MonoBehaviour
 {
     [SerializeField] GameObject cartContainer;
-    [SerializeField] GameObject newCartContainer;
+    GameObject newCartContainer;
 
     private void OnEnable()
     {

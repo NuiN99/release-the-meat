@@ -341,6 +341,7 @@ MonoBehaviour:
   plankPrefab: {fileID: 405934711945403022, guid: 87e0f31ec28ec30458a23b59c77959c5, type: 3}
   rodPrefab: {fileID: 405934711945403022, guid: 9457dc45b4b0ffb4ba33dfc452fed5e1, type: 3}
   ropePrefab: {fileID: 405934711945403022, guid: 6d49ffc40f0209845addbe596ae1d880, type: 3}
+  springPrefab: {fileID: 405934711945403022, guid: 9effae84be1936e499c78e161e264bc9, type: 3}
 --- !u!114 &163130264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1566,7 +1567,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffcf69a0409b8394da55acb021e729b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  partType: 0
+  partType: 4
 --- !u!1 &831951751
 GameObject:
   m_ObjectHideFlags: 0
@@ -4744,7 +4745,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffcf69a0409b8394da55acb021e729b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  partType: 0
+  partType: 3
 --- !u!1 &1666953155
 GameObject:
   m_ObjectHideFlags: 0
@@ -5088,7 +5089,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gamePhase: {fileID: 1727039850}
-  debugStressMode: 1
+  debugStressMode: 0
 --- !u!114 &1753315215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5102,7 +5103,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cartContainer: {fileID: 2064783883}
-  newCartContainer: {fileID: 0}
 --- !u!1 &1761226116
 GameObject:
   m_ObjectHideFlags: 0
@@ -5520,7 +5520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffcf69a0409b8394da55acb021e729b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  partType: 0
+  partType: 2
 --- !u!1 &1977805719
 GameObject:
   m_ObjectHideFlags: 0
@@ -5668,7 +5668,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffcf69a0409b8394da55acb021e729b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  partType: 0
+  partType: 5
 --- !u!1 &1982797391
 GameObject:
   m_ObjectHideFlags: 0

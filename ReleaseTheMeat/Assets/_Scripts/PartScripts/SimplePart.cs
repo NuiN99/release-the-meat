@@ -46,6 +46,7 @@ public class SimplePart : Part
             var motor = joint.motor;
             motor.maxMotorTorque = wheelMaxMotorForce;
             joint.motor = motor;
+            joint.useMotor = false;
 
             joint.connectedBody = connectedBody;
             joint.anchor = transform.InverseTransformPoint(transform.position);

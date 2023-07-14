@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class PartSelection : MonoBehaviour
 {
@@ -48,7 +49,7 @@ public class PartSelection : MonoBehaviour
         if (extendablePartCreator.IsMaxLength()) return;
 
         float maxDist = Mathf.Infinity;
-        foreach(RaycastHit2D rayHit in rayHits)
+        foreach (RaycastHit2D rayHit in rayHits)
         {
             if (!ReferenceEquals(rayHit.collider.gameObject, currentHeldPart.part))
             {
