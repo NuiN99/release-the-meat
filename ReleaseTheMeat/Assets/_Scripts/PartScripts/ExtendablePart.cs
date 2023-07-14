@@ -229,10 +229,16 @@ public class ExtendablePart : Part
             Destroy(gameObject);
             return;
         }
+        IgnoreCollisionBetweenRopeSegments(segments);
 
+        Destroy(gameObject);
+    }
+
+    void IgnoreCollisionBetweenRopeSegments(List<GameObject> segments)
+    {
         if (objAttachedToStart != null)
         {
-            foreach(var segment in segments)
+            foreach (var segment in segments)
             {
                 if (segment != objAttachedToStart && segment != objAttachedToEnd)
                 {
@@ -247,13 +253,11 @@ public class ExtendablePart : Part
             {
                 if (segment != objAttachedToStart && segment != objAttachedToEnd)
                 {
-                    if(segment.TryGetComponent(out Collider2D segmentCollider) && objAttachedToEnd.TryGetComponent(out Collider2D objAttachedToEndCollider))
-                    Physics2D.IgnoreCollision(segmentCollider, objAttachedToEndCollider);
+                    if (segment.TryGetComponent(out Collider2D segmentCollider) && objAttachedToEnd.TryGetComponent(out Collider2D objAttachedToEndCollider))
+                        Physics2D.IgnoreCollision(segmentCollider, objAttachedToEndCollider);
                 }
             }
         }
-
-        Destroy(gameObject);
     }
 
     private void OnJointBreak2D(Joint2D joint)
